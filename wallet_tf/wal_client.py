@@ -126,13 +126,14 @@ class WalClient:
 		payload = ",".join([name,action,pubkey]).encode()
 
 		address = self._get_address(name)
+		sec_address = self._get_address(pubkey)
 
 		header = TransactionHeader(
 			signer_public_key = self._signer.get_public_key().as_hex(),
 			family_name = "wal",
 			family_version = "1.0",
-			inputs = [address],
-			outputs = [address],
+			inputs = [address,sec_address],
+			outputs = [address,sec_address],
 			dependencies = [],
 			payload_sha512 = _sha512(payload),
 			batcher_public_key = self._signer.get_public_key().as_hex(),

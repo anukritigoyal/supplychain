@@ -47,11 +47,17 @@ class WalState(object):
 	def _store_pair(self,pair_name,pairs):
 
 		address = _make_wal_address(pair_name)
+		sec_address = _make_wal_address(pairs[pair_name].pubkey)
 
 		state_data = self._serialize(pairs)
 
 		self._address_cache[address] = state_data
 		self._context.set_state({address: state_data},timeout=self.TIMEOUT)
+
+		self._address_cache[sec_address] = state_data
+		self._context.set_state({sec_address: state_data},timeout=self.TIMEOUT)
+
+
 
 	def _delete_pair(self,pair_name):
 		address = _make_wal_address(pair_name)
