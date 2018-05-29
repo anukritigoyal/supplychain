@@ -58,6 +58,9 @@ class HwClient:
 	def send(self,name,cu_add,nxt_add,wait=None):
 		return self._send_hw_txn(name,"send",cu_add,nxt_add,wait=wait)
 
+	def check(self,name,check_no,wait=None):
+		return self._send_hw_txn(name,check_no,cu_add='no',nxt_add='no',wait=wait)
+
 	def show(self,name):
 		address = self._get_address(name)
 
