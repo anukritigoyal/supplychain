@@ -42,15 +42,19 @@ class HwState(object):
 		else:
 			self._delete_item(item_name)
 
-	def vldt_item(self,item_name,cu_add,signer_pubkey):
-		key_address = _make_wal_address(cu_add)
-		key_state_entry=_context.get_state([address],timeout=self.TIMEOUT)
+	def get_pubkey(self,name):
+		key_address = _make_wal_address(name)
+		"""key_state_entry=self._context.get_state([key_address],timeout=self.TIMEOUT)
+		
+		print('debugg')
 		if key_state_entry :
-			pubkey = self._deserialize_key(data=state_entries[0].data)
-			if 
-		else:
-			print("Sender doesn't exist in the database")
+			pubkey = self._deserialize_key(data=key_state_entry[0].data)
+			return pubkey[name].pubkey
 
+		else:
+			print("Reciever doesn't exist in the database")
+		"""
+		return name
 
 	def set_item(self,item_name,item):
 		items = self._load_items(item_name= item_name)
@@ -123,6 +127,18 @@ class HwState(object):
 			item_strs.append(item_str)
 
 		return "|".join(sorted(item_strs)).encode()
+
+	def _deserialize_key(self,data):
+		pairs = {}
+		try:
+			for pair in data.decode().split("|"):
+				name,pubkey = pair.split(",")
+				pairs[name] = Pair(name,pubkey)
+
+		except ValueError:
+			raise InternalError("Failed to deserialize pairs data")
+
+		return pairs
 
 
 

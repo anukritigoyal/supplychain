@@ -55,8 +55,8 @@ class HwTransHand(TransactionHandler):
 			if hwstate.get_item(hwpayload.name) is not None:
 				raise InvalidTransaction('Invalid Item Exists')
 
-			item = Item(name = hwpayload.name,check = "-" * 2 ,
-						c_addr = hwpayload.cu_add , p_addr = None)
+			item = Item(name = hwpayload.name,check = "-" * 4 ,
+						c_addr = signer , p_addr = None)
 			hwstate.set_item(hwpayload.name,item)
 			_display("Item {} created by {}".format(hwpayload.name,hwpayload.cu_add))
 
@@ -67,15 +67,33 @@ class HwTransHand(TransactionHandler):
 			if item is None:
 				raise InvalidTransaction('Item not yet created')
 
-			if hwstate.vldt_item(hwpayload.name,hwpayload.cu_add):
+			pubkey_nxt_add = hwstate.get_pubkey(name=hwpayload.nxt_add)
 
-				item.p_addr = hwpayload.cu_add
-				item.c_addr = hwpayload.nxt_add
 
-				hwstate.set_item(hwpayload.name,item)
-				_display("Item {} sent to {} by {}".format(hwpayload.name,hwpayload.nxt_add,hwpayload.cu_add))
-			else:
-				print("Invalid transaction")
+			item.p_addr = item.c_addr
+			item.c_addr = pubkey_nxt_add
+
+			hwstate.set_item(hwpayload.name,item)
+			_display("Item {} sent to {} by {}".format(hwpayload.name,hwpayload.nxt_add,hwpayload.cu_add))
+		
+		elif hwpayload.action[:5] == 'check':
+			item = hwstate.get_item(hwpayload.name)
+			cno = int(hwpayload.action[5])
+
+			if hwstate.get_item(hwpayload.name) is None:
+				raise InvalidTransaction('Invalid Item does not exist')
+
+			new_c = list("-"*4)
+			for i in range(0,len(item.check)):
+				if i != cno-1:
+					new_c[i] = item.check[i] 
+				else:
+					new_c[i] = 'x'
+			new_c = "".join(new_c)
+
+			item1 = Item(name = hwpayload.name,check =new_c,
+						c_addr = item.c_addr , p_addr = item.p_addr)
+			hwstate.set_item(hwpayload.name,item1)
 
 
 def _display(msg):
