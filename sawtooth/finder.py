@@ -8,12 +8,12 @@ def _get_keyfile():
 
 	return '{}/{}.priv'.format(key_dir, username)
 
-def cr(name):
+def find(name):
 	url = 'http://127.0.0.1:8008'
 	keyfile = _get_keyfile()
 	client = HwClient(base_url=url,keyfile = keyfile)
 
-	response = client.create(name=name)
+	response = client.show(name=name)
 
 	print("response: {}".format(response))
 

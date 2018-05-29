@@ -49,8 +49,8 @@ class HwClient:
 			.new_signer(private_key)
 
 
-	def create(self,name,cu_add,wait=None):
-		return self._send_hw_txn(name,"create",cu_add=cu_add,nxt_add='no',wait = wait)
+	def create(self,name,cu_add=None,wait=None):
+		return self._send_hw_txn(name,"create",cu_add=self._signer.get_public_key().as_hex(),nxt_add='no',wait = wait)
 
 	def delete(self,name,wait=None):
 		return self._send_hw_txn(name,"delete",cu_add='no',nxt_add='no', wait = wait)
@@ -89,6 +89,17 @@ class HwClient:
 		hw_prefix = self._get_prefix()
 		item_address = _sha512(name.encode('utf-8'))[0:64]
 		return hw_prefix + item_address
+
+
+	def _get_key_address(self,name):
+		wal_prefix =  _sha512('wal'.encode('utf-8'))[0:6]
+		key_address = _sha512(name.encode('utf-8'))[0:64]
+		return wal_prefix + key_address
+
+
+
+
+
 
 	def _send_request(self,suffix,data=None,content_type=None,name=None):
 		if self._base_url.startswith("http://"):
@@ -131,19 +142,36 @@ class HwClient:
 
 		payload = ",".join([name,action,cu_add,nxt_add]).encode()
 
+		key_add = self._get_key_address(nxt_add)
+
+
 		address = self._get_address(name)
 
-		header = TransactionHeader(
-			signer_public_key = self._signer.get_public_key().as_hex(),
-			family_name = "hw",
-			family_version = "1.0",
-			inputs = [address],
-			outputs = [address],
-			dependencies = [],
-			payload_sha512 = _sha512(payload),
-			batcher_public_key = self._signer.get_public_key().as_hex(),
-			nonce = time.time().hex().encode()).SerializeToString()
-		print(header)
+		if key_add is not None:
+			header = TransactionHeader(
+				signer_public_key = self._signer.get_public_key().as_hex(),
+				family_name = "hw",
+				family_version = "1.0",
+				inputs = [address,key_add],
+				outputs = [address],
+				dependencies = [],
+				payload_sha512 = _sha512(payload),
+				batcher_public_key = self._signer.get_public_key().as_hex(),
+				nonce = time.time().hex().encode()).SerializeToString()
+			
+		else:
+			header = TransactionHeader(
+				signer_public_key = self._signer.get_public_key().as_hex(),
+				family_name = "hw",
+				family_version = "1.0",
+				inputs = [address],
+				outputs = [address],
+				dependencies = [],
+				payload_sha512 = _sha512(payload),
+				batcher_public_key = self._signer.get_public_key().as_hex(),
+				nonce = time.time().hex().encode()).SerializeToString()
+			
+
 
 		signature = self._signer.sign(header)
 

@@ -24,6 +24,11 @@ class Item(object):
 		self.c_addr = c_addr
 		self.p_addr = p_addr
 
+class Pair(object):
+	def __init__(self,name,pubkey):
+		self.name = name
+		self.pubkey = pubkey
+
 
 class HwState(object):
 	
@@ -44,17 +49,16 @@ class HwState(object):
 
 	def get_pubkey(self,name):
 		key_address = _make_wal_address(name)
-		"""key_state_entry=self._context.get_state([key_address],timeout=self.TIMEOUT)
+		key_state_entry=self._context.get_state([key_address],timeout=self.TIMEOUT)
 		
-		print('debugg')
 		if key_state_entry :
 			pubkey = self._deserialize_key(data=key_state_entry[0].data)
 			return pubkey[name].pubkey
 
 		else:
+
 			print("Reciever doesn't exist in the database")
-		"""
-		return name
+			return None
 
 	def set_item(self,item_name,item):
 		items = self._load_items(item_name= item_name)

@@ -68,6 +68,8 @@ class HwTransHand(TransactionHandler):
 				raise InvalidTransaction('Item not yet created')
 
 			pubkey_nxt_add = hwstate.get_pubkey(name=hwpayload.nxt_add)
+			if pubkey_nxt_add is None:
+				raise InvalidTransaction('Recvr doesnt exist')
 
 
 			item.p_addr = item.c_addr
