@@ -25,8 +25,9 @@ class Item(object):
 		self.p_addr = p_addr
 
 class Pair(object):
-	def __init__(self,name,pubkey):
+	def __init__(self,name,pubkey,prof):
 		self.name = name
+		self.prof = prof
 		self.pubkey = pubkey
 
 
@@ -54,11 +55,23 @@ class HwState(object):
 		if key_state_entry :
 			pubkey = self._deserialize_key(data=key_state_entry[0].data)
 			return pubkey[name].pubkey
+		else:
+			print("Reciever doesn't exist in the database")
+			return None
+
+	def get_prof(self,name):
+		key_address = _make_wal_address(name)
+		key_state_entry=self._context.get_state([key_address],timeout=self.TIMEOUT)
+		
+		if key_state_entry :
+			pubkey = self._deserialize_key(data=key_state_entry[0].data)
+			return pubkey[name].prof
 
 		else:
 
 			print("Reciever doesn't exist in the database")
 			return None
+
 
 	def set_item(self,item_name,item):
 		items = self._load_items(item_name= item_name)
@@ -136,8 +149,8 @@ class HwState(object):
 		pairs = {}
 		try:
 			for pair in data.decode().split("|"):
-				name,pubkey = pair.split(",")
-				pairs[name] = Pair(name,pubkey)
+				name,pubkey,profile = pair.split(",")
+				pairs[name] = Pair(name,pubkey,profile)
 
 		except ValueError:
 			raise InternalError("Failed to deserialize pairs data")

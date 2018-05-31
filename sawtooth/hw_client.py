@@ -53,13 +53,13 @@ class HwClient:
 		return self._send_hw_txn(name,"create",cu_add=self._signer.get_public_key().as_hex(),nxt_add='no',wait = wait)
 
 	def delete(self,name,wait=None):
-		return self._send_hw_txn(name,"delete",cu_add='no',nxt_add='no', wait = wait)
+		return self._send_hw_txn(name,"delete",cu_add=self._signer.get_public_key().as_hex(),nxt_add='no', wait = wait)
 
 	def send(self,name,nxt_add,wait=None):
 		return self._send_hw_txn(name,"send",cu_add=self._signer.get_public_key().as_hex(),nxt_add=nxt_add,wait=wait)
 
-	def check(self,name,check_no,wait=None):
-		return self._send_hw_txn(name,check_no,cu_add='no',nxt_add='no',wait=wait)
+	def check(self,name,check_no,cu_add,wait=None):
+		return self._send_hw_txn(name,check_no,cu_add=cu_add,nxt_add=self._signer.get_public_key().as_hex(),wait=wait)
 
 	def show(self,name):
 		address = self._get_address(name)
@@ -143,7 +143,8 @@ class HwClient:
 		payload = ",".join([name,action,cu_add,nxt_add]).encode()
 
 		key_add = self._get_key_address(nxt_add)
-
+		print(key_add)
+		cli_add = self._get_key_address(cu_add)
 
 		address = self._get_address(name)
 
@@ -152,7 +153,7 @@ class HwClient:
 				signer_public_key = self._signer.get_public_key().as_hex(),
 				family_name = "hw",
 				family_version = "1.0",
-				inputs = [address,key_add],
+				inputs = [address,key_add,cli_add],
 				outputs = [address],
 				dependencies = [],
 				payload_sha512 = _sha512(payload),

@@ -12,9 +12,10 @@ def _make_wal_address(name):
 
 
 class Pair(object):
-	def __init__(self,name,pubkey):
+	def __init__(self,name,pubkey,prof):
 		self.name = name
 		self.pubkey = pubkey
+		self.prof = prof
 
 
 class WalState(object):
@@ -34,10 +35,13 @@ class WalState(object):
 			self._delete_pair(pair_name)
 
 
+
+
 	def set_pair(self,pair_name,pair):
 		pairs = self._load_pairs(pair_name= pair_name)
 
 		pairs[pair_name] = pair
+		print(pairs[pair_name])
 
 		self._store_pair(pair_name,pairs = pairs)
 
@@ -50,6 +54,7 @@ class WalState(object):
 		sec_address = _make_wal_address(pairs[pair_name].pubkey)
 
 		state_data = self._serialize(pairs)
+		print(state_data)
 
 		self._address_cache[address] = state_data
 		self._context.set_state({address: state_data},timeout=self.TIMEOUT)
@@ -92,8 +97,8 @@ class WalState(object):
 		pairs = {}
 		try:
 			for pair in data.decode().split("|"):
-				name,pubkey = pair.split(",")
-				pairs[name] = Pair(name,pubkey)
+				name,pubkey,prof = pair.split(",")
+				pairs[name] = Pair(name,pubkey,prof)
 
 		except ValueError:
 			raise InternalError("Failed to deserialize pairs data")
@@ -104,7 +109,7 @@ class WalState(object):
 		pair_strs =[]
 		for name,g in pairs.items():
 			pair_str = ",".join(
-				[name,g.pubkey])
+				[name,g.pubkey,g.prof])
 
 			pair_strs.append(pair_str)
 

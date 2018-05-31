@@ -71,7 +71,6 @@ class HwTransHand(TransactionHandler):
 			if pubkey_nxt_add is None:
 				raise InvalidTransaction('Recvr doesnt exist')
 
-
 			item.p_addr = item.c_addr
 			item.c_addr = pubkey_nxt_add
 
@@ -81,7 +80,12 @@ class HwTransHand(TransactionHandler):
 		elif hwpayload.action[:5] == 'check':
 			item = hwstate.get_item(hwpayload.name)
 			cno = int(hwpayload.action[5])
-
+			prof = hwstate.get_prof(name = hwpayload.cu_add)
+			
+			if prof == None:
+				raise InvalidTransaction('Profile doesnt exist')
+			if prof[cno-1] != 'X':
+				raise InvalidTransaction('You dont have permission to change this check')
 			if hwstate.get_item(hwpayload.name) is None:
 				raise InvalidTransaction('Invalid Item does not exist')
 

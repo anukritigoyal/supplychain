@@ -8,38 +8,38 @@ def _get_keyfile():
 
 	return '{}/{}.priv'.format(key_dir, username)
 
-def check1(name):
+def check1(name,cu_add):
 	url = 'http://127.0.0.1:8008'
 	keyfile = _get_keyfile()
 	client = HwClient(base_url=url,keyfile = keyfile)
 
-	response = client.check(name=name,check_no='check1')
+	response = client.check(name=name,check_no='check1',cu_add=cu_add)
 
 	print("response: {}".format(response))
 
-def check2(name):
+def check2(name,cu_add):
 	url = 'http://127.0.0.1:8008'
 	keyfile = _get_keyfile()
 	client = HwClient(base_url=url,keyfile = keyfile)
 
-	response = client.check(name=name,check_no='check2')
+	response = client.check(name=name,check_no='check2',cu_add=cu_add)
 
 	print("response: {}".format(response))
 
-def check3(name):
+def check3(name,cu_add):
 	url = 'http://127.0.0.1:8008'
 	keyfile = _get_keyfile()
 	client = HwClient(base_url=url,keyfile = keyfile)
 
-	response = client.check(name=name,check_no='check3')
+	response = client.check(name=name,check_no='check3',cu_add=cu_add)
 
 	print("response: {}".format(response))
 
-def check4(name):
+def check4(name,cu_add):
 	url = 'http://127.0.0.1:8008'
 	keyfile = _get_keyfile()
 	client = HwClient(base_url=url,keyfile = keyfile)
 
-	response = client.check(name=name,check_no='check4')
+	response = client.check(name=name,check_no='check4',cu_add=cu_add)
 
 	print("response: {}".format(response))

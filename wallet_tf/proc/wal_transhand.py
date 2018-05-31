@@ -30,12 +30,6 @@ def _display(msg):
 	LOGGER.debug("+"+(length+2)*"-"+"+")
 
 
-
-
-
-
-
-
 class WalTransHand(TransactionHandler):
 
 
@@ -73,8 +67,15 @@ class WalTransHand(TransactionHandler):
 			if walstate.get_pair(walpayload.name) is not None:
 				raise InvalidTransaction('Invalid Item Exists')
 
-			pair = Pair(name = walpayload.name,pubkey = walpayload.pubkey)
+			pair = Pair(name = walpayload.name,pubkey = walpayload.pubkey,prof = "-"*5)
 			walstate.set_pair(walpayload.name,pair)
 		
+		elif walpayload.action == 'profile':
+			pair = walstate.get_pair(walpayload.name)
 
+			if pair is None:
+				raise InvalidTransaction('Invalid Action')
 
+			new_pair = Pair(name=walpayload.name,pubkey = pair.pubkey,prof = walpayload.pubkey)
+			print(new_pair)
+			walstate.set_pair(walpayload.name,new_pair)

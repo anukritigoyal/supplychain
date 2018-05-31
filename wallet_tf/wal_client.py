@@ -53,7 +53,12 @@ class WalClient:
 		return self._send_wal_txn(name,"create",pubkey = self._signer.get_public_key().as_hex(),wait = wait)
 
 	def delete(self,name,wait=None):
-		return self._send_wal_txn(name,"delete",pubkey = 'none',wait = wait)
+		return self._send_wal_txn(name,"delete",pubkey = self._signer.get_public_key().as_hex(),wait = wait)
+
+	def prof(self,name,profile,wait = None):
+		return self._send_wal_txn(name,"profile",pubkey = profile,wait = wait)
+
+
 
 	def show(self,name):
 		address = self._get_address(name)
@@ -126,8 +131,8 @@ class WalClient:
 		payload = ",".join([name,action,pubkey]).encode()
 
 		address = self._get_address(name)
-		sec_address = self._get_address(pubkey)
-
+		sec_address = self._get_address(self._signer.get_public_key().as_hex())
+		print(sec_address)
 		header = TransactionHeader(
 			signer_public_key = self._signer.get_public_key().as_hex(),
 			family_name = "wal",
