@@ -6,5 +6,5 @@ The sawtooth folder contains a 'hello world' transcation family which create a c
 ## Wallet_tf
 ### Overview
 This folder contains a 'wallet' transaction family which maintains the public keys of the client applications in the sawtooth framework itself. Wallet tf also stores the profiles of the client.
-#
+######
 **P.S.** : **proc** folder has the transaction processor part and the scripts outside it pertain to the client.
