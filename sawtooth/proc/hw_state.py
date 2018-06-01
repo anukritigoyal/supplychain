@@ -156,7 +156,3 @@ class HwState(object):
 			raise InternalError("Failed to deserialize pairs data")
 
 		return pairs
-
-
-
-

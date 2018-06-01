@@ -8,6 +8,8 @@ def _get_keyfile():
 
 	return '{}/{}.priv'.format(key_dir, username)
 
+#different check functions will be called for different checks
+
 def check1(name,cu_add):
 	url = 'http://127.0.0.1:8008'
 	keyfile = _get_keyfile()

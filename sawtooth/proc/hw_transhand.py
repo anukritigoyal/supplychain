@@ -1,25 +1,15 @@
 import logging
-
-
 from sawtooth_sdk.processor.handler import TransactionHandler
 from sawtooth_sdk.processor.exceptions import InvalidTransaction
 from sawtooth_sdk.processor.exceptions import InternalError
-
 from hw_payload import HwPayload
 from hw_state import Item
 from hw_state import HwState
 from hw_state import HW_NAMESPACE
 
-
 LOGGER = logging.getLogger(__name__)
 
-
-
-
-
-
 class HwTransHand(TransactionHandler):
-
 
 	@property
 	def family_name(self):
@@ -33,28 +23,26 @@ class HwTransHand(TransactionHandler):
 	def namespaces(self):
 		return [HW_NAMESPACE]
 
-	#apply method will be calledd by the validator probably ??
+	#apply method will be called by the validator(Inbuilt sawtoth framework)
 
 	def apply(self,transaction,context):
 		header = transaction.header
 		signer = header.signer_public_key
-
 		hwpayload = HwPayload.from_bytes(transaction.payload)
 		hwstate = HwState(context)
 
 		if hwpayload.action == 'delete':
-
 			item = hwstate.get_item(hwpayload.name)
-
 			if item is None:
 				raise InvalidTransaction('Invalid Action')
 
 			hwstate.delete_item(hwpayload.name)
 
+
 		elif hwpayload.action == 'create' :
+
 			if hwstate.get_item(hwpayload.name) is not None:
 				raise InvalidTransaction('Invalid Item Exists')
-
 			item = Item(name = hwpayload.name,check = "-" * 4 ,
 						c_addr = signer , p_addr = None)
 			hwstate.set_item(hwpayload.name,item)
@@ -67,13 +55,13 @@ class HwTransHand(TransactionHandler):
 			if item is None:
 				raise InvalidTransaction('Item not yet created')
 
+			#get pubkey of the nxt_add
 			pubkey_nxt_add = hwstate.get_pubkey(name=hwpayload.nxt_add)
 			if pubkey_nxt_add is None:
 				raise InvalidTransaction('Recvr doesnt exist')
 
 			item.p_addr = item.c_addr
 			item.c_addr = pubkey_nxt_add
-
 			hwstate.set_item(hwpayload.name,item)
 			_display("Item {} sent to {} by {}".format(hwpayload.name,hwpayload.nxt_add,hwpayload.cu_add))
 		
@@ -82,12 +70,14 @@ class HwTransHand(TransactionHandler):
 			cno = int(hwpayload.action[5])
 			prof = hwstate.get_prof(name = hwpayload.cu_add)
 			
+
 			if prof == None:
 				raise InvalidTransaction('Profile doesnt exist')
 			if prof[cno-1] != 'X':
 				raise InvalidTransaction('You dont have permission to change this check')
 			if hwstate.get_item(hwpayload.name) is None:
 				raise InvalidTransaction('Invalid Item does not exist')
+
 
 			new_c = list("-"*4)
 			for i in range(0,len(item.check)):
@@ -115,10 +105,4 @@ def _display(msg):
 	LOGGER.debug("+"+(length+2)*"-"+"+")
 	for line in msg:
 		LOGGER.debug("+"+line.center(length)+"+")
-
 	LOGGER.debug("+"+(length+2)*"-"+"+")
-
-
-
-
-

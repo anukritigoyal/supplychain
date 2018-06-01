@@ -4,19 +4,17 @@ from base64 import b64encode
 import time
 import requests
 import yaml
-
 from sawtooth_signing import create_context
 from sawtooth_signing import CryptoFactory
 from sawtooth_signing import ParseError
 from sawtooth_signing.secp256k1 import Secp256k1PrivateKey
-
 from sawtooth_sdk.protobuf.transaction_pb2 import TransactionHeader
 from sawtooth_sdk.protobuf.transaction_pb2 import Transaction
 from sawtooth_sdk.protobuf.batch_pb2 import BatchList
 from sawtooth_sdk.protobuf.batch_pb2 import BatchHeader
 from sawtooth_sdk.protobuf.batch_pb2 import Batch
-
 from sawtooth_xo.xo_exceptions import XoException
+
 
 def _sha512(data):
 	return hashlib.sha512(data).hexdigest()
@@ -62,13 +60,12 @@ class WalClient:
 
 	def show(self,name):
 		address = self._get_address(name)
-
 		result = self._send_request(
 			"state/{}".format(address),
 			name = name)
+
 		try:
 			return base64.b64decode(yaml.safe_load(result)["data"])
-
 		except BaseException:
 			return None
 
@@ -97,10 +94,8 @@ class WalClient:
 
 		headers  = {}
 
-
 		if content_type is not None:
 			headers['Content-Type'] = content_type
-
 		try:
 			if data is not None:
 				result = requests.post(url,headers= headers,data=data)
@@ -121,8 +116,6 @@ class WalClient:
 
 		except BaseException as err:
 			raise XoException(err)
-
-
 		return result.text
 
 
@@ -132,7 +125,6 @@ class WalClient:
 
 		address = self._get_address(name)
 		sec_address = self._get_address(self._signer.get_public_key().as_hex())
-		print(sec_address)
 		header = TransactionHeader(
 			signer_public_key = self._signer.get_public_key().as_hex(),
 			family_name = "wal",
@@ -143,8 +135,6 @@ class WalClient:
 			payload_sha512 = _sha512(payload),
 			batcher_public_key = self._signer.get_public_key().as_hex(),
 			nonce = time.time().hex().encode()).SerializeToString()
-		print(header)
-
 		signature = self._signer.sign(header)
 
 		transaction = Transaction(header= header,payload = payload,

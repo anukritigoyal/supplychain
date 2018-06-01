@@ -1,15 +1,11 @@
 import hashlib
-
 from sawtooth_sdk.processor.exceptions import InternalError
 
-
 WAL_NAMESPACE = hashlib.sha512('wal'.encode("utf-8")).hexdigest()[0:6]
-
 
 def _make_wal_address(name):
 	return WAL_NAMESPACE + \
 		hashlib.sha512(name.encode('utf-8')).hexdigest()[:64]
-
 
 class Pair(object):
 	def __init__(self,name,pubkey,prof):
@@ -17,10 +13,8 @@ class Pair(object):
 		self.pubkey = pubkey
 		self.prof = prof
 
-
 class WalState(object):
 	TIMEOUT = 3
-
 	def __init__(self,context):
 		self._context = context
 		self._address_cache = {}
@@ -34,15 +28,9 @@ class WalState(object):
 		else:
 			self._delete_pair(pair_name)
 
-
-
-
 	def set_pair(self,pair_name,pair):
 		pairs = self._load_pairs(pair_name= pair_name)
-
 		pairs[pair_name] = pair
-		print(pairs[pair_name])
-
 		self._store_pair(pair_name,pairs = pairs)
 
 	def get_pair(self,pair_name):
@@ -52,13 +40,9 @@ class WalState(object):
 
 		address = _make_wal_address(pair_name)
 		sec_address = _make_wal_address(pairs[pair_name].pubkey)
-
 		state_data = self._serialize(pairs)
-		print(state_data)
-
 		self._address_cache[address] = state_data
 		self._context.set_state({address: state_data},timeout=self.TIMEOUT)
-
 		self._address_cache[sec_address] = state_data
 		self._context.set_state({sec_address: state_data},timeout=self.TIMEOUT)
 
@@ -66,7 +50,6 @@ class WalState(object):
 
 	def _delete_pair(self,pair_name):
 		address = _make_wal_address(pair_name)
-
 		self._context.delete_state([address],timeout=self.TIMEOUT)
 		self._address_cache[address] = None
 
@@ -74,7 +57,6 @@ class WalState(object):
 		address = _make_wal_address(pair_name)
 		if address in self._address_cache:
 			if self._address_cache[address]:
-				
 				serialized_pairs = self._address_cache[address]
 				pairs = self._deserialize(serialized_pairs)
 			else:

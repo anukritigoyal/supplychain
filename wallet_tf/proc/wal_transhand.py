@@ -1,17 +1,13 @@
 import logging
-
-
 from sawtooth_sdk.processor.handler import TransactionHandler
 from sawtooth_sdk.processor.exceptions import InvalidTransaction
 from sawtooth_sdk.processor.exceptions import InternalError
-
 from wal_payload import WalPayload
 from wal_state import Pair
 from wal_state import WalState
 from wal_state import WAL_NAMESPACE
 
 LOGGER = logging.getLogger(__name__)
-
 
 def _display(msg):
 	n = msg.count("\n")
@@ -32,7 +28,6 @@ def _display(msg):
 
 class WalTransHand(TransactionHandler):
 
-
 	@property
 	def family_name(self):
 		return 'wal'
@@ -45,7 +40,7 @@ class WalTransHand(TransactionHandler):
 	def namespaces(self):
 		return [WAL_NAMESPACE]
 
-	#apply method will be calledd by the validator probably ??
+	#apply method will be called by the validator
 
 	def apply(self,transaction,context):
 		header = transaction.header

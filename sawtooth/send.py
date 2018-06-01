@@ -8,8 +8,6 @@ def _get_keyfile():
 
 	return '{}/{}.priv'.format(key_dir, username)
 
-
-
 def snd(name,nxt_add):
 	url = 'http://127.0.0.1:8008'
 	keyfile = _get_keyfile()

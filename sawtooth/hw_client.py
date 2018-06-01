@@ -4,18 +4,15 @@ from base64 import b64encode
 import time
 import requests
 import yaml
-
 from sawtooth_signing import create_context
 from sawtooth_signing import CryptoFactory
 from sawtooth_signing import ParseError
 from sawtooth_signing.secp256k1 import Secp256k1PrivateKey
-
 from sawtooth_sdk.protobuf.transaction_pb2 import TransactionHeader
 from sawtooth_sdk.protobuf.transaction_pb2 import Transaction
 from sawtooth_sdk.protobuf.batch_pb2 import BatchList
 from sawtooth_sdk.protobuf.batch_pb2 import BatchHeader
 from sawtooth_sdk.protobuf.batch_pb2 import Batch
-
 from sawtooth_xo.xo_exceptions import XoException
 
 
@@ -25,8 +22,8 @@ def _sha512(data):
 
 class HwClient:
 	def __init__(self,base_url,keyfile=None):
-		self._base_url = base_url
 
+		self._base_url = base_url
 		if keyfile is None:
 			self._signer = None
 			return
@@ -34,14 +31,12 @@ class HwClient:
 		try:
 			with open(keyfile) as fd:
 				private_key_str = fd.read().strip()
-
 		except OSError as err:
 			raise XoException('Failed to read private key {} : {}'.format(
 				keyfile,str(err)))
 
 		try :
 			private_key = Secp256k1PrivateKey.from_hex(private_key_str)
-
 		except ParseError as e :
 			raise XoException('Unable to load priv key')
 
@@ -63,7 +58,6 @@ class HwClient:
 
 	def show(self,name):
 		address = self._get_address(name)
-
 		result = self._send_request(
 			"state/{}".format(address),
 			name = name)
@@ -95,10 +89,6 @@ class HwClient:
 		wal_prefix =  _sha512('wal'.encode('utf-8'))[0:6]
 		key_address = _sha512(name.encode('utf-8'))[0:64]
 		return wal_prefix + key_address
-
-
-
-
 
 
 	def _send_request(self,suffix,data=None,content_type=None,name=None):
@@ -141,13 +131,13 @@ class HwClient:
 	def _send_hw_txn(self,name,action,cu_add,nxt_add,wait=None):
 
 		payload = ",".join([name,action,cu_add,nxt_add]).encode()
-
 		key_add = self._get_key_address(nxt_add)
-		print(key_add)
 		cli_add = self._get_key_address(cu_add)
-
 		address = self._get_address(name)
 
+		#for a transaction processor to access an address in the state database, we have to specify it in
+		#inputs of the transaction header. For a transaction processor to change an element at an address,
+		#we have to specify that address in outputs
 		if key_add is not None:
 			header = TransactionHeader(
 				signer_public_key = self._signer.get_public_key().as_hex(),
@@ -175,7 +165,6 @@ class HwClient:
 
 
 		signature = self._signer.sign(header)
-
 		transaction = Transaction(header= header,payload = payload,
 			header_signature = signature)
 
@@ -201,6 +190,10 @@ class HwClient:
 		return self._send_request("batches",batch_list.SerializeToString(),
 			'application/octet-stream')
 
+	#transactions are wrapped as batches. We wait some time to recieve any transactions to come by
+	#If wait time is over , we complete the batch with the transactions recieved until that point and
+	#wrap up the batch creation and push it into the validator rest-api
+
 
 	def _create_batch_list(self,transactions):
 		transaction_signatures = [t.header_signature for t in transactions]
@@ -215,14 +208,3 @@ class HwClient:
 			transactions= transactions,
 			header_signature = signature)
 		return BatchList(batches = [batch])
-
-		
-
-
-
-
-
-		
-
-
-

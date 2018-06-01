@@ -10,7 +10,6 @@ class HwPayload(object):
 			raise InvalidTransaction("Invalid payload serialization")
 
 		#Add different type of exceptions
-
 		self._name = name
 		self._action = action
 		self._cu_add = cu_add
