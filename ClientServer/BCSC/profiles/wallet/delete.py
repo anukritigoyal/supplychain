@@ -1,0 +1,22 @@
+import os
+from wal_client import WalClient
+
+def _get_keyfile(usrname):
+	username = usrname
+	home = os.path.expanduser("~")
+	key_dir = os.path.join(home, ".sawtooth", "keys")
+
+	return '{}/{}.priv'.format(key_dir, username)
+
+
+
+#delete is gonna dance
+#check for admin previlages
+def delete(usrname):
+	url = 'http://127.0.0.1:8008'
+	keyfile = _get_keyfile(usrname)
+	client = WalClient(base_url=url,keyfile = keyfile)
+
+	response = client.delete(name=target)
+
+	print("response: {}".format(response))
