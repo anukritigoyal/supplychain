@@ -32,11 +32,12 @@ def item_history(name):
 	r = requests.get(url=url)
 	alltrans = r.json()
 	address = make_item_address(name)
-
+	j = 0
+	jsan = {}
 	for i in alltrans['data']:
 		if i['header']['outputs'] == [address]:
-			jsan = (base64.b64decode(i['payload']))
-
+			jsan[j] = (base64.b64decode(i['payload']))
+			j = j+1
 	return jsan
 
 def user_history(usrname):

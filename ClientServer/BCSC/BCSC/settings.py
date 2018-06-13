@@ -26,7 +26,8 @@ SECRET_KEY = 'ivv64b220!lf7+@_jygcw_0=%73ebww&k08lw@f+r+-h9j+pt4'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '35.174.114.142'
+    '54.173.184.247'
+
 ]
 
 
@@ -40,8 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'item'
-    'profiles'
+    'item',
+    'profiles',
 ]
 
 MIDDLEWARE = [

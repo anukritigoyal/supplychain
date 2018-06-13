@@ -46,12 +46,12 @@ class WalClient:
 			.new_signer(private_key)
 
 
-	def create(self,name,wait=None):
+	def create(self,name,pubkey,wait=None):
 		
-		return self._send_wal_txn(name,"create",pubkey = self._signer.get_public_key().as_hex(),wait = wait)
+		return self._send_wal_txn(name,"create",pubkey = pubkey,wait = wait)
 
-	def delete(self,name,wait=None):
-		return self._send_wal_txn(name,"delete",pubkey = self._signer.get_public_key().as_hex(),wait = wait)
+	def delete(self,name,pubkey,wait=None):
+		return self._send_wal_txn(name,"delete",pubkey = pubkey,wait = wait)
 
 	def prof(self,name,profile,wait = None):
 		return self._send_wal_txn(name,"profile",pubkey = profile,wait = wait)
@@ -124,7 +124,7 @@ class WalClient:
 		payload = ",".join([name,action,pubkey]).encode()
 
 		address = self._get_address(name)
-		sec_address = self._get_address(self._signer.get_public_key().as_hex())
+		sec_address = self._get_address(pubkey)
 		header = TransactionHeader(
 			signer_public_key = self._signer.get_public_key().as_hex(),
 			family_name = "wal",
@@ -149,7 +149,7 @@ class WalClient:
 			response = self._send_request(
 				"batches",batch_list.SerializeToString(),
 				'application/octet-stream')
-			while wait_time <wait:
+			while wait_time < wait:
 				status = self._get_status(batch_id,wait - int(wait_time))
 				wait_time = time.time()-start_time
 
