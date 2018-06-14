@@ -13,11 +13,11 @@ def index(request):
 	resp = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
-		name2 = finder.query(c_add,'ubuntu')
-		if name2:
-			print(name2)
-			print("hi") 
-		resp[name] = Item(name,checks,c_add,prev_add)
+		nc_add = finder.query(c_add,'ubuntu')
+		nc_add = _deserialize_key(nc_add)
+		np_add = finder.query(prev_add,'ubuntu')
+		np_add = _deserialize_key(np_add)
+		resp[name] = Item(name,checks,nc_add,np_add)
 
 
 	
@@ -58,3 +58,11 @@ def _deserialize(data):
 			raise InternalError("Failed to deserialize items data")
 
 		return items
+
+def _deserialize_key(self,data):
+	
+		for pair in data.decode().split("|"):
+			name,pubkey,prof = pair.split(",")
+			
+		return name 
+		
