@@ -3,8 +3,8 @@
 {% block body %}
 	
 	<ul>
-		{% for object in object_list %}
-			<li><a href="{% url 'items:detail' object.name %}">{{object.name}}</a></li>
+		{% for item in response %}
+			<li><a href="{% url 'items:detail' item.name %}">{{item.name}}</a></li>
 		{% endfor %}
 	</ul>
 {% endblock %}
