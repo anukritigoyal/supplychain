@@ -9,6 +9,7 @@ def index(request):
 	return render(request,'items/index.html',response)
 
 def detail(request,itemname):
+
 	try:
 		response = finder.find(itemname,'ubuntu')
 	except:
