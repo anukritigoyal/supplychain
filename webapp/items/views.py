@@ -6,7 +6,7 @@ from django.http import Http404
 
 def index(request):
 	response = querying.query_all_items()
-	response = {item:1}
+	response = {1: {name:jo},2:{name:sj}}
 	return render(request,'items/index.html',response)
 
 def detail(request,itemname):
@@ -15,8 +15,7 @@ def detail(request,itemname):
 		response = finder.find(itemname,'ubuntu')
 	except:
 		raise Http404("Item Doesn't exist")
-	print("Icame atleast")	
-	return Response("PHew")
+
 	#return render(request,'items/detail.html',response)	
 
 def create(request):
