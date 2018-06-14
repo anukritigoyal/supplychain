@@ -3,6 +3,7 @@
 {% block body %}
 	
 	<ul>
+		<li> Hello</li>
 		{% for item in items %}
 			<li> Icame</li>
 			<li><a href="{% url 'items:detail' item.name %}">{{item.name}}  is currently with {{item.c_add}} </a></li>
