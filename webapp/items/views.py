@@ -13,6 +13,7 @@ def index(request):
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
 		items[name] = Item(name,checks,c_add,prev_add)
+	print(items)
 
 
 	return render(request,'items/index.html', items)
@@ -20,10 +21,10 @@ def index(request):
 def detail(request,itemname):
 
 	response = finder.find(itemname,'ubuntu')
-	dictresp = _deserialize(response)
+	items = _deserialize(response)
 
 	
-	return render(request,'items/detail.html',dictresp)	
+	return render(request,'items/detail.html',items)	
 
 def create(request):
 	return None
