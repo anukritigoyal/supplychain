@@ -4,8 +4,9 @@
 	
 	<ul>
 		<li>Hello</li>
-		{% for object in object_list %}
-			<li><a href="{% url 'items:detail' object.name %}">{{object.name}}</a></li>
+		{% for item,g in resp %}
+			<li><a >{{g.name}}</a> has been with {{g.c_addr}}</li>
 		{% endfor %}
 	</ul>
 {% endblock %}
+<!---href="{% url 'items:detail' object.name %}"-->
