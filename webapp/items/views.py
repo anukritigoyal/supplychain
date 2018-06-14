@@ -11,7 +11,7 @@ def index(request):
 	print(response)
 	items = {}
 	for s in response:
-		name,checks,c_add,prev_add = s.decode().split(",")
+		name,checks,c_add,prev_add = response[s].decode().split(",")
 		items[name] = Item(name,checks,c_addr,p_addr)
 
 
