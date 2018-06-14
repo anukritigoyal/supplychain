@@ -8,7 +8,7 @@ def index(request):
 	response = querying.query_all_items()
 	print(response)
 	#response = {1: {name:jo}, 2:{name:sj}}
-	return render(request,'items/index.html',response)
+	return render(request,'items/index.html',{reponse : response})
 
 def detail(request,itemname):
 
