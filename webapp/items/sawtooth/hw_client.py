@@ -45,17 +45,17 @@ class HwClient:
 			.new_signer(private_key)
 
 
-	def create(self,name,cu_add=None,wait=None):
-		return self._send_hw_txn(name,"create",cu_add=self._signer.get_public_key().as_hex(),nxt_add='no',wait = wait)
+	def create(self,name,cu_add,wait=None):
+		return self._send_hw_txn(name,"create",cu_add=cu_add,nxt_add='no',wait = wait)
 
-	def delete(self,name,wait=None):
-		return self._send_hw_txn(name,"delete",cu_add=self._signer.get_public_key().as_hex(),nxt_add='no', wait = wait)
+	def delete(self,name,cu_add,wait=None):
+		return self._send_hw_txn(name,"delete",cu_add=cu_add,nxt_add='no', wait = wait)
 
 	def send(self,name,nxt_add,wait=None):
-		return self._send_hw_txn(name,"send",cu_add=self._signer.get_public_key().as_hex(),nxt_add=nxt_add,wait=wait)
+		return self._send_hw_txn(name,"send",cu_add=cu_add,nxt_add=nxt_add,wait=wait)
 
 	def check(self,name,check_no,cu_add,wait=None):
-		return self._send_hw_txn(name,'check'+ check_no,cu_add=cu_add,nxt_add=self._signer.get_public_key().as_hex(),wait=wait)
+		return self._send_hw_txn(name,'check'+ check_no,cu_add=cu_add,nxt_add=cu_add,wait=wait)
 
 	def show(self,name):
 		address = self._get_address(name)

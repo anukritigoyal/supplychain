@@ -61,7 +61,7 @@ class HwTransHand(TransactionHandler):
 				raise InvalidTransaction('Recvr doesnt exist')
 
 			item.p_addr = item.c_addr
-			item.c_addr = hwpayload.nxt_add
+			item.c_addr = pubkey_nxt_add
 			hwstate.set_item(hwpayload.name,item)
 			_display("Item {} sent to {} by {}".format(hwpayload.name,hwpayload.nxt_add,hwpayload.cu_add))
 		
