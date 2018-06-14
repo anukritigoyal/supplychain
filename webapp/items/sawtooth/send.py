@@ -13,7 +13,7 @@ def snd(name,nxt_add,usrname):
 	keyfile = _get_keyfile(usrname)
 	client = HwClient(base_url=url,keyfile = keyfile)
 
-	response = client.send(name=name,nxt_add=nxt_add,cu_add = username)
+	response = client.send(name=name,nxt_add=nxt_add,cu_add = usrname)
 
 	print("response: {}".format(response))
 
