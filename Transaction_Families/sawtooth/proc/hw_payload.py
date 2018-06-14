@@ -5,7 +5,7 @@ class HwPayload(object):
 	def __init__(self,payload):
 
 		try:
-			name,action,cu_add,nxt_add = payload.decode().split(",")
+			name,action,cu_add,nxt_add,time_stamp = payload.decode().split(",")
 		except ValueError:
 			raise InvalidTransaction("Invalid payload serialization")
 
@@ -14,6 +14,7 @@ class HwPayload(object):
 		self._action = action
 		self._cu_add = cu_add
 		self._nxt_add = nxt_add
+		self._time_stamp = time_stamp
 
 	@staticmethod
 	def from_bytes(payload):
@@ -34,3 +35,8 @@ class HwPayload(object):
 	@property
 	def nxt_add(self):
 		return self._nxt_add
+
+	@property
+	def time_stamp(self):
+		return self._time_stamp
+	
