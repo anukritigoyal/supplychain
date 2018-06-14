@@ -1,13 +1,14 @@
 {% extends 'items/base.html' %}
 
 {% block body %}
+<!--href="{% url 'items:detail' g.name %}" -->
 	
 	<ul>
 		<li> Hello</li>
 
 		{% for g in resp.items %}
 			<li> Icame</li>
-			<li><a>{{g.name}}  is currently with {{g.c_add}} </a></li>
+			<li><a> {{resp[g].name}}  is currently with {{resp[g].c_add}} </a></li>
 		{% endfor %}
 	</ul>
 {% endblock %}
