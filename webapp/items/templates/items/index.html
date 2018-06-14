@@ -8,6 +8,7 @@
 		<li> Hello</li>
 
 		{% for g in resp %}
+			{{ print(g)}}
 			<li> Icame</li>
 			<li><a> {{ g.item.name }}  is currently with {{ g.item.c_add }} </a></li>
 		{% endfor %}

@@ -8,12 +8,12 @@ import json
 
 def index(request):
 	response = querying.query_all_items()
-	print(response)
+	
 	resp = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
 		resp[name] = Item(name,checks,c_add,prev_add)
-	print(resp)
+	
 	context = {'resp' :resp}
 
 	return render(request,'items/index.html', context)
