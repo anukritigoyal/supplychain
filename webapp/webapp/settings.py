@@ -25,7 +25,9 @@ SECRET_KEY = '8@i_icp=%=qr=y_#o!p2v6!g6*4z=-u6xqxv#$nnq=$kl!#w$_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '52.208.30.8'
+]
 
 
 # Application definition
