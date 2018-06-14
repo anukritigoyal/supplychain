@@ -7,7 +7,7 @@ app_name='items'
 import time
 urlpatterns = [
 
-	url('',views.index,name='index'),
+	url('home/',views.index,name='index'),
 	url('create/',views.create,name='create'),
 	path('<str:itemname>/',views.detail,name='detail'),
 
