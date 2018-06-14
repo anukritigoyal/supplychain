@@ -15,9 +15,10 @@ def index(request):
 		name,checks,c_add,prev_add = response[s].decode().split(",")
 		nc_add = finder.query(c_add,'ubuntu')
 		nc_add = _deserialize_key(nc_add)
-		np_add = finder.query(prev_add,'ubuntu')
-		np_add = _deserialize_key(np_add)
-		resp[name] = Item(name,checks,nc_add,np_add)
+		'''np_add = finder.query(prev_add,'ubuntu')
+								np_add = _deserialize_key(np_add)
+								'''
+		resp[name] = Item(name,checks,nc_add,prev_add)
 
 
 	
