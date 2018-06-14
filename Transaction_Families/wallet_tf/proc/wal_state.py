@@ -40,8 +40,8 @@ class WalState(object):
 
 		address = _make_wal_address(pair_name)
 		state_data = self._serialize(pairs)
-		self._address_cache[address] = state_data1
-		self._context.set_state({address: state_data1},timeout=self.TIMEOUT)
+		self._address_cache[address] = state_data
+		self._context.set_state({address: state_data},timeout=self.TIMEOUT)
 		
 
 
