@@ -18,7 +18,7 @@ def detail(request,itemname):
 	except:
 		raise Http404("Item Doesn't exist")
 
-	#return render(request,'items/detail.html',response)	
+	return render(request,'items/detail.html',response)	
 
 def create(request):
 	return None
