@@ -7,7 +7,7 @@ from django.http import Http404
 def index(request):
 	response = querying.query_all_items()
 	return render(request,'items/index.html',response)
-'''
+
 def detail(request,itemname):
 	try:
 		response = finder.find(itemname,'ubuntu')
@@ -15,6 +15,6 @@ def detail(request,itemname):
 		raise Http404("Item Doesn't exist")
 		
 	return render(request,'items/detail.html',response)	
-'''
-def create():
+
+def create(request):
 	return None
