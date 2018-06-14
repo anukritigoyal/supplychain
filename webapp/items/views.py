@@ -16,3 +16,5 @@ def detail(request,itemname):
 		
 	return render(request,'items/detail.html',response)	
 '''
+def create():
+	return None
