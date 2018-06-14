@@ -55,7 +55,7 @@ class HwClient:
 		return self._send_hw_txn(name,"send",cu_add=self._signer.get_public_key().as_hex(),nxt_add=nxt_add,wait=wait)
 
 	def check(self,name,check_no,cu_add,wait=None):
-		return self._send_hw_txn(name,check_no,cu_add=cu_add,nxt_add=self._signer.get_public_key().as_hex(),wait=wait)
+		return self._send_hw_txn(name,'check'+ check_no,cu_add=cu_add,nxt_add=self._signer.get_public_key().as_hex(),wait=wait)
 
 	def show(self,name):
 		address = self._get_address(name)
