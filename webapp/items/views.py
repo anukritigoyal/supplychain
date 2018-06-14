@@ -14,7 +14,7 @@ def detail(request,itemname):
 		response = finder.find(itemname,'ubuntu')
 	except:
 		raise Http404("Item Doesn't exist")
-		
+	print("Icame atleast")	
 	return render(request,'items/detail.html',response)	
 
 def create(request):
