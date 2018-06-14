@@ -12,7 +12,7 @@ def index(request):
 	items = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
-		items[name] = Item(name,checks,c_addr,p_addr)
+		items[name] = Item(name,checks,c_add,prev_add)
 
 
 	return render(request,'items/index.html', items)
