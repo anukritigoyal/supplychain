@@ -4,10 +4,10 @@
 	
 	<ul>
 		<li> Hello</li>
-		<p>{{ resp }}</p>
-		{% for name,g in resp.items %}
+
+		{% for g in resp %}
 			<li> Icame</li>
-			<li><a href="{% url 'items:detail' g.name %}">{{g.name}}  is currently with {{g.c_add}} </a></li>
+			<li><a href="{% url 'items:detail' resp[g].name %}">{{resp[g].name}}  is currently with {{resp[g].c_add}} </a></li>
 		{% endfor %}
 	</ul>
 {% endblock %}

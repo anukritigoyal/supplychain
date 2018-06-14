@@ -15,7 +15,7 @@ def index(request):
 		resp[name] = Item(name,checks,c_add,prev_add)
 	print(resp)
 
-
+	
 	return render(request,'items/index.html', resp)
 
 def detail(request,itemname):
