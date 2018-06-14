@@ -4,9 +4,9 @@
 	
 	<ul>
 		<li> Hello</li>
-		{% for item in items %}
+		{% for name,g in items.items() %}
 			<li> Icame</li>
-			<li><a href="{% url 'items:detail' item.name %}">{{item.name}}  is currently with {{item.c_add}} </a></li>
+			<li><a href="{% url 'items:detail' g.name %}">{{g.name}}  is currently with {{g.c_add}} </a></li>
 		{% endfor %}
 	</ul>
 {% endblock %}
