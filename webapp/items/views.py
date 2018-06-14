@@ -34,12 +34,12 @@ def detail(request,itemname):
 	resp = _deserialize(response)
 	print(resp)
 
-	his = his.item_history(itemname)
+	hist= his.item_history(itemname)
 
 
 
 
-	context = {'resp' :resp,'his' : his}
+	context = {'resp' :resp,'hist' : hist}
 	return render(request,'items/detail.html',context)	
 
 def create(request):
