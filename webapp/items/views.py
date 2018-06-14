@@ -3,6 +3,8 @@ from .sawtooth import querying
 from django.http import Http404
 from .sawtooth import finder
 import json
+from profiles import wallet_tf
+from wallet_tf import finder
 
 # Create your views here.
 
@@ -12,7 +14,11 @@ def index(request):
 	resp = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
+		name2 = finder.query(c_add)
+		print(name2) 
 		resp[name] = Item(name,checks,c_add,prev_add)
+
+
 	
 	context = {'resp' :resp}
 
