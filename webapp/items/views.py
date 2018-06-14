@@ -15,13 +15,10 @@ def index(request):
 
 def detail(request,itemname):
 
-	try:
-		response = finder.find(itemname,'ubuntu')
-		dictresp = _deserialize(response)
+	response = finder.find(itemname,'ubuntu')
+	dictresp = _deserialize(response)
 
-	except:
-		raise Http404("Item Doesn't exist")
-
+	
 	return render(request,'items/detail.html',dictresp)	
 
 def create(request):
