@@ -9,8 +9,6 @@ urlpatterns = [
 
 	url('home/',views.index,name='index'),
 	url('create/',views.create,name='create'),
-	path('<str:itemname>/',views.detail,name='detail'),
-
-
+	path('?P<itemname>/',views.detail,name='detail'),
 
 ]
