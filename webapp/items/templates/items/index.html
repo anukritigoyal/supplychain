@@ -5,9 +5,9 @@
 	<ul>
 		<li> Hello</li>
 
-		{% for g in resp %}
+		{% for g in resp.items %}
 			<li> Icame</li>
-			<li><a>{{g.name}}  is currently with {{g.c_add}} </a></li>
+			<li><a href="{% url 'items:detail' g.name %}">{{g.name}}  is currently with {{g.c_add}} </a></li>
 		{% endfor %}
 	</ul>
 {% endblock %}
