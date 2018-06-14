@@ -21,8 +21,9 @@ def index(request):
 def detail(request,itemname):
 
 	response = finder.find(itemname,'ubuntu')
+	print(response)
 	resp = _deserialize(response)
-
+	print(resp)
 	context = {'resp' : resp}
 	return render(request,'items/detail.html',resp)	
 
