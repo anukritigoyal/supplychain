@@ -6,6 +6,7 @@ from django.http import Http404
 
 def index(request):
 	response = querying.query_all_items()
+	response = {item:1}
 	return render(request,'items/index.html',response)
 
 def detail(request,itemname):
