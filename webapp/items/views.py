@@ -30,11 +30,11 @@ def index(request):
 def detail(request,itemname):
 	#find item uses state list 
 	response = finder_saw.find(itemname,'ubuntu')
-	print(response)
+	
 	resp = _deserialize(response)
-	print(resp)
-
-	hist= his.item_history(itemname)
+	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
+	resp[itemname].c_addr = nc_add
+	hist= his.item_history(itemname)[:2]
 
 
 
