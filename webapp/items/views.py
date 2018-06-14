@@ -33,6 +33,7 @@ def detail(request,itemname):
 	
 	resp = _deserialize(response)
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
+	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
 	hist= his.item_history(itemname)
 
