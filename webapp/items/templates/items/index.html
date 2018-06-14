@@ -4,7 +4,7 @@
 	
 	<ul>
 		<li> Hello</li>
-		{% for name,g in items.items %}
+		{% for name,g in resp.items() %}
 			<li> Icame</li>
 			<li><a href="{% url 'items:detail' g.name %}">{{g.name}}  is currently with {{g.c_add}} </a></li>
 		{% endfor %}

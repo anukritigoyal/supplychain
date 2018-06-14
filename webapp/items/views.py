@@ -9,14 +9,14 @@ import json
 def index(request):
 	response = querying.query_all_items()
 	print(response)
-	items = {}
+	resp = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
-		items[name] = Item(name,checks,c_add,prev_add)
-	print(items)
+		resp[name] = Item(name,checks,c_add,prev_add)
+	print(resp)
 
 
-	return render(request,'items/index.html', items)
+	return render(request,'items/index.html', resp)
 
 def detail(request,itemname):
 
