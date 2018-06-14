@@ -7,10 +7,10 @@
 	<ul>
 		<li> Hello</li>
 
-		{% for g in resp %}
+		{% for name,g in resp.items %}
 
 			<li> Icame</li>
-			<li><a> {{ g.name.decode }}  is currently with {{ g.c_add.decode }} </a></li>
+			<li><a> {{ g.name }}  is currently with {{ g.c_add }} </a></li>
 		{% endfor %}
 	</ul>
 {% endblock %}

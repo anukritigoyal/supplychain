@@ -3,6 +3,7 @@ from .sawtooth import querying
 from django.http import Http404
 from .sawtooth import finder
 import json
+from models import Item
 
 # Create your views here.
 
@@ -30,12 +31,6 @@ def create(request):
 	return None
 
 
-class Item(object):
-	def __init__(self,name,check,c_addr,p_addr):
-		self.name = name
-		self.check = check
-		self.c_addr = c_addr
-		self.p_addr = p_addr
 
 def _deserialize(data):
 		items = {}
