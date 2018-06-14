@@ -2,16 +2,20 @@ from django.shortcuts import render
 from .sawtooth import querying
 from django.http import Http404
 from .sawtooth import finder
+import json
 
 # Create your views here.
 
 def index(request):
 	response = querying.query_all_items()
 	print(response)
-	#json to dict
-	#response = {1: {name:jo}, 2:{name:sj}}
+	items = {}
+	for s in response:
+		name,checks,c_add,prev_add = s.decode().split(",")
+		items[name] = Item(name,checks,c_addr,p_addr)
 
-	return render(request,'items/index.html', dictresp)
+
+	return render(request,'items/index.html', items)
 
 def detail(request,itemname):
 
