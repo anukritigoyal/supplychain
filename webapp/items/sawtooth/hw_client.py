@@ -2,6 +2,7 @@ import hashlib
 import base64
 from base64 import b64encode
 import time
+import datetime
 import requests
 import yaml
 from sawtooth_signing import create_context
@@ -130,7 +131,9 @@ class HwClient:
 
 	def _send_hw_txn(self,name,action,cu_add,nxt_add,wait=None):
 
-		payload = ",".join([name,action,cu_add,nxt_add]).encode()
+		ts = time.time()
+		time_stamp = datetime.datetime.fromtimestamp(ts).strftime('%X %x')
+		payload = ",".join([name,action,cu_add,nxt_add,time_stamp]).encode()
 		key_add = self._get_key_address(nxt_add)
 		cli_add = self._get_key_address(cu_add)
 		address = self._get_address(name)
