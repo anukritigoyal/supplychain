@@ -14,7 +14,7 @@ def index(request):
 		name,checks,c_add,prev_add = response[s].decode().split(",")
 		resp[name] = Item(name,checks,c_add,prev_add)
 	print(resp)
-	context = {resp : resp}
+	context = resp
 
 	return render(request,'items/index.html', context)
 
