@@ -51,7 +51,7 @@ class HwClient:
 	def delete(self,name,cu_add,wait=None):
 		return self._send_hw_txn(name,"delete",cu_add=cu_add,nxt_add='no', wait = wait)
 
-	def send(self,name,nxt_add,wait=None):
+	def send(self,name,nxt_add,cu_add,wait=None):
 		return self._send_hw_txn(name,"send",cu_add=cu_add,nxt_add=nxt_add,wait=wait)
 
 	def check(self,name,check_no,cu_add,wait=None):
