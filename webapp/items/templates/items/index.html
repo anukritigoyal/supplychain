@@ -4,7 +4,7 @@
 	
 	<ul>
 		{% for item in response %}
-			<li><a href="{% url 'items:detail' item.name %}">{{item.name}}</a></li>
+			<li><a href="{% url 'items:detail' item %}">{{item}}</a></li>
 		{% endfor %}
 	</ul>
 {% endblock %}
