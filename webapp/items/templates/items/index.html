@@ -3,9 +3,9 @@
 {% block body %}
 	
 	<ul>
-		{% for item in response %}
+		{% for item in items %}
 			<li> Icame</li>
-			<li><a href="{% url 'items:detail' item %}">{{item}}</a></li>
+			<li><a href="{% url 'items:detail' item.name %}">{{item.name}}  is currently with {{item.c_add}} </a></li>
 		{% endfor %}
 	</ul>
 {% endblock %}
