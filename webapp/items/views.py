@@ -24,7 +24,7 @@ def detail(request,itemname):
 	print(response)
 	resp = _deserialize(response)
 	print(resp)
-	context = {'resp' : resp}
+	context = {'resp' :resp}
 	return render(request,'items/detail.html',resp)	
 
 def create(request):
