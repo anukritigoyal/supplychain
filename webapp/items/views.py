@@ -59,7 +59,7 @@ def _deserialize(data):
 
 		return items
 
-def _deserialize_key(self,data):
+def _deserialize_key(data):
 	
 		for pair in data.decode().split("|"):
 			name,pubkey,prof = pair.split(",")
