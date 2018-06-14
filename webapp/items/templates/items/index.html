@@ -1,0 +1,15 @@
+{% extends 'items/base.html' %}
+
+{% block body %}
+
+<!----->
+	
+	<ul>
+		<li> Hello</li>
+
+		{% for name,g in resp.items %}
+
+			<li><a> {{ g.name }}  is currently with {{ g.c_addr }} </a></li>
+		{% endfor %}
+	</ul>
+{% endblock %}

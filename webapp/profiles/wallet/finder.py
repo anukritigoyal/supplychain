@@ -1,5 +1,5 @@
 import os
-from wal_client import WalClient
+from .wal_client import WalClient
 
 def _get_keyfile(usrname):
 	username = usrname
@@ -15,6 +15,5 @@ def query(name,usrname):
 	client = WalClient(base_url=url,keyfile = keyfile)
 
 	response = client.show(name=name)
-
-	print("response: {}".format(response))
+	return response
 
