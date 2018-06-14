@@ -13,7 +13,7 @@ def index(request):
 	resp = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
-		name2 = finder.query(c_add)
+		name2 = finder.query(c_add,'ubuntu')
 		print(name2) 
 		resp[name] = Item(name,checks,c_add,prev_add)
 
