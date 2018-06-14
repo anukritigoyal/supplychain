@@ -4,7 +4,7 @@
 	
 	<ul>
 		<li>Hello</li>
-		{% for item,g in resp %}
+		{% for item,g in resp.items %}
 			<li><a >{{g.name}}</a> has been with {{g.c_addr}}</li>
 		{% endfor %}
 	</ul>
