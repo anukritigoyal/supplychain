@@ -7,8 +7,9 @@ import time
 urlpatterns = [
 
 	url('',views.index,name='index'),
-	url('create',views.create,name='create')
+	url('create',views.create,name='create'),
 	url('<str:itemname>/',views.detail,name='detail'),
+
 
 
 ]
