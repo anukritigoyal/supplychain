@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from .sawtooth import querying
 from django.http import Http404
-from .sawtooth import finder
+from .sawtooth import finder as finder_saw
+from .sawtooth import his
 import json
-from profiles.wallet import finder
+from profiles.wallet import finder as finder_wal
 
 # Create your views here.
 
@@ -13,7 +14,7 @@ def index(request):
 	resp = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
-		nc_add = finder.query(c_add,'ubuntu')
+		nc_add = finder_wal.query(c_add,'ubuntu')
 		nc_add = _deserialize_key(nc_add)
 		'''np_add = finder.query(prev_add,'ubuntu')
 								np_add = _deserialize_key(np_add)
@@ -27,12 +28,18 @@ def index(request):
 	return render(request,'items/index.html', context)
 
 def detail(request,itemname):
-
-	response = finder.find(itemname,'ubuntu')
+	#find item uses state list 
+	response = finder_saw.find(itemname,'ubuntu')
 	print(response)
 	resp = _deserialize(response)
 	print(resp)
-	context = {'resp' :resp}
+
+	his = his.item_history(itemname)
+
+
+
+
+	context = {'resp' :resp,'his' : his}
 	return render(request,'items/detail.html',context)	
 
 def create(request):
