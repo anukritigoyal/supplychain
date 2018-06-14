@@ -2,7 +2,7 @@ import os
 from wal_client import WalClient
 
 def _get_keyfile():
-	username = usrname
+	username = 'ubuntu'
 	home = os.path.expanduser("~")
 	key_dir = os.path.join(home, ".sawtooth", "keys")
 
