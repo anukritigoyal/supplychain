@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_
+from django.shortcuts import render
 from .sawtooth import querying
 from django.http import Http404
 
