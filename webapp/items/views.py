@@ -3,7 +3,7 @@ from .sawtooth import querying
 from django.http import Http404
 from .sawtooth import finder
 import json
-from profiles.wallet_tf import finder
+from profiles.wallet import finder
 
 # Create your views here.
 
