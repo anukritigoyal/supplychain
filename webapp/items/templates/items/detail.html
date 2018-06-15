@@ -9,7 +9,7 @@
 		{% endfor %}
 		
 		{% for item,g in resp.items %}
-			{% for check in g.check and for check,cl in checks_list.items %}
+			{% for check in g.check and check,cl in checks_list.items %}
 					<li>{{ cl }}
 						{% if check == '-' %}
 					  		 Check is not done</li>
