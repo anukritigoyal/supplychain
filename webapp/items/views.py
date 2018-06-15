@@ -90,18 +90,15 @@ class UserFormView(View):
 		return render(request,self.template_name,{'form':form})
 	#process form data
 	def post(self,request):
-		form = self.form_class(request.POST)
 
-		if form.is_valid():
-			
-			username = form.cleaned_data['username']
-			password  = form.cleaned_data['password']
-			user = authenticate(username=username,password=password)
-			
-			if user is not None:
-				if user.is_active:
-					login(request,user)
-					return redirect('items:index')
+		form = self.form_class(request.POST)
+		username = form.cleaned_data['username']
+		password  = form.cleaned_data['password']
+		user = authenticate(username=username,password=password)
+		
+		if user is not None:
+			login(request,user)
+			return redirect('items:index')
 
 		return render(request,self.template_name,{'form':form})
 			
