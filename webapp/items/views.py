@@ -22,7 +22,7 @@ def index(request):
 	resp = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
-		nc_add = finder_wal.query(c_add,'ubunut')
+		nc_add = finder_wal.query(c_add,'ubuntu')
 		nc_add = _deserialize_key(nc_add)
 
 		'''np_add = finder.query(prev_add,'ubuntu')
