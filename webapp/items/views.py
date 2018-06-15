@@ -103,7 +103,7 @@ class UserFormView(View):
 					login(request,user)
 					return redirect('items:index')
 
-		return render(request,self.template_name,{'form:form'})
+		return render(request,self.template_name,{'form':form})
 			
 
 
