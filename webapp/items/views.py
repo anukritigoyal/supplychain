@@ -11,7 +11,7 @@ from profiles.wallet import finder as finder_wal
 from .forms import UserForm
 from django.views import View
 # Create your views here.
-from django
+
 
 def index(request):
 	response = querying.query_all_items()
