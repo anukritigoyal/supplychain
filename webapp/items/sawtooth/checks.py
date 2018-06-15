@@ -29,9 +29,9 @@ def item_checks_list(check_status):
 
 	check_entire = {}
 	j=0
-	for i in checks:
+	for i,names in checks:
 		
-		check_entire[j] = check_class(i,check_status[j]== '-')
+		check_entire[j] = check_class(name,check_status[j]== '-')
 		j = j+1
 
 	
