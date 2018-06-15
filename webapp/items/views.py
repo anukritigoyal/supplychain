@@ -87,7 +87,7 @@ class UserFormView(View):
 	#send blank form
 	def get(self,request):
 		form = self.form_class(None)
-		return render(request,self.template_name,{'form:form'})
+		return render(request,self.template_name,{'form':form})
 	#process form data
 	def post(self,request):
 		form = self.form_class(request.POST)
