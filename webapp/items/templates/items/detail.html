@@ -7,7 +7,7 @@
 		{% for item,g in resp.items %}
 			<li><a >{{ g.name }}</a> is with {{ g.c_addr }}</li>
 		{% endfor %}
-		{% i = 0%}
+		{{i = 0}}
 		{% for item,g in resp.items %}
 			{% for check in g.check %}
 					<li>{{% checks_list[i]}}
@@ -16,7 +16,7 @@
 						{% else %}
 							 Check is done </li>
 						{% endif %}
-				{% i = i+1 %}
+				{{ i = i+1 }}
 			{% endfor %}
 		{% endfor %}
 
