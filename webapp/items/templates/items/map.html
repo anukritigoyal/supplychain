@@ -14,7 +14,7 @@
 
 {% block body %}
 
-	
+	<div id="text" style="float:left;">
 	<ul>
 		<li> Hello</li>
 
@@ -23,9 +23,9 @@
 			<li><a href = "{% url 'items:detail' g.name %} "> {{ g.name }}  is currently with {{ g.c_addr }} </a></li><br>
 		{% endfor %}
 	</ul>
+	</div>
 
-
-	<div id="mapid" style="width: 600px; height: 400px; float:right; position:static; top : 100; "></div>
+	<div id="mapid" style="width: 600px; height: 400px; float:right; "></div>
 	<script>
 
 		var mymap = L.map('mapid').setView([42.34, -71.55], 13);
