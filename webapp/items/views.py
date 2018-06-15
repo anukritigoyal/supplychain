@@ -35,7 +35,9 @@ def detail(request,itemname):
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
+	#hist goes through transactions in BC, so returns in human readble form
 	hist= his.item_history(itemname)
+	
 
 
 
