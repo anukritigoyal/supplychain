@@ -41,6 +41,7 @@ def detail(request,itemname):
 	checks_list = checks.item_checks_list()
 	#hist goes through transactions in BC, so returns in human readble form
 	hist= his.item_history(itemname)
+	print(checks_list)
 
 
 
