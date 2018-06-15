@@ -11,10 +11,11 @@
 		{% for item,g in resp.items %}
 			{% for checkname,obj in checks_list.items %}
 					<li>{{ obj }}
-						{% if g.check['{{ forloop.counter }}'] == '-' %}
+						{% if g.check[1] == '-' %}
 					  		 Check is not done</li>
 						{% else %}
 							 Check is done </li>
+						
 						{% endif %}
 		
 			{% endfor %}
