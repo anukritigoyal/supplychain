@@ -16,10 +16,7 @@
 
 	<div id="text" style="float:left;">
 	<ul>
-		<li> Hello</li>
-
 		{% for name,g in resp.items %}
-
 			<li><a href = "{% url 'items:detail' g.name %} "> {{ g.name }}  is currently with {{ g.c_addr }} </a></li><br>
 		{% endfor %}
 	</ul>
@@ -39,21 +36,14 @@
 		}).addTo(mymap);
 
 		L.marker([42.34, -71.55]).addTo(mymap)
-			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+			.bindPopup("<b>Alex</b><br />10").openPopup();
 
+		L.marker([42.24, -71.05].addTo(mymap))
+			.bindPopup("<b>Mike</b><br />15").openPopup();
+			
 		
 
-		var popup = L.popup();
-
-		function onMapClick(e) {
-			popup
-				.setLatLng(e.latlng)
-				.setContent("You clicked the map at " + e.latlng.toString())
-				.openOn(mymap);
-		}
-
-		mymap.on('click', onMapClick);
-
+		
 	</script>
 
 {% endblock %}
