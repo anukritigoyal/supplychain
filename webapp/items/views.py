@@ -43,6 +43,7 @@ def detail(request,itemname):
 	#hist goes through transactions in BC, so returns in human readble form
 	hist= his.item_history(itemname)
 	print(resp[itemname].check)
+	print(resp[itemname].name)
 
 
 
