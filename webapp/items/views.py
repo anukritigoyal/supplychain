@@ -92,16 +92,15 @@ class UserFormView(View):
 	def post(self,request):
 		form = self.form_class(request.POST)
 		print("Posting atleast")
-		if form.is_valid():
-			print("in form")
-			username = form.cleaned_data['username']
-			password  = form.cleaned_data['password']
-			user = authenticate(username=username,password=password)
-			print("User authenticate")
-			if user is not None:
-				print("USer is present")
-				login(request,user)
-				return redirect('items:index')
+
+		username = request.POST['username']
+		password  =request.POST['password']
+		user = authenticate(username=username,password=password)
+		print("User authenticate")
+		if user is not None:
+			
+			login(request,user)
+			return redirect('items:index')
 
 		return render(request,self.template_name,{'form':form})
 			
