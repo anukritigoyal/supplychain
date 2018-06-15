@@ -10,7 +10,7 @@
 		
 		{% for item,g in resp.items %}
 			{% for check in g.check %}
-					<li>{{ checks_list[forloop.counter-1]}}
+					<li>{{ checks_list['(forloop.counter-1)']}}
 						{% if check == '-' %}
 					  		 Check is not done</li>
 						{% else %}
