@@ -3,6 +3,7 @@ from .sawtooth import querying
 from django.http import Http404
 from .sawtooth import finder as finder_saw
 from .sawtooth import his
+from .sawtooth import checks
 import json
 from profiles.wallet import finder as finder_wal
 
@@ -16,6 +17,7 @@ def index(request):
 		name,checks,c_add,prev_add = response[s].decode().split(",")
 		nc_add = finder_wal.query(c_add,'ubuntu')
 		nc_add = _deserialize_key(nc_add)
+
 		'''np_add = finder.query(prev_add,'ubuntu')
 								np_add = _deserialize_key(np_add)
 								'''
@@ -35,14 +37,16 @@ def detail(request,itemname):
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
+	#get the checks list
+	checks_list = checks.item_checks_list()
 	#hist goes through transactions in BC, so returns in human readble form
 	hist= his.item_history(itemname)
-	
 
 
 
 
-	context = {'resp' :resp,'hist' : hist}
+
+	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list}
 	return render(request,'items/detail.html',context)	
 
 def create(request):
