@@ -5,6 +5,7 @@ from .sawtooth import finder as finder_saw
 from .sawtooth import his
 from .sawtooth import checks
 import json
+import time
 from profiles.wallet import finder as finder_wal
 
 # Create your views here.
@@ -50,6 +51,7 @@ def detail(request,itemname):
 
 def checked(request,itemname):
 	checks.check(itemname,'ubuntu',request.POST['check'],'ubuntu')
+	time.sleep(300)
 	response = finder_saw.find(itemname,'ubuntu')
 	
 	resp = _deserialize(response)
