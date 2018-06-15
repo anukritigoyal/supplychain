@@ -8,19 +8,32 @@
 			<li><a >{{ g.name }}</a> is with {{ g.c_addr }}</li>
 		{% endfor %}
 		
-		{% for item,g in resp.items %}
-			{% for checkno,obj in checks_list.items %}
-					<li>{{ obj.name }}
-						{% if obj.check %}
-					  		 Check is not done</li>
-						{% else %}
-							 Check is done </li>
-						
-						{% endif %}
-		
-			{% endfor %}
-		{% endfor %}
+		<form action="{% url 'items:checked' g.name %}" method="post">
 
+			{% csrf_token %}
+
+
+
+			{% for item,g in resp.items %}
+				{% for checkno,obj in checks_list.items %}
+
+					<input type="radio" name="check" value="{{ forloop.counter }}" />
+						<label>{{ obj.name }}
+							{% if obj.check %}
+						  		 
+							{% else %}
+								  YOOO
+							
+							{% endif %}
+								
+							
+						</label>
+			
+				{% endfor %}
+			{% endfor %}
+
+			<input type = "submit" value="Checked_Item">
+		</form>
 		{% for item,g in hist.items %}
 			<li>{{g}}
 		{% endfor %}

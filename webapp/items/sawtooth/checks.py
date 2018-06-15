@@ -21,14 +21,13 @@ def check(name,cu_add,checkno,usrname):
 
 def item_checks_list(check_status):
 	checks = {}
-	checks[0] = "Sterilization of the product"
 	checks[1] = "LAL Test"
 	checks[2] = "PDP"
 	checks[3] = "Batch Release"
-	#checks[4] = "Final Product Verification"
+	checks[4] = "Final Product Verification"
 
 	check_entire = {}
-	j=0
+	j=1
 	for i in checks:
 		
 		check_entire[j] = check_class(checks[i],check_status[j]== '-')

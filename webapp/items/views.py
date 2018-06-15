@@ -45,14 +45,35 @@ def detail(request,itemname):
 
 
 
-
-
 	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list}
 	return render(request,'items/detail.html',context)	
+
+def checked(request,itemname):
+	checks.check(itemname,'val1',request.POST['check'],'ubuntu')
+	response = finder_saw.find(itemname,'ubuntu')
+	
+	resp = _deserialize(response)
+	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
+	nc_add = _deserialize_key(nc_add)
+	resp[itemname].c_addr = nc_add
+	#get the checks list
+	checks_list = checks.item_checks_list(resp[itemname].check)
+	#hist goes through transactions in BC, so returns in human readble form
+	hist= his.item_history(itemname)
+	
+	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list}
+	return render(request,'items/detail.html',context)
+
+
+
+
 
 def create(request):
 	return None
 
+
+
+#shift item to models
 class Item(object):
 	def __init__(self,name,check,c_addr,p_addr):
 		self.name = name

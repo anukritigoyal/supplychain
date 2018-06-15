@@ -10,5 +10,6 @@ urlpatterns = [
 	url('home/',views.index,name='index'),
 	url('create/',views.create,name='create'),
 	path('details/<itemname>/',views.detail,name='detail'),
+	path('dteails/<itemname>/checks',views.checked , name = 'checked')
 
 ]
