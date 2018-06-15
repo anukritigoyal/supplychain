@@ -49,7 +49,7 @@ def detail(request,itemname):
 	return render(request,'items/detail.html',context)	
 
 def checked(request,itemname):
-	checks.check(itemname,'val1',request.POST['check'],'ubuntu')
+	checks.check(itemname,'ubuntu',request.POST['check'],'ubuntu')
 	response = finder_saw.find(itemname,'ubuntu')
 	
 	resp = _deserialize(response)
