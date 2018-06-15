@@ -1,13 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .sawtooth import querying
 from django.http import Http404
+from django.contrib.auth import authenticate, login
 from .sawtooth import finder as finder_saw
 from .sawtooth import his
 from .sawtooth import checks
 import json
 import time
 from profiles.wallet import finder as finder_wal
-
+from .forms import UserForm
 # Create your views here.
 
 def index(request):
@@ -74,6 +75,34 @@ def checked(request,itemname):
 def create(request):
 	return None
 
+
+
+
+class UserFormView(View):
+	form_class = UserForm
+	template_name = 'items/login_form.html'
+
+	#send blank form
+	def get(self,request):
+		form = self.form_class(None)
+		return render(request,self.template_name,{'form:form'})
+	#process form data
+	def post(self,request):
+		form = self.form_class(request.POST)
+
+		if form.is_valid():
+			
+			username = form.cleaned_data['username']
+			password  = form.cleaned_data['password']
+			user = authenticate(username=username,password=password)
+			
+			if user is not None:
+				if user.is_active:
+					login(request,user)
+					return redirect('items:index')
+
+		return render(request,self.template_name,{'form:form'})
+			
 
 
 #shift item to models
