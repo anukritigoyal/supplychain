@@ -27,7 +27,7 @@ def item_checks_list(check_status):
 	checks[4] = "Final Product Verification"
 
 	check_entire = {}
-	j=1
+	j=0
 	for i in checks:
 		
 		check_entire[j] = check_class(checks[i],check_status[j]== '-')
