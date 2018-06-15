@@ -38,10 +38,10 @@ def detail(request,itemname):
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
 	#get the checks list
-	checks_list = checks.item_checks_list()
+	checks_list = checks.item_checks_list(resp[itemname].check)
 	#hist goes through transactions in BC, so returns in human readble form
 	hist= his.item_history(itemname)
-	print(checks_list)
+
 
 
 
