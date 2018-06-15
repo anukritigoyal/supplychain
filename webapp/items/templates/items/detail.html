@@ -9,9 +9,9 @@
 		{% endfor %}
 		
 		{% for item,g in resp.items %}
-			{% for check in g.check and check,cl in checks_list.items %}
-					<li>{{ cl }}
-						{% if check == '-' %}
+			{% for checkname,obj in checks_list.items %}
+					<li>{{ obj }}
+						{% if g.check[forloop.counter] == '-' %}
 					  		 Check is not done</li>
 						{% else %}
 							 Check is done </li>
