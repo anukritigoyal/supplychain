@@ -5,8 +5,36 @@
 	<ul>
 		<li>Hello</li>
 		{% for item,g in resp.items %}
-			<li><a >{{ g.name }}</a> has been with {{ g.c_addr }}</li>
+			<li><a >{{ g.name }}</a> is with {{ g.c_addr }}</li>
 		{% endfor %}
+		
+		{% for item,g in resp.items %}
+			<form action="{% url 'items:checked' g.name %}" method="post">
+
+				{% csrf_token %}
+				
+				{% for checkno,obj in checks_list.items %}
+
+					<input type="radio" name="check" value="{{ forloop.counter }}" />
+						<label>{{ obj.name }}
+							{% if obj.check %}
+						  		 
+							{% else %}
+								  YOOO
+							
+							{% endif %}
+								
+							
+						</label><br>
+			
+				{% endfor %}
+			
+
+			<input type = "submit" value="Submit">
+		</form>
+		{% endfor %}
+
+		<!--- HISTORY -->
 
 		{% for item,g in hist.items %}
 			<li>{{g}}

@@ -9,7 +9,7 @@
 
 		{% for name,g in resp.items %}
 
-			<li><a> {{ g.name }}  is currently with {{ g.c_addr }} </a></li>
+			<li><a href = "{% url 'items:detail' g.name %} "> {{ g.name }}  is currently with {{ g.c_addr }} </a></li>
 		{% endfor %}
 	</ul>
 {% endblock %}
