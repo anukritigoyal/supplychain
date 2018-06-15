@@ -26,3 +26,5 @@ def item_checks_list():
 	checks[2] = "PDP"
 	checks[3] = "Batch Release"
 	checks[3] = "Final Product Verification"
+
+	return checks
