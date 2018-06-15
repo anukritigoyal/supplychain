@@ -14,12 +14,13 @@ from django.views import View
 
 
 def index(request):
-	response = querying.query_all_items()
+	#response = querying.query_all_items()
+	response = querying.quer_user_held(request.user.username)
 	
 	resp = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
-		nc_add = finder_wal.query(c_add,'ubuntu')
+		nc_add = finder_wal.query(c_add,request.user.username)
 		nc_add = _deserialize_key(nc_add)
 
 		'''np_add = finder.query(prev_add,'ubuntu')
@@ -80,15 +81,15 @@ def create(request):
 
 
 
+#LOGIN Stuff
+
 class UserFormView(View):
 	form_class = UserForm
 	template_name = 'items/login_form.html'
-
-	#send blank form
 	def get(self,request):
 		form = self.form_class(None)
 		return render(request,self.template_name,{'form':form})
-	#process form data
+
 	def post(self,request):
 		form = self.form_class(request.POST)
 		print("Posting atleast")
