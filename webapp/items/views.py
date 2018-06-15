@@ -95,7 +95,16 @@ def create(request):
 	return None
 
 def map(request):
-	return render(request,'items/map.html')
+	response = querying.query_all_items()
+	resp = {}
+	for s in response:
+		name,checks,c_add,prev_add = response[s].decode().split(",")
+		nc_add = finder_wal.query(c_add,'ubuntu')
+		nc_add = _deserialize_key(nc_add)
+		resp[name] = Item(name,checks,nc_add,prev_add)
+		
+	context = {'resp' :resp}
+	return render(request,'items/map.html', context)
 
 
 
