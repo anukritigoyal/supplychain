@@ -15,7 +15,7 @@ from django.views import View
 
 def index(request):
 	#response = querying.query_all_items()
-	response = querying.quer_user_held(request.user.username)
+	response = querying.query_user_held(request.user.username)
 	
 	resp = {}
 	for s in response:
