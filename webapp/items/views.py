@@ -78,6 +78,9 @@ def checked(request,itemname):
 def create(request):
 	return None
 
+def map(request):
+	return render(request,'items/map.html')
+
 
 
 

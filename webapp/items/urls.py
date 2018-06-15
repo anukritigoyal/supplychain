@@ -12,5 +12,6 @@ urlpatterns = [
 	url('create/',views.create,name='create'),
 	path('details/<itemname>/',views.detail,name='detail'),
 	path('details/<itemname>/checks/',views.checked , name = 'checked')
+	url('map/',views.map,name='map')
 
 ]
