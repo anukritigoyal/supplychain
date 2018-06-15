@@ -51,7 +51,7 @@ def detail(request,itemname):
 
 def checked(request,itemname):
 	checks.check(itemname,'ubuntu',request.POST['check'],'ubuntu')
-	time.sleep(300)
+	time.sleep(2)
 	response = finder_saw.find(itemname,'ubuntu')
 	
 	resp = _deserialize(response)
