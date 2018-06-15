@@ -5,7 +5,18 @@
 	<ul>
 		<li>Hello</li>
 		{% for item,g in resp.items %}
-			<li><a >{{ g.name }}</a> has been with {{ g.c_addr }}</li>
+			<li><a >{{ g.name }}</a> is with {{ g.c_addr }}</li>
+		{% endfor %}
+
+		{% for item,g in resp.items %}
+			{% for check in g.check %}
+				{% if check = '-' %}
+					<li> Check is not done</li>
+				{% else %}
+					<li> Check is done </li>
+				{% end if %}
+
+			{% endfor %}
 		{% endfor %}
 
 		{% for item,g in hist.items %}
