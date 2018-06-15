@@ -38,7 +38,7 @@ def item_checks_list(check_status):
 	return check_entire
 
 #django is making me do this !!!!!
-class check_class(name,check):
+class check_class(object):
 	def __init__(self,name,check):
 		self.name = name
 		self.check = check
