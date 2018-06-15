@@ -9,8 +9,8 @@
 		{% endfor %}
 		
 		{% for item,g in resp.items %}
-			{% for check in g.check %}
-					<li>{{ checks_list['checks_list'][1] }}
+			{% for check in g.check and for check,cl in checks_list.items %}
+					<li>{{ cl }}
 						{% if check == '-' %}
 					  		 Check is not done</li>
 						{% else %}
