@@ -39,9 +39,9 @@ def index(request):
 					nc_add = finder_wal.query(c_add,request.user.username)
 					nc_add = _deserialize_key(nc_add)
 			
-					'''np_add = finder.query(prev_add,'ubuntu')
+					np_add = finder.query(prev_add,'ubuntu')
 											np_add = _deserialize_key(np_add)
-											'''
+					
 					resp[name] = Item(name,checks,nc_add,prev_add)
 			
 			'''
