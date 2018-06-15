@@ -35,11 +35,11 @@
 			id: 'mapbox.streets'
 		}).addTo(mymap);
 
-		L.marker([42.34, -71.55]).addTo(mymap)
-			.bindPopup("<b>Alex</b><br />10").openPopup();
+		marker = new L.marker([42.34, -71.55]).addTo(mymap)
+			.bindPopup("<b>Alex</b><br />10");
 
-		L.marker([42.24, -71.05]).addTo(mymap)
-			.bindPopup("<b>Mike</b><br />15").openPopup();
+		marker = new L.marker([42.32, -71.50]).addTo(mymap)
+			.bindPopup("<b>Mike</b><br />15");
 
 		
 
