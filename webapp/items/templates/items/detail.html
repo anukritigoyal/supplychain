@@ -5,7 +5,8 @@
 	<ul>
 		<li>Hello</li>
 		{% for item,g in resp.items %}
-			<li><a >{{ g.name }}</a> is with {{ g.c_addr }}</li>
+			<li><a href="{% url 'items:detail' object.name %}
+ >{{ g.name }}</a> is with {{ g.c_addr }}</li>
 		{% endfor %}
 
 		{% for item,g in resp.items %}
@@ -25,4 +26,4 @@
 
 	</ul>
 {% endblock %}
-<!---href="{% url 'items:detail' object.name %}"-->
+href="{% url 'items:detail' object.name %}
