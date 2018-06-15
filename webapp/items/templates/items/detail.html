@@ -5,18 +5,18 @@
 	<ul>
 		<li>Hello</li>
 		{% for item,g in resp.items %}
-			<li><a href="{% url 'items:detail' object.name %}
- >{{ g.name }}</a> is with {{ g.c_addr }}</li>
+			<li><a >{{ g.name }}</a> is with {{ g.c_addr }}</li>
 		{% endfor %}
-
+		{% i = 0%}
 		{% for item,g in resp.items %}
 			{% for check in g.check %}
-				{% if check == '-' %}
-					<li> Check is not done</li>
-				{% else %}
-					<li> Check is done </li>
-				{% endif %}
-
+					<li>{{% checks_list[i]}}
+						{% if check == '-' %}
+					  		 Check is not done</li>
+						{% else %}
+							 Check is done </li>
+						{% endif %}
+				{% i = i+1 %}
 			{% endfor %}
 		{% endfor %}
 
@@ -26,4 +26,4 @@
 
 	</ul>
 {% endblock %}
-href="{% url 'items:detail' object.name %}
+<!---href="{% url 'items:detail' object.name %}"-->

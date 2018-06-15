@@ -18,3 +18,11 @@ def check(name,cu_add,checkno,usrname):
 	response = client.check(name=name,check_no=checkno,cu_add=cu_add)
 
 	print("response: {}".format(response))
+
+def item_checks_list():
+	checks = {}
+	checks[0] = "Sterilization of the product"
+	checks[1] = "LAL Test"
+	checks[2] = "PDP"
+	checks[3] = "Batch Release"
+	checks[3] = "Final Product Verification"
