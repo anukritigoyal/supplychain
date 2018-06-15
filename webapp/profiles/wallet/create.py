@@ -14,7 +14,8 @@ def add(name,adminname):
 	try:
 		res = subprocess.check_call(['sawtooth','keygen',name])
 	except:
-		
+		pass
+
 	keyfile_u = _get_keyfile(name)
 	keyfile_admin = _get_keyfile(adminname)
 	admin_client = WalClient(base_url=url,keyfile=keyfile_admin)
