@@ -97,8 +97,9 @@ class UserFormView(View):
 			username = form.cleaned_data['username']
 			password  = form.cleaned_data['password']
 			user = authenticate(username=username,password=password)
-			
+			print("Form is valid")
 			if user is not None:
+				print("USer is present")
 				login(request,user)
 				return redirect('items:index')
 
