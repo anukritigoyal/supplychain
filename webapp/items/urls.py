@@ -11,7 +11,7 @@ urlpatterns = [
 	url('login/',views.UserFormView.as_view(),name= 'login'),
 	url('create/',views.create,name='create'),
 	path('details/<itemname>/',views.detail,name='detail'),
-	path('details/<itemname>/checks/',views.checked , name = 'checked')
-	url('map/',views.map,name='map')
+	path('details/<itemname>/checks/',views.checked , name = 'checked'),
+	url('map/',views.map,name='map'),
 
 ]
