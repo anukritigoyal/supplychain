@@ -8,7 +8,7 @@
 			<li><a >{{ g.name }}</a> is with {{ g.c_addr }}</li>
 		{% endfor %}
 		
-		<form action="{% url {{ items:checked }} g.name %}" method="post">
+		<form action="{% url 'items:checked' g.name %}" method="post">
 
 			{% csrf_token %}
 
