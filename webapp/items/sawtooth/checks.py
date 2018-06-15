@@ -25,7 +25,7 @@ def item_checks_list(check_status):
 	checks[1] = "LAL Test"
 	checks[2] = "PDP"
 	checks[3] = "Batch Release"
-	checks[4] = "Final Product Verification"
+	#checks[4] = "Final Product Verification"
 
 	check_entire = {}
 	j=0
