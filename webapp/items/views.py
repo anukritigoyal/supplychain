@@ -14,14 +14,15 @@ from django.views import View
 
 
 def index(request):
-	#response = querying.query_all_items()
-	response = querying.query_user_held(request.user.username)
-		
+	response = querying.query_all_items()
+	
+
+	#response = querying.query_user_held(request.user.username)
 	
 	resp = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
-		nc_add = finder_wal.query(c_add,request.user.username)
+		nc_add = finder_wal.query(c_add,'ubunut')
 		nc_add = _deserialize_key(nc_add)
 
 		'''np_add = finder.query(prev_add,'ubuntu')
@@ -30,6 +31,20 @@ def index(request):
 		resp[name] = Item(name,checks,nc_add,prev_add)
 
 
+	#To uncomment later and delete the above
+	
+	'''resp = {}
+				for s in response:
+					name,checks,c_add,prev_add = response[s].decode().split(",")
+					nc_add = finder_wal.query(c_add,request.user.username)
+					nc_add = _deserialize_key(nc_add)
+			
+					'''np_add = finder.query(prev_add,'ubuntu')
+											np_add = _deserialize_key(np_add)
+											'''
+					resp[name] = Item(name,checks,nc_add,prev_add)
+			
+			'''
 	
 	context = {'resp' :resp}
 
