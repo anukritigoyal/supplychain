@@ -12,5 +12,5 @@ def cr(name,usrname):
 	url = 'http://127.0.0.1:8008'
 	keyfile = _get_keyfile(usrname)
 	client = HwClient(base_url=url,keyfile = keyfile)
-	response = client.create(name=name)
+	response = client.create(name=name,cu_add=usrname)
 	return response	
