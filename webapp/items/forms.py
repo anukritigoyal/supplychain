@@ -6,4 +6,16 @@ class UserForm(forms.ModelForm):
 
 	class Meta:
 		model = User
-		fields = ['username','email','password']
+		fields = ['username','password']
+
+
+#Create a form for creation of item
+#Code reuse :D
+
+#probably will hit me 
+class CreateItemForm(form.ModelForm):
+	password = forms.CharField(widget=forms.PasswordInput)
+
+	class Meta:
+		model = User
+		fields = ['itemname','password']
