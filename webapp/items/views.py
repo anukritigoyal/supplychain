@@ -121,8 +121,10 @@ class CreateItemView(View):
 	def post(self,request):
 		
 		if request.user.is_authenticated == False :
+			print("Should not come here")
 			return redirect('items:login')
 
+		print("user is in 1 ")
 		itemname = request.Post['itemname']
 		print("user is in ")
 		username = request.user.username
