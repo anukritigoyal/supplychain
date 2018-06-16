@@ -104,7 +104,7 @@ def map(request):
 	return render(request,'items/map.html', context)
 
 
-class CreateItemView(request):
+class CreateItemView(View):
 
 	form_class = CreateItemForm
 	template_name = 'items/create.html'
