@@ -45,9 +45,8 @@ def detail(request,itemname):
 
 
 	#find item uses state list 
-	response = finder_saw.find(itemname,'ubuntu')
+	resp = finder_saw.find(itemname,'ubuntu')
 	
-	resp = _deserialize(response)
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
