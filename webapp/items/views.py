@@ -10,6 +10,7 @@ from .sawtooth import checks
 import time
 from profiles.wallet import finder as finder_wal
 from .forms import UserForm
+from .forms import CreateItemForm
 from django.views import View
 
 #imported and not used create,send
@@ -146,7 +147,7 @@ class UserFormView(View):
 		return render(request,self.template_name,{'form':form})
 
 	def post(self,request):
-		
+		form = self.form_class(request.POST)
 		username = request.POST['username']
 		password  =request.POST['password']
 		user = authenticate(username=username,password=password)
@@ -155,7 +156,7 @@ class UserFormView(View):
 			login(request,user)
 			return redirect('items:index')
 
-		return render(request,self.template_name,{'form':form})
+		return render(request,self.template_name,{'form': form})
 			
 #Create a Logout view
 def logout(request):
@@ -183,8 +184,8 @@ def _deserialize(data):
 				items[name] = Item(name,check,c_addr,p_addr)
 
 		except ValueError:
-			raise InternalError("Failed to deserialize items data")
-
+			pass
+			
 		return items
 
 def _deserialize_key(data):
