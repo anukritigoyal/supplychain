@@ -124,11 +124,8 @@ class CreateItemView(View):
 			print("Should not come here")
 			return redirect('items:login')
 
-		print("user is in 1 ")
-		itemname = request.Post['itemname']
-		print("user is in ")
+		itemname = request.POST['itemname']
 		username = request.user.username
-		print("request is going well too")
 		password  =request.POST['password']
 		user = authenticate(username=username,password=password)
 
