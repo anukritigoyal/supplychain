@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
 #Code reuse :D
 
 #probably will hit me 
-class CreateItemForm(form.ModelForm):
+class CreateItemForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput)
 
 	class Meta:
