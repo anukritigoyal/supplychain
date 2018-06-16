@@ -16,7 +16,7 @@ def check(name,cu_add,checkno,usrname):
 	keyfile = _get_keyfile(usrname)
 	client = HwClient(base_url=url,keyfile = keyfile)
 	finding_item = find(name,usrname)
-	if finding_item[name].c_addr == usrname:
+	if finding_item[name].c_addr == client._signer.get_public_key().as_hex():
 		response = client.check(name=name,check_no=checkno,cu_add=cu_add)
 		return 1
 	else:
