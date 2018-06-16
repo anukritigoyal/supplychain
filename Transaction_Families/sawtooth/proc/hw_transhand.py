@@ -46,8 +46,7 @@ class HwTransHand(TransactionHandler):
 			item = Item(name = hwpayload.name,check = "-" * 4 ,
 						c_addr = signer , p_addr = None)
 			hwstate.set_item(hwpayload.name,item)
-			_display("Item {} created by {}".format(hwpayload.name,hwpayload.cu_add))
-
+			
 
 
 		elif hwpayload.action == 'send' :
