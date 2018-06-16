@@ -171,6 +171,8 @@ class HwClient:
 		transaction = Transaction(header= header,payload = payload,
 			header_signature = signature)
 
+		print(transaction.payload)
+
 		batch_list = self._create_batch_list([transaction])
 		batch_id = batch_list.batches[0].header_signature
 

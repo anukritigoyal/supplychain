@@ -28,7 +28,6 @@ class HwTransHand(TransactionHandler):
 	def apply(self,transaction,context):
 		header = transaction.header
 		signer = header.signer_public_key
-		print(transaction.payload)
 		hwpayload = HwPayload.from_bytes(transaction.payload)
 		hwstate = HwState(context)
 
