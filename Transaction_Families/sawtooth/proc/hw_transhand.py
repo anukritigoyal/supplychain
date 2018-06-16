@@ -65,6 +65,7 @@ class HwTransHand(TransactionHandler):
 			_display("Item {} sent to {} by {}".format(hwpayload.name,hwpayload.nxt_add,hwpayload.cu_add))
 		
 		elif hwpayload.action[:5] == 'check':
+			print(hwpayload)
 			item = hwstate.get_item(hwpayload.name)
 			cno = int(hwpayload.action[5])
 			print("Inside transhand")
