@@ -148,7 +148,7 @@ class UserFormView(View):
 
 	def post(self,request):
 		form = self.form_class(request.POST)
-		username = request.user.username
+		username = request.POST['username']
 		password  =request.POST['password']
 		user = authenticate(username=username,password=password)
 
