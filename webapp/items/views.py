@@ -40,7 +40,7 @@ def index(request):
 
 def detail(request,itemname):
 	
-	if request.user.is_authenticated :
+	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
 
