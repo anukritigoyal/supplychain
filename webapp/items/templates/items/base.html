@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}Active Release{% endblock %}</title>
     {% load staticfiles %}
+    {% block imports %}{% endblock %}
    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
@@ -30,7 +31,7 @@
         <!-- Items -->
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
-                <li class="{% block albums_active %}{% endblock %}"><a href="{% url 'items:index' %}"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>&nbsp; Map</a></li>
+                <li class="{% block albums_active %}{% endblock %}"><a href="{% url 'items:map' %}"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>&nbsp; Map</a></li>
                 
 
             </ul>
@@ -41,7 +42,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'items:index' %}">
+                    <a href="{% url 'items:logout' %}">
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
                     </a>
                 </li>
