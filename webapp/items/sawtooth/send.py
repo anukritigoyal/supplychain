@@ -1,5 +1,5 @@
 import os
-from hw_client import HwClient
+from .hw_client import HwClient
 
 def _get_keyfile(usrname):
 	username = usrname
