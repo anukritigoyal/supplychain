@@ -19,4 +19,4 @@ class CreateItemForm(forms.ModelForm):
 
 	class Meta:
 		model = ItemCreation
-		fields = ['item','password']
+		fields = ['itemname','password']
