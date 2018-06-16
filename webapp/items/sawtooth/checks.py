@@ -1,5 +1,6 @@
 import os
 from .hw_client import HwClient
+from .finder import find
 
 def _get_keyfile(usrname):
 	username = usrname
@@ -14,10 +15,13 @@ def check(name,cu_add,checkno,usrname):
 	url = 'http://127.0.0.1:8008'
 	keyfile = _get_keyfile(usrname)
 	client = HwClient(base_url=url,keyfile = keyfile)
+	finding_item = find(name,usrname)
+	if finding_item[name].cu_add == usrname:
+		response = client.check(name=name,check_no=checkno,cu_add=cu_add)
+		return 1
+	else:
+		return 0
 
-	response = client.check(name=name,check_no=checkno,cu_add=cu_add)
-
-	print("response: {}".format(response))
 
 def item_checks_list(check_status):
 	checks = {}

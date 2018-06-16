@@ -65,17 +65,16 @@ def detail(request,itemname):
 
 def checked(request,itemname):
 
-	if request.user.is_authenticated == False == False :
+	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
-
-	checks.check(itemname,'ubuntu',request.POST['check'],'ubuntu')
+	if_valid = checks.check(itemname,'ubuntu',request.POST['check'],'ubuntu')
 	#necessary because it takes atleast two secs for the state list to get updated
 	#should find a more robust way to do this
 	time.sleep(2)
-	response = finder_saw.find(itemname,'ubuntu')
+	resp = finder_saw.find(itemname,'ubuntu')
 	
-	resp = _deserialize(response)
+	#add this deserialize to find itself
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
