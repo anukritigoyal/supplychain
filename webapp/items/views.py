@@ -68,6 +68,7 @@ def checked(request,itemname):
 		return redirect('items:login')
 
 	if_valid = checks.check(itemname,'ubuntu',request.POST['check'],'ubuntu')
+	print(if_valid)
 	#necessary because it takes atleast two secs for the state list to get updated
 	#should find a more robust way to do this
 	time.sleep(2)
