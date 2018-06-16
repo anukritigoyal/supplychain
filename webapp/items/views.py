@@ -18,7 +18,7 @@ from django.views import View
 
 def index(request):
 	
-	if request.user == None:
+	if request.user.is_authenticated()==0:
 		return redirect('items:login')
 
 
