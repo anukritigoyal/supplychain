@@ -21,7 +21,7 @@ def check(name,cu_add,checkno,usrname):
 	print("printing signerkeyas hex")
 	print(client._signer.get_public_key().as_hex())
 	if finding_item[name].c_addr == client._signer.get_public_key().as_hex():
-		response = client.check(name=name,check_no=checkno,cu_add=client._signer.get_public_key().as_hex())
+		response = client.check(name=name,check_no=checkno,cu_add=usrname)
 		return 1
 	else:
 		return 0
