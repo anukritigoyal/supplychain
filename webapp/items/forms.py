@@ -7,7 +7,7 @@ class UserForm(forms.ModelForm):
 
 	class Meta:
 		model = User
-		fields = ['username','password']
+		fields = ['username','email','password']
 
 
 #Create a form for creation of item
