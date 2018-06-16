@@ -130,7 +130,8 @@ class HwClient:
 
 
 	def _send_hw_txn(self,name,action,cu_add,nxt_add,wait=None):
-
+		print("Inside Client")
+		print(cu_add)
 		ts = time.time()
 		time_stamp = datetime.datetime.fromtimestamp(ts).strftime('%X %x')
 		payload = ",".join([name,action,cu_add,nxt_add,time_stamp]).encode()
