@@ -17,7 +17,7 @@ from django.views import View
 
 def index(request):
 	
-	if request.user = None:
+	if request.user == None:
 		return redirect('items:login')
 
 
@@ -39,7 +39,7 @@ def index(request):
 
 def detail(request,itemname):
 	
-	if request.user = None:
+	if request.user == None:
 		return redirect('items:login')
 
 
@@ -64,7 +64,7 @@ def detail(request,itemname):
 
 def checked(request,itemname):
 
-	if request.user = None:
+	if request.user == None:
 		return redirect('items:login')
 
 
@@ -89,7 +89,7 @@ def checked(request,itemname):
 
 def map(request):
 	
-	if request.user = None:
+	if request.user == None:
 		return redirect('items:login')
 
 	response = querying.query_all_items()
@@ -111,7 +111,7 @@ class CreateItemView(request):
 
 	def get(self,request):
 
-		if request.user = None:
+		if request.user == None:
 			return redirect('items:login')
 
 		form = self.form_class(None)
@@ -119,7 +119,7 @@ class CreateItemView(request):
 
 	def post(self,request):
 		
-		if request.user = None:
+		if request.user == None:
 			return redirect('items:login')
 		
 		itemname = request.Post['itemname']
@@ -159,7 +159,7 @@ class UserFormView(View):
 			
 #Create a Logout view
 def logout(request):
-	if request.user = None:
+	if request.user == None:
 		return redirect('items:login')
 
 	logout(request)
