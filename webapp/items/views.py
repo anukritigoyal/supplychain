@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import Http404
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login , logout
 from .sawtooth import querying
 from .sawtooth import send
 from .sawtooth import create as create_saw
@@ -159,7 +159,7 @@ class UserFormView(View):
 		return render(request,self.template_name,{'form': form})
 			
 #Create a Logout view
-def logout(request):
+def logout_view(request):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 

@@ -9,7 +9,7 @@ urlpatterns = [
 	
 	url('home/',views.index,name='index'),
 	url('login/',views.UserFormView.as_view(),name= 'login'),
-	url('logout/',views.logout,name = 'logout'),
+	url('logout/',views.logout_view,name = 'logout'),
 	url('create/',views.CreateItemView.as_view(),name='create'),
 	url('map/',views.map,name='map'),
 	path('details/<itemname>/',views.detail,name='detail'),
