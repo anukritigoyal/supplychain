@@ -130,8 +130,6 @@ class HwClient:
 
 
 	def _send_hw_txn(self,name,action,cu_add,nxt_add,wait=None):
-		print("Inside Client")
-		print(cu_add)
 		ts = time.time()
 		time_stamp = datetime.datetime.fromtimestamp(ts).strftime('%X %x')
 		payload = ",".join([name,action,cu_add,nxt_add,time_stamp]).encode()
@@ -139,6 +137,9 @@ class HwClient:
 		cli_add = self._get_key_address(cu_add)
 		address = self._get_address(name)
 
+		print("Inside Client")
+		print(payload)
+		
 		#for a transaction processor to access an address in the state database, we have to specify it in
 		#inputs of the transaction header. For a transaction processor to change an element at an address,
 		#we have to specify that address in outputs
