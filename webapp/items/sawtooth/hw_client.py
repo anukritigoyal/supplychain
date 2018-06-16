@@ -189,8 +189,6 @@ class HwClient:
 
 			return response
 
-		print("Inside Client")
-		print(payload)
 		
 		return self._send_request("batches",batch_list.SerializeToString(),
 			'application/octet-stream')
