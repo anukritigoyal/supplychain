@@ -135,9 +135,6 @@ class CreateItemView(View):
 			print(response)
 			time.sleep(2)
 			return redirect('items:index')
-
-	
-
 #LOGIN Stuff
 
 class UserFormView(View):
