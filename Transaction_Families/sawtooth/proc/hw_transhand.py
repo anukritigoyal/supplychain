@@ -44,7 +44,7 @@ class HwTransHand(TransactionHandler):
 			if hwstate.get_item(hwpayload.name) is not None:
 				raise InvalidTransaction('Invalid Item Exists')
 			item = Item(name = hwpayload.name,check = "-" * 4 ,
-						c_addr = hwpayload.cu_add , p_addr = None)
+						c_addr = signer , p_addr = None)
 			hwstate.set_item(hwpayload.name,item)
 			_display("Item {} created by {}".format(hwpayload.name,hwpayload.cu_add))
 
