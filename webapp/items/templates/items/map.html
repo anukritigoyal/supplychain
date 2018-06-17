@@ -54,7 +54,7 @@
 		{% for name,iheld in usersdata.items %}
 
 		marker = new L.marker([locations[i][1],locations[i][2]])
-			.bindPopup("<b>{{ name }}</b> <br /> {{ iheld }} ")
+			.bindPopup("<b>{{ name }}</b><br />{{ iheld }} ")
 			.addTo(mymap);	
 		{% endfor %}
 
