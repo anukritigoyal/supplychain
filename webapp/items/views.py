@@ -13,7 +13,10 @@ from .forms import UserForm
 from .forms import CreateItemForm
 from django.views import View
 
-#imported and not used create,send
+#imported and not used send
+
+###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
+
 
 
 def index(request):
@@ -94,13 +97,19 @@ def map(request):
 
 	response = querying.query_all_items()
 	resp = {}
+	usersdata = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
 		nc_add = finder_wal.query(c_add,'ubuntu')
 		nc_add = _deserialize_key(nc_add)
 		resp[name] = Item(name,checks,nc_add,prev_add)
+		if usersdata[nc_add] == None:
+			usersdata[nc_add] = 1
+		else:
+			usersdata[nc_add] += 1
+
 		
-	context = {'resp' :resp}
+	context = {'resp' :resp , 'usersdata' : 'usersdata'}
 	return render(request,'items/map.html', context)
 
 
