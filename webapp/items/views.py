@@ -103,11 +103,11 @@ def map(request):
 		nc_add = finder_wal.query(c_add,'ubuntu')
 		nc_add = _deserialize_key(nc_add)
 		resp[name] = Item(name,checks,nc_add,prev_add)
-		if usersdata[nc_add] == None:
-			usersdata[nc_add] = 1
-		else:
+		
+		try:
 			usersdata[nc_add] += 1
-
+		except:
+			usersdata[nc_add] = 1
 		
 	context = {'resp' :resp , 'usersdata' : 'usersdata'}
 	return render(request,'items/map.html', context)
