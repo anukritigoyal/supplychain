@@ -1,5 +1,5 @@
 import os
-from wal_client import WalClient
+from .wal_client import WalClient
 
 def _get_keyfile():
 	username = 'ubuntu'
