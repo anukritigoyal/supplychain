@@ -51,7 +51,7 @@
 
 		//excess processing is being used
 		//revist
-		{% for name,iheld in userdata.items %}
+		{% for name,iheld in usersdata.items %}
 
 			marker = new L.marker([locations[i][1],locations[i][2]])
 				.bindPopup({{ name }}+ "<br /> {{ iheld }} ")
