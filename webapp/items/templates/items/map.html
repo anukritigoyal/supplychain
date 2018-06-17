@@ -53,7 +53,7 @@
 		//revist
 		{% for name,iheld in usersdata.items %}
 
-		marker = new L.marker([locations[i][1],locations[i][2]])
+		marker = new L.marker([42.34, -71.55])
 			.bindPopup("<b>{{ name }}</b><br />{{ iheld }}")
 			.addTo(mymap);	
 		{% endfor %}
