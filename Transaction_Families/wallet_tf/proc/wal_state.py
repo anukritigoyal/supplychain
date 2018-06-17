@@ -47,6 +47,11 @@ class WalState(object):
 		self._context.set_state({address: state_data},timeout=self.TIMEOUT)
 		self._context.set_state({sec_add: state_data},timeout=self.TIMEOUT)
 		
+		#Unresolved issue when setting the profile... Leading to change of profile at only one state table
+		try:
+			self._context.set_state({sec_add: state_data},timeout=self.TIMEOUT)
+		except:
+			pass
 
 
 

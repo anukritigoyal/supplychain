@@ -13,7 +13,10 @@ from .forms import UserForm
 from .forms import CreateItemForm
 from django.views import View
 
-#imported and not used create,send
+
+#imported and not used send
+
+###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
 
 
 def index(request):
@@ -45,9 +48,8 @@ def detail(request,itemname):
 
 
 	#find item uses state list 
-	response = finder_saw.find(itemname,'ubuntu')
+	resp = finder_saw.find(itemname,'ubuntu')
 	
-	resp = _deserialize(response)
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
@@ -65,17 +67,17 @@ def detail(request,itemname):
 
 def checked(request,itemname):
 
-	if request.user.is_authenticated == False == False :
+
+	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
-
-	checks.check(itemname,'ubuntu',request.POST['check'],'ubuntu')
+	if_valid = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
 	#necessary because it takes atleast two secs for the state list to get updated
 	#should find a more robust way to do this
 	time.sleep(2)
-	response = finder_saw.find(itemname,'ubuntu')
+	resp = finder_saw.find(itemname,'ubuntu')
 	
-	resp = _deserialize(response)
+	#add this deserialize to find itself
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
@@ -93,15 +95,22 @@ def map(request):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
+
 	response = querying.query_all_items()
 	resp = {}
+	usersdata = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
 		nc_add = finder_wal.query(c_add,'ubuntu')
 		nc_add = _deserialize_key(nc_add)
 		resp[name] = Item(name,checks,nc_add,prev_add)
 		
-	context = {'resp' :resp}
+		try:
+			usersdata[nc_add] += 1
+		except:
+			usersdata[nc_add] = 1
+		
+	context = {'resp' :resp , 'usersdata' : usersdata}
 	return render(request,'items/map.html', context)
 
 
@@ -117,6 +126,7 @@ class CreateItemView(View):
 
 		form = self.form_class(None)
 		return render(request,self.template_name,{'form' : form})
+
 
 	def post(self,request):
 		

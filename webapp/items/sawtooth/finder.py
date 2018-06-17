@@ -15,4 +15,25 @@ def find(name,usrname):
 	keyfile = _get_keyfile(usrname)
 	client = HwClient(base_url=url,keyfile = keyfile)
 	response = client.show(name=name)
+	response = _deserialize(response)
 	return response
+
+class Item(object):
+	def __init__(self,name,check,c_addr,p_addr):
+		self.name = name
+		self.check = check
+		self.c_addr = c_addr
+		self.p_addr = p_addr
+
+
+def _deserialize(data):
+		items = {}
+		try:
+			for item in data.decode().split("|"):
+				name,check,c_addr,p_addr = item.split(",")
+				items[name] = Item(name,check,c_addr,p_addr)
+
+		except ValueError:
+			pass
+			
+		return items

@@ -8,7 +8,7 @@ class HwPayload(object):
 			name,action,cu_add,nxt_add,time_stamp = payload.decode().split(",")
 		except ValueError:
 			raise InvalidTransaction("Invalid payload serialization")
-
+		
 		#Add different type of exceptions
 		self._name = name
 		self._action = action

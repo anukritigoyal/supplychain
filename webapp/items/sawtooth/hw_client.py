@@ -130,7 +130,6 @@ class HwClient:
 
 
 	def _send_hw_txn(self,name,action,cu_add,nxt_add,wait=None):
-
 		ts = time.time()
 		time_stamp = datetime.datetime.fromtimestamp(ts).strftime('%X %x')
 		payload = ",".join([name,action,cu_add,nxt_add,time_stamp]).encode()
@@ -138,6 +137,7 @@ class HwClient:
 		cli_add = self._get_key_address(cu_add)
 		address = self._get_address(name)
 
+		
 		#for a transaction processor to access an address in the state database, we have to specify it in
 		#inputs of the transaction header. For a transaction processor to change an element at an address,
 		#we have to specify that address in outputs
@@ -170,7 +170,7 @@ class HwClient:
 		signature = self._signer.sign(header)
 		transaction = Transaction(header= header,payload = payload,
 			header_signature = signature)
-
+		
 		batch_list = self._create_batch_list([transaction])
 		batch_id = batch_list.batches[0].header_signature
 
@@ -189,7 +189,7 @@ class HwClient:
 
 			return response
 
-
+		
 		return self._send_request("batches",batch_list.SerializeToString(),
 			'application/octet-stream')
 
