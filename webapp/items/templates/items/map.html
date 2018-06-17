@@ -20,7 +20,7 @@
 			<li><a href = "{% url 'items:detail' g.name %} "> {{ g.name }}  is currently with {{ g.c_addr }} </a></li><br>
 		{% endfor %}
 
-		{% for name,iheld in users%}
+		{% for name,iheld in usersdata.items %}
 			<li> {{ name }} currently has {{ iheld }} items with him </li>
 		{% endfor %}
 	</ul>
