@@ -109,7 +109,7 @@ def map(request):
 		except:
 			usersdata[nc_add] = 1
 		
-	context = {'resp' :resp , 'usersdata' : 'usersdata'}
+	context = {'resp' :resp , 'usersdata' : usersdata}
 	return render(request,'items/map.html', context)
 
 
