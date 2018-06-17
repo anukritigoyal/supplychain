@@ -26,10 +26,20 @@
 	</ul>
 	</div>
 
-	<div id="mapid" style="width: 600px; height: 400px; float:right; "></div>
+	<div id="mapid" style="width: 800px; height: 600px; float:right; "></div>
 	<script>
 
-		var mymap = L.map('mapid').setView([42.34, -71.55], 13);
+		//Locations of the users, can be set using a python script once we have a gps
+		var locations = [
+			["admin",42.3451 , -70.541],
+			["val1",42.3341,-70.453],
+			["ubuntu",42.3541,-70.553],
+			
+			];
+
+		var mymap = L.map('mapid').setView([42.34, -70.55], 13);
+
+		//The access token stops workig once there are 100,000 map loads
 
 		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ3V5ZmF3a2VzMSIsImEiOiJjamlmemp3bncwc3ljM3lvY29lcGsydmd5In0.PRVTC56434Jga12ZTqTndA', {
 			maxZoom: 18,
@@ -38,6 +48,16 @@
 				'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 			id: 'mapbox.streets'
 		}).addTo(mymap);
+
+		//excess processing is being used
+		//revist
+		{% for name,iheld in userdata.items %}
+
+			marker = new L.marker([locations[i][1],locations[i][2]])
+				.bindPopup({{ name }}+ "<br /> {{ iheld }} ")
+				.addTo(map);	
+		{% endfor %}
+
 
 		marker = new L.marker([42.34, -71.55])
 			.bindPopup("<b>Alex</b><br />10")
