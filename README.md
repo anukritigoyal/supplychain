@@ -12,6 +12,6 @@ This folder cointains all the transaction processors in the current project. The
 
 This folder has the django project that is used to host the current Active Release Platform. All the wrapping of transactions and creations are handled inside the items app of this project. 
 
-
 ## RESTAPI
+
 This folder contains an incomplete rest api. Currently not under development.
