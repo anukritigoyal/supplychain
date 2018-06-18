@@ -26,7 +26,7 @@ SECRET_KEY = '8@i_icp=%=qr=y_#o!p2v6!g6*4z=-u6xqxv#$nnq=$kl!#w$_'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '172.31.91.11'
+    '54.175.206.187'
 ]
 
 
