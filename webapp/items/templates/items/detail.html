@@ -31,7 +31,7 @@
 		</form><br>
 
 		{% if g.c_addr == requested_user %}
-		<a href="{% url 'items:send' g.name %}">Send item ? </a><br>
+		<h4><a href="{% url 'items:send' g.name %}">Send item ?</a></h4><br>
 		{% endif %}
 		{% endfor %}
 	</ul></div>
