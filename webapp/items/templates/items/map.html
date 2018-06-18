@@ -17,7 +17,7 @@
 	<div id="text" style="float:left;">
 	<ul>
 		{% for name,g in resp.items %}
-			<li><a href = "{% url 'items:detail' g.name %} "> {{ g.name }}  is currently with {{ g.c_addr }} </a></li><br>
+			<li><a href = "{% url 'items:detail' g.name %} "> {{ g.name }}</a>  is currently with <a href = "{% url 'item:user_detail' g.c_addr %}">{{ g.c_addr }}</a> </li><br>
 		{% endfor %}
 
 
@@ -30,14 +30,7 @@
 	<div id="mapid" style="width: 800px; height: 600px; float:right; "></div>
 	<script>
 
-		//Locations of the users, can be set using a python script once we have a gps
-		var locations = [
-			["admin",42.3451 , -70.541],
-			["val1",42.3341,-70.453],
-			["ubuntu",42.3541,-70.553],
-			
-			];
-
+		
 		var mymap = L.map('mapid').setView([42.34, -70.55], 13);
 
 		//The access token stops workig once there are 100,000 map loads

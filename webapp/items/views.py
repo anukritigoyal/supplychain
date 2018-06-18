@@ -43,7 +43,7 @@ def index(request):
 
 def detail(request,itemname):
 	
-	if request.user.is_authenticated == False == False :
+	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
 
@@ -64,6 +64,32 @@ def detail(request,itemname):
 
 	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list}
 	return render(request,'items/detail.html',context)	
+
+def user_detail (request,username):
+
+	if request.user.is_authenticated == False :
+		return redirect('items:login')
+	response = querying.query_user_held(username)
+	#returns from state table all the datas with c_add as username
+
+	resp = {}
+	for s in response:
+		name,checks,c_add,prev_add = response[s].decode().split(",")
+		
+		#finding out human name of the public key holder
+		nc_add = finder_wal.query(c_add,request.user.username)
+		nc_add = _deserialize_key(nc_add)
+		resp[name] = Item(name,checks,nc_add,prev_add)
+
+	context = {'resp' :resp}
+
+	return render(request,'items/index.html', context)
+	
+
+
+
+
+
 
 def checked(request,itemname):
 
@@ -95,7 +121,7 @@ def map(request):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
-
+	#GeoLocations of users
 	response = querying.query_all_items()
 	resp = {}
 	usersdata = {}
