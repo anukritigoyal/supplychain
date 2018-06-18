@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
 from .models import ItemCreation
+from .models import ItemSending
 
 class UserForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput)
@@ -20,3 +21,10 @@ class CreateItemForm(forms.ModelForm):
 	class Meta:
 		model = ItemCreation
 		fields = ['itemname','password']
+
+class SendItemForm(forms.ModelForm):
+	password = forms.CharField(widget=forms.PasswordInput)
+
+	class Meta:
+		model = ItemSending
+		fields = ['recv','password']

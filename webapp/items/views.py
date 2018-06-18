@@ -9,7 +9,7 @@ from .sawtooth import his
 from .sawtooth import checks
 import time
 from profiles.wallet import finder as finder_wal
-from .forms import UserForm
+from .forms import UserForm,SendItemForm
 from .forms import CreateItemForm
 from django.views import View
 
@@ -115,6 +115,39 @@ def checked(request,itemname):
 	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list}
 	return render(request,'items/detail.html',context)
 
+class SendItem(View):
+	form_class = SendItemForm
+	template_name = 'items/send.html'
+
+	def get(self,request,itemname):
+
+		if request.user.is_authenticated == False :
+			return redirect('items:login')
+
+		form = self.form_class(None)
+		return render(request,self.template_name,{'form' : form})
+
+	def post(self,request,itemname):
+
+		if request.user.is_authenticated == False :
+			return redirect('items:login')
+
+		recv = request.POST['recv']
+		username = request.user.username
+		password  =request.POST['password']
+		user = authenticate(username=username,password=password)
+
+		if user is not None:
+			send.snd(itemname,recv,request.user.username) 
+			time.sleep(2)
+			return redirect('items:index')
+		else:
+			#retry password
+			form = self.form_class(None)
+			return render(request,self.template_name,{'form' : form})
+
+
+
 
 def map(request):
 	
@@ -170,6 +203,10 @@ class CreateItemView(View):
 			print(response)
 			time.sleep(2)
 			return redirect('items:index')
+		else:
+			#retry password
+			form = self.form_class(None)
+			return render(request,self.template_name,{'form' : form})
 #LOGIN Stuff
 
 class UserFormView(View):

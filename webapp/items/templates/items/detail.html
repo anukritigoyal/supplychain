@@ -30,6 +30,8 @@
 		</form>
 		{% endfor %}
 
+		<a href="{% url 'items:send' g.name %}">Send it Forward ? </a>
+
 		<!--- HISTORY -->
 
 		{% for item,g in hist.items %}
