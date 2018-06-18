@@ -157,7 +157,7 @@ def map(request):
 		return redirect('items:login')
 
 	#GeoLocations of users Probably change this entire charade to some other file ????
-	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55}, 'Mike':{'lat':42.342, 'longi' : -71.52}}
+	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55}, 'Mike':{'lat':42.342, 'longi' : -71.52}, 'Susan':{'lat':42.339 , 'longi': -71.53}}
 	response = querying.query_all_items()
 	resp = {}
 	usersdata = {}
