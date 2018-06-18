@@ -2,8 +2,8 @@
 {% block title %}Details{% endblock %}
 {% block body %}
 	
-	<ul>
-		<li>Hello</li>
+	<div id="checks_text" style="float:left;"><ul>
+		<h6>Checks for this item</h6>
 		{% for item,g in resp.items %}
 			<li><a >{{ g.name }}</a> is with {{ g.c_addr }}</li>
 		{% endfor %}
@@ -29,17 +29,19 @@
 			<input type = "submit" value="Submit">
 		</form><br>
 
-		<a href="{% url 'items:send' g.name %}">Send it Forward ? </a>
+		<a href="{% url 'items:send' g.name %}">Send item ? </a><br>
 		{% endfor %}
-
+	</ul></div>
 		
 
 		<!--- HISTORY -->
 
+	<div id="history_text" style="float:right;"><ul>
+		<h6>History</h6>
 		{% for item,g in hist.items %}
 			<li>{{g}}
 		{% endfor %}
-
-	</ul>
+	</ul></div>
+	
 {% endblock %}
 <!---href="{% url 'items:detail' object.name %}"-->
