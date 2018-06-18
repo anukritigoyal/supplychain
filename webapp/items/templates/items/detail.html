@@ -19,7 +19,7 @@
 
 					<input type="radio" name="check" value="{{ forloop.counter }}" /><label>{{ obj.name }}</label><br>			
 					{% else %}
-					<input type="radio" name="check" readonly="readonly" value="{{ forloop.counter }}" />
+					<input type="radio" name="check" disabled="disabled" value="{{ forloop.counter }}" />
 						<label style="color:green">{{ obj.name }}</label><br>
 					{% endif %}
 				
