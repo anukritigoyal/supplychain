@@ -157,7 +157,7 @@ def map(request):
 		return redirect('items:login')
 
 	#GeoLocations of users
-	locations = {'admin':{'lat' : 46.126 , 'longi' : -75.123}}
+	locations = {'admin':{'lat' : 46.126 , 'longi' : -75.123}, 'Mike':{'lat':42.56 , 'longi' : -45.44}}
 	response = querying.query_all_items()
 	resp = {}
 	usersdata = {}
@@ -170,7 +170,7 @@ def map(request):
 		try:
 			usersdata[nc_add].iheld += 1
 		except:
-			usersdata[nc_add] = userinfo(nc_add,locations[nc_add]['lat'],locations[nc_add]['longi'])
+			usersdata[nc_add] = userinfo(nc_add,int(locations[nc_add]['lat']),int(locations[nc_add]['longi']))
 			print("Hip hip hurray")
 		
 	context = {'resp' :resp , 'usersdata' : usersdata}
