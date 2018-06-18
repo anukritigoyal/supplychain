@@ -46,8 +46,14 @@
 		//revist
 		{% for name,userinfo in usersdata.items %}
 
+		marker.bindPopup($('<a href="#" class="speciallink">TestLink</a>').click(function() {
+			alert("test");
+		})[0]);
+
+		<b>{{ name }}</b><br />{{ userinfo.iheld }}")
+
 		marker = new L.marker([{{ userinfo.lat }} , {{ userinfo.longi }} ])
-			.bindPopup("<b>{{ name }}</b><br />{{ userinfo.iheld }}")
+			.bindPopup($('<a href="{% url 'items:user_detail' name %}" class="speciallink"> {{ name }} </a><br />{{ userinfo.iheld }}'))
 			.addTo(mymap);	
 		{% endfor %}
 
