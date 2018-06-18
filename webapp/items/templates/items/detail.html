@@ -2,7 +2,7 @@
 {% block title %}Details{% endblock %}
 {% block body %}
 	
-	<div id="checks_text" style="float:left;"><ul>
+	<div id="checks_text" style="position:relative; float:left;"><ul>
 		<h3>Checks for this item</h3>
 		{% for item,g in resp.items %}
 			<li><a >{{ g.name }}</a> is with {{ g.c_addr }}</li>
@@ -36,7 +36,7 @@
 
 		<!--- HISTORY -->
 
-	<div id="history_text" style="position:relative; float:center;"><ul>
+	<div id="history_text" style="position:relative; float:left;"><ul>
 		<h3>History</h3>
 		{% for item,g in hist.items %}
 			<li>{{g}}
