@@ -63,8 +63,9 @@ def detail(request,itemname):
 	#will not complain
 	#we can do the serializtion and breaking up stuff in the his.py
 	hist= his.item_history(itemname)
+	requested_user = request.user.username
 
-	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list}
+	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user}
 	return render(request,'items/detail.html',context)	
 
 def user_detail (request,username):
