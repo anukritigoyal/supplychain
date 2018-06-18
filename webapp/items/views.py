@@ -171,8 +171,9 @@ def map(request):
 			usersdata[nc_add].iheld += 1
 		except:
 			usersdata[nc_add] = userinfo(nc_add,float(locations[nc_add]['lat']),float(locations[nc_add]['longi']))
+	print("THIS STUFF IS GETTING EXXECUTED WAY TOO MUCH")
+	
 
-		
 	context = {'resp' :resp , 'usersdata' : usersdata}
 	return render(request,'items/map.html', context)
 
