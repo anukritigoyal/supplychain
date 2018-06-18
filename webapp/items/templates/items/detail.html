@@ -15,24 +15,24 @@
 				
 				{% for checkno,obj in checks_list.items %}
 
-					<input type="radio" name="check" value="{{ forloop.counter }}" />
-						<label>{{ obj.name }}
-							{% if obj.check %}
-						  		 
-							{% else %}
-								  YOOO
-							
-							{% endif %}
-								
-							
-						</label><br>
-			
+					{% if obj.check %}
+
+					<input type="radio" name="check" value="{{ forloop.counter }}" /><label>{{ obj.name }}</label><br>			
+					{% else %}
+					<input type="radio" name="check" disabled="disabled" value="{{ forloop.counter }}" />
+						<label style="color:green">{{ obj.name }}</label><br>
+					{% endif %}
+				
 				{% endfor %}
 			
 
 			<input type = "submit" value="Submit">
-		</form>
+		</form><br>
+
+		<a href="{% url 'items:send' g.name %}">Send it Forward ? </a>
 		{% endfor %}
+
+		
 
 		<!--- HISTORY -->
 

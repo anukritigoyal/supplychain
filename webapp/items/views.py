@@ -9,9 +9,11 @@ from .sawtooth import his
 from .sawtooth import checks
 import time
 from profiles.wallet import finder as finder_wal
-from .forms import UserForm
+from .forms import UserForm,SendItemForm
 from .forms import CreateItemForm
 from django.views import View
+from .models import userinfo
+
 
 
 #imported and not used send
@@ -43,7 +45,7 @@ def index(request):
 
 def detail(request,itemname):
 	
-	if request.user.is_authenticated == False == False :
+	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
 
@@ -64,6 +66,32 @@ def detail(request,itemname):
 
 	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list}
 	return render(request,'items/detail.html',context)	
+
+def user_detail (request,username):
+
+	if request.user.is_authenticated == False :
+		return redirect('items:login')
+	response = querying.query_user_held(username)
+	#returns from state table all the datas with c_add as username
+
+	resp = {}
+	for s in response:
+		name,checks,c_add,prev_add = response[s].decode().split(",")
+		
+		#finding out human name of the public key holder
+		nc_add = finder_wal.query(c_add,request.user.username)
+		nc_add = _deserialize_key(nc_add)
+		resp[name] = Item(name,checks,nc_add,prev_add)
+
+	context = {'resp' :resp}
+
+	return render(request,'items/index.html', context)
+	
+
+
+
+
+
 
 def checked(request,itemname):
 
@@ -89,13 +117,47 @@ def checked(request,itemname):
 	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list}
 	return render(request,'items/detail.html',context)
 
+class SendItem(View):
+	form_class = SendItemForm
+	template_name = 'items/send.html'
+
+	def get(self,request,itemname):
+
+		if request.user.is_authenticated == False :
+			return redirect('items:login')
+
+		form = self.form_class(None)
+		return render(request,self.template_name,{'form' : form,'itemname' : itemname})
+
+	def post(self,request,itemname):
+
+		if request.user.is_authenticated == False :
+			return redirect('items:login')
+
+		recv = request.POST['recv']
+		username = request.user.username
+		password  =request.POST['password']
+		user = authenticate(username=username,password=password)
+
+		if user is not None:
+			send.snd(itemname,recv,request.user.username) 
+			time.sleep(2)
+			return redirect('items:index')
+		else:
+			#retry password
+			form = self.form_class(None)
+			return render(request,self.template_name,{'form' : form})
+
+
+
 
 def map(request):
 	
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
-
+	#GeoLocations of users Probably change this entire charade to some other file ????
+	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55}, 'Mike':{'lat':42.342, 'longi' : -71.52}, 'Susan':{'lat':42.339 , 'longi': -71.53}}
 	response = querying.query_all_items()
 	resp = {}
 	usersdata = {}
@@ -106,10 +168,10 @@ def map(request):
 		resp[name] = Item(name,checks,nc_add,prev_add)
 		
 		try:
-			usersdata[nc_add] += 1
+			usersdata[nc_add].iheld += 1
 		except:
-			usersdata[nc_add] = 1
-		
+			usersdata[nc_add] = userinfo(nc_add,float(locations[nc_add]['lat']),float(locations[nc_add]['longi']))
+	
 	context = {'resp' :resp , 'usersdata' : usersdata}
 	return render(request,'items/map.html', context)
 
@@ -144,6 +206,10 @@ class CreateItemView(View):
 			print(response)
 			time.sleep(2)
 			return redirect('items:index')
+		else:
+			#retry password
+			form = self.form_class(None)
+			return render(request,self.template_name,{'form' : form})
 #LOGIN Stuff
 
 class UserFormView(View):
