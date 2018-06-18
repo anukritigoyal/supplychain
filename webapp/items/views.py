@@ -13,10 +13,10 @@ from .forms import UserForm
 from .forms import CreateItemForm
 from django.views import View
 
+
 #imported and not used send
 
 ###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
-
 
 
 def index(request):
@@ -67,11 +67,11 @@ def detail(request,itemname):
 
 def checked(request,itemname):
 
+
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
 	if_valid = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
-	print(if_valid)
 	#necessary because it takes atleast two secs for the state list to get updated
 	#should find a more robust way to do this
 	time.sleep(2)
@@ -94,6 +94,7 @@ def map(request):
 	
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
+
 
 	response = querying.query_all_items()
 	resp = {}
@@ -125,6 +126,7 @@ class CreateItemView(View):
 
 		form = self.form_class(None)
 		return render(request,self.template_name,{'form' : form})
+
 
 	def post(self,request):
 		
