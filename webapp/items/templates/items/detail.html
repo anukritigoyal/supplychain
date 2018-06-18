@@ -3,7 +3,7 @@
 {% block body %}
 	
 	<div id="checks_text" style="float:left;"><ul>
-		<h6>Checks for this item</h6>
+		<h3>Checks for this item</h3>
 		{% for item,g in resp.items %}
 			<li><a >{{ g.name }}</a> is with {{ g.c_addr }}</li>
 		{% endfor %}
@@ -36,8 +36,8 @@
 
 		<!--- HISTORY -->
 
-	<div id="history_text" style="float:right;"><ul>
-		<h6>History</h6>
+	<div id="history_text" style="float:center;"><ul>
+		<h3>History</h3>
 		{% for item,g in hist.items %}
 			<li>{{g}}
 		{% endfor %}
