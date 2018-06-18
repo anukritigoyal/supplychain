@@ -24,9 +24,10 @@
 					{% endif %}
 				
 				{% endfor %}
-			
-
+			{% if if g.c_addr == requested_user  %}
 			<input type = "submit" value="Submit">
+			{% endif %}	
+			
 		</form><br>
 
 		{% if g.c_addr == requested_user %}
