@@ -125,7 +125,7 @@ class SendItem(View):
 			return redirect('items:login')
 
 		form = self.form_class(None)
-		return render(request,self.template_name,{'form' : form})
+		return render(request,self.template_name,{'form' : form,'itemname' : itemname})
 
 	def post(self,request,itemname):
 
