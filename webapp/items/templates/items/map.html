@@ -19,7 +19,7 @@
 
 
 		{% for name,userinfo in usersdata.items %}
-			<li> {{ name }} currently has {{ userinfo.iheld }} items with him </li>
+			<li><a href = "{% url 'items:user_detail' name %}">{{ name }}</a> currently has {{ userinfo.iheld }} items </li>
 		{% endfor %}
 	</ul>
 	</div>
