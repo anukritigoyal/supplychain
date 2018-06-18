@@ -17,7 +17,7 @@ class userinfo(object):
 
         self.name = name
         self.lat = lat
-        self.long = longi
+        self.longi = longi
         if iheld == None:
             self.iheld = 1
         else:

@@ -21,8 +21,8 @@
 		{% endfor %}
 
 
-		{% for name,iheld in usersdata.items %}
-			<li> {{ name }} currently has {{ iheld }} items with him </li>
+		{% for name,userinfo in usersdata.items %}
+			<li> {{ name }} currently has {{ userinfo.iheld }} items with him </li>
 		{% endfor %}
 	</ul>
 	</div>
@@ -47,10 +47,10 @@
 
 		//excess processing is being used
 		//revist
-		{% for name,iheld in usersdata.items %}
+		{% for name,userinfo in usersdata.items %}
 
-		marker = new L.marker([42.3451 , -70.541])
-			.bindPopup("<b>{{ name }}</b><br />{{ iheld }}")
+		marker = new L.marker([{{ userinfo.lat }} , {{ userinfo.longi }} ])
+			.bindPopup("<b>{{ name }}</b><br />{{ userinfo.iheld }}")
 			.addTo(mymap);	
 		{% endfor %}
 
