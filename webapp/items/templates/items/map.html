@@ -47,7 +47,7 @@
 		{% for name,userinfo in usersdata.items %}
 
 		marker = new L.marker([{{ userinfo.lat }} , {{ userinfo.longi }} ])
-			.bindPopup($('<a href="{% url 'items:user_detail' name %}" class="speciallink"> {{ name }} </a><br />{{ userinfo.iheld }}'))
+			.bindPopup($('<a href="{% url 'items:user_detail' name %}" class="speciallink"> {{ name }} </a>'))
 			.addTo(mymap);	
 		{% endfor %}
 
