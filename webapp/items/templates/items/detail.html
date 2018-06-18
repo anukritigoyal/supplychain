@@ -17,9 +17,9 @@
 
 					{% if obj.check %}
 
-					<input type="radio" name="check" value="{{ forloop.counter }}" /><label>{{ obj.name }}</label><br>			
+					<input type="checkbox" name="check" value="{{ forloop.counter }}" /><label>{{ obj.name }}</label><br>			
 					{% else %}
-					<input type="radio" name="check" disabled="disabled" value="{{ forloop.counter }}" />
+					<input type="checkbox" name="check" disabled="disabled" value="{{ forloop.counter }}" checked />
 						<label style="color:green">{{ obj.name }}</label><br>
 					{% endif %}
 				

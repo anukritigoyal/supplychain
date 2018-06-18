@@ -29,10 +29,11 @@ def check(name,cu_add,checkno,usrname):
 
 def item_checks_list(check_status):
 	checks = {}
-	checks[1] = "LAL Test"
-	checks[2] = "PDP"
-	checks[3] = "Batch Release"
-	checks[4] = "Final Product Verification"
+	
+	checks[1] = "Sterilization Confirmation by Mfg"
+	checks[2] = "LAL/Endotoxin Testing"
+	checks[3] = "DES Batch Release Testing"
+	checks[4] = "Final Functional Testing"
 
 	check_entire = {}
 	j=0
