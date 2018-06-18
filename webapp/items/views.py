@@ -12,6 +12,8 @@ from profiles.wallet import finder as finder_wal
 from .forms import UserForm,SendItemForm
 from .forms import CreateItemForm
 from django.views import View
+from .models import userinfo
+
 
 
 #imported and not used send
@@ -155,6 +157,7 @@ def map(request):
 		return redirect('items:login')
 
 	#GeoLocations of users
+	locations = {'admin':{'lat' : 46.126 , 'longi' : -75.123}}
 	response = querying.query_all_items()
 	resp = {}
 	usersdata = {}
@@ -165,9 +168,10 @@ def map(request):
 		resp[name] = Item(name,checks,nc_add,prev_add)
 		
 		try:
-			usersdata[nc_add] += 1
+			usersdata[nc_add].iheld += 1
 		except:
-			usersdata[nc_add] = 1
+			usersdata[nc_add] = userinfo(nc_add,locations[nc_add]['lat'],locations[nc_add]['longi'])
+			print("Hip hip hurray")
 		
 	context = {'resp' :resp , 'usersdata' : usersdata}
 	return render(request,'items/map.html', context)
