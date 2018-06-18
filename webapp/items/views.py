@@ -170,7 +170,7 @@ def map(request):
 		try:
 			usersdata[nc_add].iheld += 1
 		except:
-			usersdata[nc_add] = userinfo(nc_add,int(locations[nc_add]['lat']),int(locations[nc_add]['longi']))
+			usersdata[nc_add] = userinfo(nc_add,float(locations[nc_add]['lat']),float(locations[nc_add]['longi']))
 
 		
 	context = {'resp' :resp , 'usersdata' : usersdata}
