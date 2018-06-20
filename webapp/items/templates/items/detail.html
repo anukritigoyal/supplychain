@@ -46,7 +46,8 @@
 		{% endfor %}
 	</ul></div>
 	</div>
-	{% for i in range(0,50) %}
-		<li>{{i}}</li>
+	{% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
+    	{{ forloop.counter0 }}
+	{% endfor %}
 {% endblock %}
 <!---href="{% url 'items:detail' object.name %}"-->
