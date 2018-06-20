@@ -1,7 +1,7 @@
 {% extends 'items/base.html' %}
 {% block title %}Details{% endblock %}
 {% block body %}
-	
+	<div class= "container-fluid">
 	<div id="checks_text" style="margin: 0 auto; border-color:black; border-width: 10px; float:left;"><ul>
 
 		
@@ -45,6 +45,6 @@
 			<li>{{g}}
 		{% endfor %}
 	</ul></div>
-	
+	</div>
 {% endblock %}
 <!---href="{% url 'items:detail' object.name %}"-->
