@@ -1,5 +1,6 @@
 import os
 from .hw_client import HwClient
+from ..models import Item
 import requests
 import hashlib
 import json
@@ -42,14 +43,15 @@ def query_user_held(usrname):
 	r = requests.get(url = url)
 	allstates = r.json()
 
-	jsan = {}
+	item_dict = {}
 	j = 0
 	for i in allstates['data']:
 		if i['address'][0:6] == HW_NAMESPACE:
 			serialized = (base64.b64decode(i['data']))
 			name,checks,c_add,prev_add = serialized.decode().split(",")
 			if c_add == public_key :
-				jsan[j] = serialized
+				item = Item(name,checks,c_add,prev_add)
+				item_dict[name] = item
 				j = j+1
 
-	return jsan
+	return item_dict
