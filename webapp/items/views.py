@@ -69,17 +69,25 @@ def user_detail (request,username):
 
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
-	response = querying.query_user_held(username)
+	resp = querying.query_user_held(username)
 	#returns from state table all the datas with c_add as username
 
-	resp = {}
-	for s in response:
-		name,checks,c_add,prev_add = response[s].decode().split(",")
+	# resp = {}
+	# for s in response:
+	# 	name,checks,c_add,prev_add = response[s].decode().split(",")
 		
+	# 	#finding out human name of the public key holder
+	# 	nc_add = finder_wal.query(c_add,request.user.username)
+	# 	nc_add = _deserialize_key(nc_add)
+	# 	resp[name] = Item(name,checks,nc_add,prev_add)
+
+	for name,item_obj in resp.items():
 		#finding out human name of the public key holder
-		nc_add = finder_wal.query(c_add,request.user.username)
+		nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
 		nc_add = _deserialize_key(nc_add)
-		resp[name] = Item(name,checks,nc_add,prev_add)
+		resp[name].c_addr = nc_add
+
+
 
 	context = {'resp' :resp}
 
