@@ -33,12 +33,13 @@ def item_history(name):
 	alltrans = r.json()
 	address = make_item_address(name)
 	j = 0
+	print(alltrans)
 	jsan = {}
 	for i in alltrans['data']:
 		if i['header']['outputs'] == [address]:
 			jsan[j] = (base64.b64decode(i['payload']))
 			j = j+1
-	print(jsan)
+	
 	return jsan
 
 def user_history(usrname):
