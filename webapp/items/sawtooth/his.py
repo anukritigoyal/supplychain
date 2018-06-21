@@ -38,6 +38,7 @@ def item_history(name):
 		if i['header']['outputs'] == [address]:
 			jsan[j] = (base64.b64decode(i['payload']))
 			j = j+1
+	print(jsan)
 	return jsan
 
 def user_history(usrname):
