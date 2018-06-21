@@ -108,7 +108,7 @@ def checked(request,itemname):
 	if_valid = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
 	#necessary because it takes atleast two secs for the state list to get updated
 	#should find a more robust way to do this
-	time.sleep(2)
+	time.sleep(1.5)
 	resp = finder_saw.find(itemname,'ubuntu')
 	
 	#add this deserialize to find itself
@@ -147,7 +147,7 @@ class SendItem(View):
 
 		if user is not None:
 			send.snd(itemname,recv,request.user.username) 
-			time.sleep(2)
+			time.sleep(1.5)
 			return redirect('items:index')
 		else:
 			#retry password
@@ -210,7 +210,7 @@ class CreateItemView(View):
 		if user is not None:
 			response = create_saw.cr(itemname,username)
 			print(response)
-			time.sleep(2)
+			time.sleep(1.5)
 			return redirect('items:index')
 		else:
 			#retry password
