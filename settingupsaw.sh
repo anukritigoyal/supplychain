@@ -3,8 +3,8 @@
 #this is the variable command because we may have different ips
 screen -d -m -S validator sudo -u sawtooth sawtooth-validator -v \
 --bind component:tcp://127.0.0.1:4004 \
---bind network:tcp://184.73.58.223:8800 \
---endpoint tcp://184.73.58.223:8800 \
+--bind network:tcp://18.206.115.232:8800 \
+--endpoint tcp://18.206.115.232:8800 \
 --peers tcp://54.164.17.48:8800,tcp://18.206.225.151:8800
 
 
