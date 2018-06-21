@@ -67,7 +67,7 @@ class WalTransHand(TransactionHandler):
 			except:
 				pass
 
-			pair = Pair(name = walpayload.name,pubkey = walpayload.pubkey,prof = "-"*5)
+			pair = Pair(name = walpayload.name,pubkey = walpayload.pubkey,prof = "X"*5)
 			walstate.set_pair(walpayload.name,pair)
 		
 		elif walpayload.action == 'profile':
