@@ -173,7 +173,7 @@ class HwClient:
 		
 		batch_list = self._create_batch_list([transaction])
 		batch_id = batch_list.batches[0].header_signature
-
+		wait = 0.1
 		if wait and wait > 0:
 			wait_time = 0
 			start_time = time.time()
