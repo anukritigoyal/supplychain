@@ -6,7 +6,7 @@ from wal_payload import WalPayload
 from wal_state import Pair
 from wal_state import WalState
 from wal_state import WAL_NAMESPACE
-
+import subprocess
 LOGGER = logging.getLogger(__name__)
 
 def _display(msg):
@@ -61,7 +61,12 @@ class WalTransHand(TransactionHandler):
 		elif walpayload.action == 'create' :
 			'''if walstate.get_pair(walpayload.name) is not None:
 				raise InvalidTransaction('Invalid Item Exists')
-'''
+'''			
+			try:
+				res = subprocess.check_call(['sawtooth','keygen',walpayload.name])
+			except:
+				pass
+
 			pair = Pair(name = walpayload.name,pubkey = walpayload.pubkey,prof = "-"*5)
 			walstate.set_pair(walpayload.name,pair)
 		
