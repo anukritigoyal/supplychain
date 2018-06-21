@@ -1,7 +1,7 @@
 from . import create
 from . import send
 import time
-create.cr('exec starts','Mike')
+create.cr('exec starts3','Mike')
 for i in range(1,10000):
     create.cr(str(i)+'ab','ubuntu')
     time.sleep(1/1000)
