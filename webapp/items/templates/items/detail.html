@@ -47,7 +47,7 @@
 			{% if g.action == 'send'%}
 			<li>{{g.c_addr}}:{{g.action}} to  {{g.p_addr}}  at {g.timestamp}   </li>
 			{% else %}
-			<li>{{g.c_addr}} {{g.action}} at {{g.timestamp}}</li>
+			<li>{{g.c_addr}}:{{g.action}} at {{g.timestamp}}</li>
 			
 			{% endif %}
 
