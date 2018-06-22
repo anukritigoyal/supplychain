@@ -111,7 +111,7 @@ def checked(request,itemname):
 	#necessary because it takes atleast two secs for the state list to get updated
 	#should find a more robust way to do this
 	#time.sleep(1.5)
-	print("I am here too")
+	
 	resp = finder_saw.find(itemname,'ubuntu')
 	
 	#add this deserialize to find itself
