@@ -22,7 +22,6 @@ def check(name,cu_add,checkno,usrname):
 	print(client._signer.get_public_key().as_hex())
 	finding_item[name].c_addr == client._signer.get_public_key().as_hex()
 	response = client.check(name=name,check_no=checkno,cu_add=usrname)
-	print("I am here too")
 	return 0
 
 
