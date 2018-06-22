@@ -36,9 +36,6 @@ def query_user_held(usrname):
 	keyfile = _get_keyfile(usrname)
 	client = HwClient(base_url=url,keyfile = keyfile)
 	public_key = client._signer.get_public_key().as_hex()
-	print("in query")
-	print(usrname)
-	print(public_key)
 	
 	r = requests.get(url = url)
 	allstates = r.json()

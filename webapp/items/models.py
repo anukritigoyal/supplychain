@@ -8,6 +8,14 @@ class Item(object):
 		self.c_addr = c_addr
 		self.p_addr = p_addr
 
+class history_object(object):
+    def __init__(self,name,action,c_addr,p_addr,timestamp):
+        self.name = name
+        self.action = action
+        self.c_addr = c_addr
+        self.p_addr = p_addr
+        self.timestamp = timestamp
+
 
 class ItemCreation(models.Model):
     itemname = models.CharField(max_length=30)
