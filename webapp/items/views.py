@@ -149,7 +149,7 @@ class SendItem(View):
 
 		if user is not None:
 			send.snd(itemname,recv,request.user.username) 
-			time.sleep(1.5)
+			#time.sleep(1.5)
 			return redirect('items:index')
 		else:
 			#retry password
@@ -212,7 +212,7 @@ class CreateItemView(View):
 		if user is not None:
 			response = create_saw.cr(itemname,username)
 			print(response)
-			time.sleep(1.5)
+			#time.sleep(1.5)
 			return redirect('items:index')
 		else:
 			#retry password
