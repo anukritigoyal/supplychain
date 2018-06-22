@@ -11,7 +11,7 @@
 
 {% block body %}
 
-	<div id="text" style="float:left;">
+	<div id="text" style="float:left;overflow: auto; height: 80%">
 	<ul>
 		{% for name,g in resp.items %}
 			<li><a href = "{% url 'items:detail' g.name %} "> {{ g.name }}</a>  is currently with <a href = "{% url 'items:user_detail' g.c_addr %}">{{ g.c_addr }}</a> </li><br>
@@ -24,7 +24,7 @@
 	</ul>
 	</div>
 
-	<div id="mapid" style="width: 800px; height: 600px; float:right; "></div>
+	<div id="mapid" style="width: 660px; height: 500px; float:right; "></div>
 	<script>
 
 		

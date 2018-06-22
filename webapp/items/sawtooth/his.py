@@ -5,6 +5,7 @@ import hashlib
 import json
 import base64
 from base64 import b64encode
+from ..models import history_object
 
 
 
@@ -34,13 +35,17 @@ def item_history(name):
 	address = make_item_address(name)
 	j = 0
 	
-	jsan = {}
+	history_collection = {}
 	for i in alltrans['data']:
 		if i['header']['outputs'] == [address]:
-			jsan[j] = (base64.b64decode(i['payload']))
+			#jsan[j] = (base64.b64decode(i['payload']))
+			
+			unprocessed = base64.b64decode(i['payload'])
+			name,action,c_add,prev_add,timestamp = unprocessed.decode().split(",")
+			hist = history_object(name,action,c_add,prev_add,timestamp)
+			history_collection[j] = hist
 			j = j+1
-	print(jsan[0])
-	return jsan
+	return history_collection
 
 def user_history(usrname):
 	keyfile = _get_keyfile(usrname)

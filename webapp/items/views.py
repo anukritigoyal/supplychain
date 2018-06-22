@@ -104,11 +104,15 @@ def checked(request,itemname):
 
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
-
-	if_valid = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
+	
+	# if not 'check' in request.POST:
+	# 	return redirect('items:detail', itemname)
+	response = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
+	
 	#necessary because it takes atleast two secs for the state list to get updated
 	#should find a more robust way to do this
-	time.sleep(2)
+	#time.sleep(1.5)
+	
 	resp = finder_saw.find(itemname,'ubuntu')
 	
 	#add this deserialize to find itself
@@ -147,7 +151,7 @@ class SendItem(View):
 
 		if user is not None:
 			send.snd(itemname,recv,request.user.username) 
-			time.sleep(2)
+			#time.sleep(1.5)
 			return redirect('items:index')
 		else:
 			#retry password
@@ -163,7 +167,7 @@ def map(request):
 		return redirect('items:login')
 
 	#GeoLocations of users Probably change this entire charade to some other file ????
-	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55}, 'Mike':{'lat':42.342, 'longi' : -71.52}, 'Susan':{'lat':42.339 , 'longi': -71.53}}
+	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55}, 'Mike@manufacturing':{'lat':42.342, 'longi' : -71.52}, 'Susan@sterilization':{'lat':42.339 , 'longi': -71.53}}
 	response = querying.query_all_items()
 	resp = {}
 	usersdata = {}
@@ -210,7 +214,7 @@ class CreateItemView(View):
 		if user is not None:
 			response = create_saw.cr(itemname,username)
 			print(response)
-			time.sleep(2)
+			#time.sleep(1.5)
 			return redirect('items:index')
 		else:
 			#retry password
