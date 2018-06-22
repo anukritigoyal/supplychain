@@ -105,7 +105,7 @@ def checked(request,itemname):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 	
-	if request.POST['check'] == None:
+	if not 'check' in request.POST:
 		return redirect('items:detail itemname')
 	if_valid = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
 	#necessary because it takes atleast two secs for the state list to get updated
