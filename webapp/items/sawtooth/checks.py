@@ -23,7 +23,7 @@ def check(name,cu_add,checkno,usrname):
 	finding_item[name].c_addr == client._signer.get_public_key().as_hex()
 	response = client.check(name=name,check_no=checkno,cu_add=usrname)
 
-	return response
+	return 0
 
 
 def item_checks_list(check_status):
