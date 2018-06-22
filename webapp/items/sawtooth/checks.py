@@ -22,7 +22,12 @@ def check(name,cu_add,checkno,usrname):
 	print(client._signer.get_public_key().as_hex())
 	finding_item[name].c_addr == client._signer.get_public_key().as_hex()
 	response = client.check(name=name,check_no=checkno,cu_add=usrname)
-	return 0
+	#only when the transaction is not pending it will return control back to django
+
+
+
+
+	return response
 
 
 def item_checks_list(check_status):
