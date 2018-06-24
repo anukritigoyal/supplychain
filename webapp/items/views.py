@@ -15,9 +15,6 @@ from django.views import View
 from .models import userinfo
 
 
-
-#imported and not used send
-
 ###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
 
 
@@ -26,15 +23,22 @@ def index(request):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
-
-	resp= querying.query_user_held(request.user.username)
-	#returns from state table all the datas with c_add as username
-	
+	if request.GET.q is None:
+		resp= querying.query_user_held(request.user.username)
+		#returns from state table all the datas with c_add as username
+	else:
+		resp = querying.query_possible_items(request.GET.q)
+		#takes care of search form
+		
 	for name,item_obj in resp.items():
 		#finding out human name of the public key holder
 		nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
 		nc_add = _deserialize_key(nc_add)
 		resp[name].c_addr = nc_add
+
+	else:
+		resp = querying.query_possible_items(request.GET.q)
+		
 
 	context = {'resp' :resp}
 
@@ -69,29 +73,21 @@ def user_detail (request,username):
 
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
-	resp = querying.query_user_held(username)
-	#returns from state table all the datas with c_add as username
-
-	# resp = {}
-	# for s in response:
-	# 	name,checks,c_add,prev_add = response[s].decode().split(",")
+	
+	if request.GET.q is None:
+		resp = querying.query_user_held(username)
 		
-	# 	#finding out human name of the public key holder
-	# 	nc_add = finder_wal.query(c_add,request.user.username)
-	# 	nc_add = _deserialize_key(nc_add)
-	# 	resp[name] = Item(name,checks,nc_add,prev_add)
-
-	for name,item_obj in resp.items():
-		#finding out human name of the public key holder
-		nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
-		nc_add = _deserialize_key(nc_add)
-		resp[name].c_addr = nc_add
+		for name,item_obj in resp.items():
+			#finding out human name of the public key holder
+			nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
+			nc_add = _deserialize_key(nc_add)
+			resp[name].c_addr = nc_add
 
 
 
-	context = {'resp' :resp}
+		context = {'resp' :resp}
 
-	return render(request,'items/index.html', context)
+		return render(request,'items/index.html', context)
 	
 
 
@@ -168,6 +164,9 @@ def map(request):
 
 	#GeoLocations of users Probably change this entire charade to some other file ????
 	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55}, 'Mike@manufacturing':{'lat':42.342, 'longi' : -71.52}, 'Susan@sterilization':{'lat':42.339 , 'longi': -71.53}}
+	
+	
+	
 	response = querying.query_all_items()
 	resp = {}
 	usersdata = {}
@@ -181,6 +180,8 @@ def map(request):
 			usersdata[nc_add].iheld += 1
 		except:
 			usersdata[nc_add] = userinfo(nc_add,float(locations[nc_add]['lat']),float(locations[nc_add]['longi']))
+	
+
 	
 	context = {'resp' :resp , 'usersdata' : usersdata}
 	return render(request,'items/map.html', context)
