@@ -23,7 +23,7 @@ def index(request):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
-	if request.GET.get('q'):
+	if not request.GET.get('q'):
 		resp= querying.query_user_held(request.user.username)
 		#returns from state table all the datas with c_add as username
 	else:
