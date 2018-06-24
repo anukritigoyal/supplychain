@@ -38,12 +38,13 @@ def query_possible_items(partial_name):
 	item_dict = {}
 	j = 0
 	for i in allstates['data']:
-		serialized = (base64.b64decode(i['data']))
-		name,checks,c_add,prev_add = serialized.decode().split(",")
-		if partial_name in name:
-			item = Item(name,checks,c_add,prev_add)
-			item_dict[name] = item
-			j = j+1
+		if i['address'][0:6] == HW_NAMESPACE:
+			serialized = (base64.b64decode(i['data']))
+			name,checks,c_add,prev_add = serialized.decode().split(",")
+			if partial_name in name:
+				item = Item(name,checks,c_add,prev_add)
+				item_dict[name] = item
+				j = j+1
 
 	return item_dict
 
