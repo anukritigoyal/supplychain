@@ -27,7 +27,7 @@ def index(request):
 		resp= querying.query_user_held(request.user.username)
 		#returns from state table all the datas with c_add as username
 	else:
-		resp = querying.query_possible_items(request.GET.q)
+		resp = querying.query_possible_items(request.GET.get("q"))
 		#takes care of search form
 		
 	for name,item_obj in resp.items():
