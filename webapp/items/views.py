@@ -23,11 +23,11 @@ def index(request):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
-	if q in request.GET:
+	if request.GET.get('q'):
 		resp= querying.query_user_held(request.user.username)
 		#returns from state table all the datas with c_add as username
 	else:
-		resp = querying.query_possible_items(request.GET.q)
+		resp = querying.query_possible_items(request.GET['q'])
 		#takes care of search form
 		
 	for name,item_obj in resp.items():
