@@ -36,8 +36,6 @@ def index(request):
 		nc_add = _deserialize_key(nc_add)
 		resp[name].c_addr = nc_add
 
-		
-
 	context = {'resp' :resp}
 
 	return render(request,'items/index.html', context)
