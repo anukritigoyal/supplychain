@@ -36,8 +36,6 @@ def index(request):
 		nc_add = _deserialize_key(nc_add)
 		resp[name].c_addr = nc_add
 
-	else:
-		resp = querying.query_possible_items(request.GET.q)
 		
 
 	context = {'resp' :resp}
