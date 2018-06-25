@@ -7,7 +7,7 @@
 # --endpoint tcp://54.144.235.23:8800 \
 # --peers tcp://34.239.121.66:8800,tcp://54.175.105.234:8800
 
-screen -d -m -S validator sudo -u sawtooth sawtooth-validator -v
+#screen -d -m -S validator sudo -u sawtooth sawtooth-validator -v
 screen -d -m -S settings_tp sudo -u sawtooth settings-tp -v
 screen -d -m -S poet_registry_tp sudo -u sawtooth poet-validator-registry-tp -v
 screen -d -m -S rest_api sudo -u sawtooth sawtooth-rest-api -v
