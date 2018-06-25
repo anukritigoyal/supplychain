@@ -14,6 +14,7 @@ from .forms import UserForm,SendItemForm
 from .forms import CreateItemForm
 from django.views import View
 from .models import userinfo
+import json
 
 
 ###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
@@ -104,7 +105,7 @@ def checked(request,itemname):
 	# if not 'check' in request.POST:
 	# 	return redirect('items:detail', itemname)
 	response_url = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
-	
+	response_url = response_url.json()
 
 	#better way to increment time is to increase exponentially with the number of tries
 	start_time = time.time()
