@@ -107,7 +107,8 @@ def checked(request,itemname):
 	
 	start_time = time.time()
 	while time.time()-start_time<1.5:
-		req_lib.get(response_url)
+		status = req_lib.get(response_url)
+		if status[]
 
 	
 	#necessary because it takes atleast two secs for the state list to get updated
