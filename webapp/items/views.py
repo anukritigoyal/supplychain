@@ -8,6 +8,7 @@ from .sawtooth import finder as finder_saw
 from .sawtooth import his
 from .sawtooth import checks
 import time
+import requests as req_lib
 from profiles.wallet import finder as finder_wal
 from .forms import UserForm,SendItemForm
 from .forms import CreateItemForm
@@ -102,7 +103,12 @@ def checked(request,itemname):
 	
 	# if not 'check' in request.POST:
 	# 	return redirect('items:detail', itemname)
-	response = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
+	response_url = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
+	
+	start_time = time.time()
+	while time.time()-start_time<1.5:
+		req_lib.get(response_url)
+
 	
 	#necessary because it takes atleast two secs for the state list to get updated
 	#should find a more robust way to do this
