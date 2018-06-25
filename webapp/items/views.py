@@ -70,20 +70,23 @@ def user_detail (request,username):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 	
-	if request.GET.q is None:
-		resp = querying.query_user_held(username)
+	if not request.GET.get('q'):
+		resp= querying.query_user_held(username)
+		#returns from state table all the datas with c_add as username
+	else:
+		resp = querying.query_possible_items(request.GET.get("q"))
+		#takes care of search form
 		
-		for name,item_obj in resp.items():
-			#finding out human name of the public key holder
-			nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
-			nc_add = _deserialize_key(nc_add)
-			resp[name].c_addr = nc_add
+	for name,item_obj in resp.items():
+		#finding out human name of the public key holder
+		nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
+		nc_add = _deserialize_key(nc_add)
+		resp[name].c_addr = nc_add
 
 
+	context = {'resp' :resp}
 
-		context = {'resp' :resp}
-
-		return render(request,'items/index.html', context)
+	return render(request,'items/index.html', context)
 	
 
 
