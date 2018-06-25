@@ -69,10 +69,10 @@ class HwClient:
 			return None
 
 
-	def _get_status(self,batch_id,wait):
+	def _get_status(self,batch_id):
 		try:
 			result = self._send_request(
-			'batch_statuses?id={}&wait={}'.format(batch_id, wait))
+			'batch_statuses?id={}'.format(batch_id))
 			return yaml.safe_load(result)['data'][0]['status']
 		except BaseException as err:
 			raise XoException(err)
@@ -173,6 +173,7 @@ class HwClient:
 		
 		batch_list = self._create_batch_list([transaction])
 		batch_id = batch_list.batches[0].header_signature
+		wait = 1.5
 		if wait and wait > 0:
 			wait_time = 0
 			start_time = time.time()
@@ -180,7 +181,7 @@ class HwClient:
 				"batches",batch_list.SerializeToString(),
 				'application/octet-stream')
 			while wait_time <wait:
-				status = self._get_status(batch_id,wait - int(wait_time))
+				status = self._get_status(batch_id)
 				wait_time = time.time()-start_time
 
 				if status != 'PENDING':

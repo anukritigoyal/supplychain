@@ -8,11 +8,13 @@ from .sawtooth import finder as finder_saw
 from .sawtooth import his
 from .sawtooth import checks
 import time
+import requests as req_lib
 from profiles.wallet import finder as finder_wal
 from .forms import UserForm,SendItemForm
 from .forms import CreateItemForm
 from django.views import View
 from .models import userinfo
+import json
 
 
 ###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
@@ -70,20 +72,23 @@ def user_detail (request,username):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 	
-	if request.GET.q is None:
-		resp = querying.query_user_held(username)
+	if not request.GET.get('q'):
+		resp= querying.query_user_held(username)
+		#returns from state table all the datas with c_add as username
+	else:
+		resp = querying.query_possible_items(request.GET.get("q"))
+		#takes care of search form
 		
-		for name,item_obj in resp.items():
-			#finding out human name of the public key holder
-			nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
-			nc_add = _deserialize_key(nc_add)
-			resp[name].c_addr = nc_add
+	for name,item_obj in resp.items():
+		#finding out human name of the public key holder
+		nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
+		nc_add = _deserialize_key(nc_add)
+		resp[name].c_addr = nc_add
 
 
+	context = {'resp' :resp}
 
-		context = {'resp' :resp}
-
-		return render(request,'items/index.html', context)
+	return render(request,'items/index.html', context)
 	
 
 
@@ -96,14 +101,10 @@ def checked(request,itemname):
 
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
-	
-	# if not 'check' in request.POST:
-	# 	return redirect('items:detail', itemname)
-	response = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
-	
-	#necessary because it takes atleast two secs for the state list to get updated
-	#should find a more robust way to do this
-	#time.sleep(1.5)
+
+
+	response_url = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
+
 	
 	resp = finder_saw.find(itemname,'ubuntu')
 	

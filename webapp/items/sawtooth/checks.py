@@ -24,10 +24,6 @@ def check(name,cu_add,checkno,usrname):
 	response = client.check(name=name,check_no=checkno,cu_add=usrname)
 	#only when the transaction is not pending it will return control back to django
 	print(response)
-
-
-
-
 	return response
 
 
