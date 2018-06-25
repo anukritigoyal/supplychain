@@ -69,10 +69,10 @@ class HwClient:
 			return None
 
 
-	def _get_status(self,batch_id,wait):
+	def _get_status(self,batch_id):
 		try:
 			result = self._send_request(
-			'batch_statuses?id={}&wait={}'.format(batch_id, wait))
+			'batch_statuses?id={}'.format(batch_id))
 			return yaml.safe_load(result)['data'][0]['status']
 		except BaseException as err:
 			raise XoException(err)
@@ -182,7 +182,7 @@ class HwClient:
 				'application/octet-stream')
 			while wait_time <wait:
 				print("I got in")
-				status = self._get_status(batch_id,wait - int(wait_time))
+				status = self._get_status(batch_id)
 				print("This is the problem")
 				wait_time = time.time()-start_time
 
