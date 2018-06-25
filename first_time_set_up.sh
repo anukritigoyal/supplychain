@@ -1,3 +1,4 @@
+git clone https://github.com/GuyFawkes1/supplychain.git
 screen -d -m -S keygeneration sawtooth keygen
 screen -d -m -S validator_key_gen sudo sawadm keygen
 
@@ -27,7 +28,7 @@ sawadm genesis config-genesis.batch config.batch poet.batch poet-settings.batch
 screen -d -m -S settings_tp sudo -u sawtooth settings-tp -v
 screen -d -m -S poet_registry_tp sudo -u sawtooth poet-validator-registry-tp -v
 screen -d -m -S rest_api sudo -u sawtooth sawtooth-rest-api -v
-screen -d -m -S items_tp python3 /home/ubuntu/supplychain/Transaction_Families/sawtooth/proc/main.py
-screen -d -m -S wallet_tp python3 /home/ubuntu/supplychain/Transaction_Families/wallet_tf/proc/main.py
-screen -d -m -S server_django python3 /home/ubuntu/supplychain/webapp/manage.py runserver 0:8000
+screen -d -m -S items_tp python3 $PWD/supplychain/Transaction_Families/sawtooth/proc/main.py
+screen -d -m -S wallet_tp python3 $PWD/supplychain/Transaction_Families/wallet_tf/proc/main.py
+screen -d -m -S server_django python3 $PWD/supplychain/webapp/manage.py runserver 0:8000
 screen -d -m -S validator sudo -u sawtooth sawtooth-validator -v
