@@ -109,7 +109,7 @@ def checked(request,itemname):
 	#better way to increment time is to increase exponentially with the number of tries
 	start_time = time.time()
 	while time.time()-start_time<1.5:
-		status = req_lib.get(response_url)
+		status = req_lib.get(response_url['link'])
 		if status['status'] == 'COMMITTED':
 			break
 		else:
