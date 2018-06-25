@@ -15,7 +15,7 @@ This repository contains a web app that can be hosted on your ubuntu machine tha
 
 ## Installation Procedure
 
-First, install the dependencies as listed above. Once you installed sawtooth, just download the first_time_set_up.sh file from the repository and run it. This will create a single validator with two transaction procesors and a django server at your ip:8000.(Please make sure you change the allowed hosts attribute in the webapp/settings.py file)
+First, install the dependencies as listed above. Once you installed sawtooth, just download the first_time_set_up.sh file from the repository and run it. This will create a single validator with two transaction procesors and a django server at your ip:8000.(Please make sure you change the allowed hosts attribute in the webapp/webapp/settings.py file)
 
 ## Details of folders
 
