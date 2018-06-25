@@ -105,10 +105,15 @@ def checked(request,itemname):
 	# 	return redirect('items:detail', itemname)
 	response_url = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
 	
+
+	#better way to increment time is to increase exponentially with the number of tries
 	start_time = time.time()
 	while time.time()-start_time<1.5:
 		status = req_lib.get(response_url)
-		if status[]
+		if status['status'] == 'COMMITTED':
+			break
+		else:
+			continue
 
 	
 	#necessary because it takes atleast two secs for the state list to get updated
