@@ -101,9 +101,7 @@ def checked(request,itemname):
 
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
-	
-	# if not 'check' in request.POST:
-	# 	return redirect('items:detail', itemname)
+
 
 	response_url = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
 
