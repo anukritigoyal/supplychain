@@ -31,6 +31,25 @@ def query_all_items():
 			j = j+1
 	return jsan
 
+def query_possible_items(partial_name):
+	url = 'http://127.0.0.1:8008/state'
+	r = requests.get(url= url)
+	allstates = r.json()
+	item_dict = {}
+	j = 0
+	for i in allstates['data']:
+		if i['address'][0:6] == HW_NAMESPACE:
+			serialized = (base64.b64decode(i['data']))
+			name,checks,c_add,prev_add = serialized.decode().split(",")
+			if partial_name in name:
+				item = Item(name,checks,c_add,prev_add)
+				item_dict[name] = item
+				j = j+1
+
+	return item_dict
+
+
+
 def query_user_held(usrname):
 	url = 'http://127.0.0.1:8008/state'
 	keyfile = _get_keyfile(usrname)
