@@ -111,6 +111,7 @@ def checked(request,itemname):
 	start_time = time.time()
 	while time.time()-start_time<1.5:
 		status = req_lib.get(response_url['link'])
+		status = status.json()
 		if status['status'] == 'COMMITTED':
 			break
 		else:
