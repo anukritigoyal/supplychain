@@ -181,7 +181,9 @@ class HwClient:
 				"batches",batch_list.SerializeToString(),
 				'application/octet-stream')
 			while wait_time <wait:
+				print("I got in")
 				status = self._get_status(batch_id,wait - int(wait_time))
+				print("This is the problem")
 				wait_time = time.time()-start_time
 
 				if status != 'PENDING':
