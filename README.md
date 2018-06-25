@@ -10,12 +10,12 @@ This repository contains a web app that can be hosted on your ubuntu machine tha
 <ul> <li>Hyperledger sawtooth on Ubuntu 16.04 </li>
 <li>Django 2.0 or later </li>
 <li>screen</li>
+<li>git</li>
 </ul>
 
 ## Installation Procedure
 
-First, install the dependencies as listed above. Once you create a sawtooth
-
+First, install the dependencies as listed above. Once you installed sawtooth, just download the first_time_set_up.sh file from the repository and run it. This will create a single validator with two transaction procesors and a django server at your ip:8000.(Please make sure you change the allowed hosts attribute in the webapp/settings.py file)
 
 ## Details of folders
 
