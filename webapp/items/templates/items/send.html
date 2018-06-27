@@ -5,6 +5,57 @@
 
 {% block body %}
 <div class="container-fluid">
+        <div id="checks_text" style="margin: 0 auto; float: left; "><ul>
+
+		
+		
+                {% for item,g in resp.items %}
+                    <h3>Requirements of {{ g.name }}</h3>
+                    <h6><a href= "{% url 'items:detail' g.name %}">Refresh</a></h6>
+                    
+                    <form action="{% url 'items:checked' g.name %}" method="post">
+        
+                        {% csrf_token %}
+                        
+                        {% for checkno,obj in checks_list.items %}
+        
+                            {% if obj.check %}
+        
+                            <input type="checkbox" name="check" value="{{ forloop.counter }}" /><label>{{ obj.name }}</label><br>			
+                            {% else %}
+                            <input type="checkbox" name="check" disabled="disabled" value="{{ forloop.counter }}" checked />
+                                <label style="color:green">{{ obj.name }}</label><br>
+                            {% endif %}
+                        
+                        {% endfor %}
+                    {% if g.c_addr == requested_user  %}
+                    <input type = "submit" value="Submit">
+                    {% endif %}	
+                    
+                </form><br>
+        
+                {% if g.c_addr == requested_user %}
+                <h4><a href="{% url 'items:send' g.name %}">Send item ?</a></h4><br>
+                {% endif %}
+                {% endfor %}
+            </ul></div>
+                
+        
+                <!--- Mike at manufacturing send   -->
+        
+            <div id="history_text" style="margin:0px auto;float:right; position:relative;"><ul>
+                <h3>Previous Transactions</h3>
+                <!--its actually next addr in the transactions , please go and look at send in sawtooth folder(inside item)-->
+                {% for item,g in hist.items %}
+                    {% if g.action == 'send'%}
+                    <li>{{g.c_addr}}: {{g.action}} to  {{g.p_addr}}  at {{g.timestamp}}   </li>
+                    {% else %}
+                    <li>{{g.c_addr}}: {{g.action}} at {{g.timestamp}}</li>
+                    
+                    {% endif %}
+        
+                {% endfor %}
+            </ul></div>
 
     <div class="row">
         <div class="col-sm-12 col-md-6">
@@ -45,9 +96,8 @@
 
 </div>
 
-
-
+{% comment %} 
 {{ form.errors }}
-{{ form.non_field_errors }}
+{{ form.non_field_errors }} {% endcomment %}
 
 {% endblock %}
