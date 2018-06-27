@@ -4,7 +4,7 @@
 
 
 {% block body %}
-<div class="container-fluid">
+<div class="container">
         <div id="checks_text" style="margin: 0 auto; float: left; "><ul>
                 {% for item,g in resp.items %}
                     <h3>Requirements of {{ g.name }}</h3>
@@ -54,7 +54,7 @@
                 {% endfor %}
             </ul></div>
             </div>
-    <div class="container-fluid">        
+    <div class="container">        
         <div style="float: left;width:50%">
             <h3>Send Item ?</h3>
                 {% if error_message %}
