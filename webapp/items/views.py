@@ -38,7 +38,7 @@ def index(request):
 		nc_add = _deserialize_key(nc_add)
 		resp[name].c_addr = nc_add
 
-	context = {'resp' :resp}
+	context = {'resp' :resp, 'username' : request.user.username}
 
 	return render(request,'items/index.html', context)
 
@@ -86,7 +86,7 @@ def user_detail (request,username):
 		resp[name].c_addr = nc_add
 
 
-	context = {'resp' :resp}
+	context = {'resp' :resp,'username':username}
 
 	return render(request,'items/index.html', context)
 	
