@@ -178,7 +178,7 @@ def map(request):
 		return redirect('items:login')
 
 	#GeoLocations of users Probably change this entire charade to some other file ????
-	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55},'Larry@lab':{'lat':42.34, 'longi': -72}, 'Mike@manufacturing':{'lat':42.342, 'longi' : -71.52}, 'Susan@sterilization':{'lat':42.339 , 'longi': -71.53}, 'Quinn@quality':{'lat':42.39 , 'longi': -71.54}}
+	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55},'Larry@lab':{'lat':42.34, 'longi': -71.64}, 'Mike@manufacturing':{'lat':42.342, 'longi' : -71.52}, 'Susan@sterilization':{'lat':42.339 , 'longi': -71.53}, 'Quinn@quality':{'lat':42.39 , 'longi': -71.54}}
 	
 	
 	
