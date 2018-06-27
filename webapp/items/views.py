@@ -130,6 +130,24 @@ class SendItem(View):
 			return redirect('items:login')
 
 		form = self.form_class(None)
+		#can change 'ubuntu' to 'requested user'
+		resp = finder_saw.find(itemname,'ubuntu')
+	
+		nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
+		nc_add = _deserialize_key(nc_add)
+		resp[itemname].c_addr = nc_add
+		#get the checks list
+		checks_list = checks.item_checks_list(resp[itemname].check)
+		#hist goes through transactions in block chain, so returns in human readble form
+		
+		#serialized make that into an item history class with all the attributes so that django 
+		#will not complain
+		#we can do the serializtion and breaking up stuff in the his.py
+		hist= his.item_history(itemname)
+		requested_user = request.user.username
+
+		context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user}
+
 		return render(request,self.template_name,{'form' : form,'itemname' : itemname})
 
 	def post(self,request,itemname):
