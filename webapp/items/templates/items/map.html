@@ -15,7 +15,7 @@
 		<h3> Current state of supplychain</h3>
 		<ul>
 		{% for name,g in resp.items %}
-			<li><a href = "{% url 'items:detail' g.name %} "> {{ g.name }}</a>  is currently with <a href = "{% url 'items:user_detail' g.c_addr %}">{{ g.c_addr }}</a> </li>
+			<li><a href = "{% url 'items:detail' g.name %} "> {{ g.name }}</a>  is currently with <a href = "{% url 'items:user_detail' g.c_addr %}">{{ g.c_addr }}</a> </li><br>
 		{% endfor %}
 
 	</ul></div>
@@ -23,7 +23,7 @@
 		<h3> Current state of users </h3>
 		<ul>
 		{% for name,userinfo in usersdata.items %}
-			<li><a href = "{% url 'items:user_detail' name %}">{{ name }}</a> currently has {{ userinfo.iheld }} items </li>
+			<li><a href = "{% url 'items:user_detail' name %}">{{ name }}</a> currently has {{ userinfo.iheld }} items </li><br>
 		{% endfor %}
 	</ul>
 	</div>
