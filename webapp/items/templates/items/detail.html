@@ -7,7 +7,7 @@
 		
 		
 		{% for item,g in resp.items %}
-			<h3>Checks for {{ g.name }}</h3>
+			<h3>Requirements of {{ g.name }}</h3>
 			<h6><a href= "{% url 'items:detail' g.name %}">Refresh</a></h6>
 			
 			<form action="{% url 'items:checked' g.name %}" method="post">
