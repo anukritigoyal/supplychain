@@ -138,10 +138,10 @@ class SendItem(View):
 			return redirect('items:login')
 
 		recv = request.POST['recv']
-		username = request.user.username
-		password  =request.POST['password']
-		user = authenticate(username=username,password=password)
-
+		# username = request.user.username
+		# password  =request.POST['password']
+		# user = authenticate(username=username,password=password)
+		user = request.user.username
 		if user is not None:
 			send.snd(itemname,recv,request.user.username) 
 			#time.sleep(1.5)
