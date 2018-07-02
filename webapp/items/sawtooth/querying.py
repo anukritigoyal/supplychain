@@ -18,7 +18,7 @@ def _get_keyfile(usrname):
 
 
 def query_all_items(url):
-	url = url + 'state'
+	url = url + '/state'
 
 	r = requests.get(url = url)
 	allstates = r.json()
@@ -32,7 +32,7 @@ def query_all_items(url):
 	return jsan
 
 def query_possible_items(partial_name,url):
-	url = url + 'state'
+	url = url + '/state'
 	r = requests.get(url= url)
 	allstates = r.json()
 	item_dict = {}
@@ -51,7 +51,7 @@ def query_possible_items(partial_name,url):
 
 
 def query_user_held(usrname,url):
-	url = url + 'state'
+	url = url + '/state'
 	keyfile = _get_keyfile(usrname)
 	client = HwClient(base_url=url,keyfile = keyfile)
 	public_key = client._signer.get_public_key().as_hex()

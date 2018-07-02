@@ -29,7 +29,7 @@ def make_item_address(name):
 
 def item_history(name,url):
 	#url = 'http://127.0.0.1:8008/transactions'
-	url = url + 'transactions'
+	url = url + '/transactions'
 	
 	r = requests.get(url=url)
 	alltrans = r.json()
@@ -50,7 +50,7 @@ def item_history(name,url):
 
 def user_history(usrname,url):
 	keyfile = _get_keyfile(usrname)
-	url =  url + 'transactions'
+	url =  url + '/transactions'
 	client = HwClient(base_url=url,keyfile = keyfile)
 	public_key = client._signer.get_public_key().as_hex()
 	r = requests.get(url=url)
