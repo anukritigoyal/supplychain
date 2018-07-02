@@ -8,8 +8,7 @@ def _get_keyfile(usrname):
 	return '{}/{}.priv'.format(key_dir, username)
 
 
-def cr(name,usrname):
-	url = 'http://127.0.0.1:8008'
+def cr(name,usrname,url):
 	keyfile = _get_keyfile(usrname)
 	client = HwClient(base_url=url,keyfile = keyfile)
 	response = client.create(name=name,cu_add=usrname)
