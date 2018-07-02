@@ -21,7 +21,7 @@ import json
 ###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
 ##configure randomness here
 def random_server():
-	urls_list = { '1': '128.0.0.1:8008/' }
+	urls_list = { '1': 'https://128.0.0.1:8008/' }
 	return urls_list['1']
 
 def index(request):
