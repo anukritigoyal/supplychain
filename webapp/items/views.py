@@ -17,19 +17,24 @@ from .models import userinfo
 import json
 
 
-###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
 
+###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
+##configure randomness here
+def random_server():
+	urls_list = { '1': 'localhost:8008' }
+	return urls_list[1]
 
 def index(request):
 	
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
+	url = random_server()
 
 	if not request.GET.get('q'):
-		resp= querying.query_user_held(request.user.username)
+		resp= querying.query_user_held(request.user.username,url)
 		#returns from state table all the datas with c_add as username
 	else:
-		resp = querying.query_possible_items(request.GET.get("q"))
+		resp = querying.query_possible_items(request.GET.get("q"),url)
 		#takes care of search form
 		
 	for name,item_obj in resp.items():
@@ -46,11 +51,13 @@ def detail(request,itemname):
 	
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
+	url = random_server()
 
 
 	#find item uses state list 
-	resp = finder_saw.find(itemname,'ubuntu')
+	resp = finder_saw.find(itemname,'ubuntu',url)
 	
+	#######VERY IMPOSRTANT CHANGE TO BE APPLIED HERE TOOO
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
@@ -61,7 +68,7 @@ def detail(request,itemname):
 	#serialized make that into an item history class with all the attributes so that django 
 	#will not complain
 	#we can do the serializtion and breaking up stuff in the his.py
-	hist= his.item_history(itemname)
+	hist= his.item_history(itemname,url)
 	requested_user = request.user.username
 
 	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user}
@@ -71,16 +78,19 @@ def user_detail (request,username):
 
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
-	
+
+	url = random_server()
+
 	if not request.GET.get('q'):
-		resp= querying.query_user_held(username)
+		resp= querying.query_user_held(username,url)
 		#returns from state table all the datas with c_add as username
 	else:
-		resp = querying.query_possible_items(request.GET.get("q"))
+		resp = querying.query_possible_items(request.GET.get("q"),url)
 		#takes care of search form
 		
 	for name,item_obj in resp.items():
 		#finding out human name of the public key holder
+		######HERE TOOOO
 		nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
 		nc_add = _deserialize_key(nc_add)
 		resp[name].c_addr = nc_add
@@ -102,20 +112,23 @@ def checked(request,itemname):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
+	url = random_server()
 
-	response_url = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
+
+	response_url = checks.check(itemname, request.user.username,request.POST['check'],request.user.username,url)
 
 	
-	resp = finder_saw.find(itemname,'ubuntu')
+	resp = finder_saw.find(itemname,'ubuntu',url)
 	
 	#add this deserialize to find itself
+	#### HERE TOO
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
 	#get the checks list
 	checks_list = checks.item_checks_list(resp[itemname].check)
 	#hist goes through transactions in BC, so returns in human readble form
-	hist= his.item_history(itemname)
+	hist= his.item_history(itemname,url)
 	requested_user = request.user.username
 	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list,'requested_user':requested_user}
 	return render(request,'items/detail.html',context)
