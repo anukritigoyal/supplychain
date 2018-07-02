@@ -32,9 +32,11 @@ def index(request):
 
 	if not request.GET.get('q'):
 		resp= querying.query_user_held(request.user.username,url)
+		flag = 1
 		#returns from state table all the datas with c_add as username
 	else:
 		resp = querying.query_possible_items(request.GET.get("q"),url)
+		flag = 0
 		#takes care of search form
 		
 	for name,item_obj in resp.items():
@@ -43,7 +45,7 @@ def index(request):
 		nc_add = _deserialize_key(nc_add)
 		resp[name].c_addr = nc_add
 
-	context = {'resp' :resp, 'username' : request.user.username}
+	context = {'resp' :resp, 'username' : request.user.username,'flag' : flag}
 
 	return render(request,'items/index.html', context)
 

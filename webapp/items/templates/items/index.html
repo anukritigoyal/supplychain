@@ -2,7 +2,9 @@
 
 {% block body %}
 	<div class="container">
+	{% if flag == 1 %}
 	<h3>Assigned to {{ username }}</h3>
+	{% endif %}
 	<ul>
 		
 		{% for name,g in resp.items %}
