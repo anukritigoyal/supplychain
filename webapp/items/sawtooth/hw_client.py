@@ -173,21 +173,21 @@ class HwClient:
 		
 		batch_list = self._create_batch_list([transaction])
 		batch_id = batch_list.batches[0].header_signature
-		wait = 1.5
-		if wait and wait > 0:
-			wait_time = 0
-			start_time = time.time()
-			response = self._send_request(
-				"batches",batch_list.SerializeToString(),
-				'application/octet-stream')
-			while wait_time <wait:
-				status = self._get_status(batch_id)
-				wait_time = time.time()-start_time
+		# wait = 1.5
+		# if wait and wait > 0:
+		# 	wait_time = 0
+		# 	start_time = time.time()
+		# 	response = self._send_request(
+		# 		"batches",batch_list.SerializeToString(),
+		# 		'application/octet-stream')
+		# 	while wait_time <wait:
+		# 		status = self._get_status(batch_id)
+		# 		wait_time = time.time()-start_time
 
-				if status != 'PENDING':
-					return response
-
-			return response
+		# 		if status != 'PENDING':
+		# 			return response
+	
+	#		return response
 
 		
 		return self._send_request("batches",batch_list.SerializeToString(),
