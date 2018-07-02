@@ -22,7 +22,7 @@ import json
 ##configure randomness here
 def random_server():
 	urls_list = { '1': 'localhost:8008' }
-	return urls_list[1]
+	return urls_list['1']
 
 def index(request):
 	
@@ -142,9 +142,10 @@ class SendItem(View):
 		if request.user.is_authenticated == False :
 			return redirect('items:login')
 
+		url = random_server()
 		form = self.form_class(None)
 		#can change 'ubuntu' to 'requested user'
-		resp = finder_saw.find(itemname,'ubuntu')
+		resp = finder_saw.find(itemname,'ubuntu',url)
 	
 		nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
 		nc_add = _deserialize_key(nc_add)
@@ -156,7 +157,7 @@ class SendItem(View):
 		#serialized make that into an item history class with all the attributes so that django 
 		#will not complain
 		#we can do the serializtion and breaking up stuff in the his.py
-		hist= his.item_history(itemname)
+		hist= his.item_history(itemname,url)
 		requested_user = request.user.username
 
 		context = {'form' : form,'itemname' : itemname ,'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user}
@@ -167,14 +168,14 @@ class SendItem(View):
 
 		if request.user.is_authenticated == False :
 			return redirect('items:login')
-
+		url = random_server()
 		recv = request.POST['recv']
 		# username = request.user.username
 		# password  =request.POST['password']
 		# user = authenticate(username=username,password=password)
 		user = request.user.username
 		if user is not None:
-			send.snd(itemname,recv,request.user.username) 
+			send.snd(itemname,recv,request.user.username,url) 
 			#time.sleep(1.5)
 			return redirect('items:index')
 		else:
@@ -190,12 +191,13 @@ def map(request):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
+	url =random_server()
 	#GeoLocations of users Probably change this entire charade to some other file ????
 	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55},'Larry@lab':{'lat':42.34, 'longi': -71.64}, 'Mike@manufacturing':{'lat':42.342, 'longi' : -71.52}, 'Susan@sterilization':{'lat':42.339 , 'longi': -71.53}, 'Quinn@quality':{'lat':42.39 , 'longi': -71.54}}
 	
 	
 	
-	response = querying.query_all_items()
+	response = querying.query_all_items(url)
 	resp = {}
 	usersdata = {}
 	for s in response:
@@ -234,6 +236,7 @@ class CreateItemView(View):
 		if request.user.is_authenticated == False :
 			print("Should not come here")
 			return redirect('items:login')
+		url = random_server()
 
 		itemname = request.POST['itemname']
 		username = request.user.username
@@ -241,7 +244,7 @@ class CreateItemView(View):
 		user = authenticate(username=username,password=password)
 
 		if user is not None:
-			response = create_saw.cr(itemname,username)
+			response = create_saw.cr(itemname,username,url)
 			print(response)
 			#time.sleep(1.5)
 			return redirect('items:index')
