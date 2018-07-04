@@ -17,8 +17,8 @@ def _get_keyfile(usrname):
 	return '{}/{}.priv'.format(key_dir, username)
 
 
-def query_all_items():
-	url = 'http://127.0.0.1:8008/state'
+def query_all_items(url):
+	url = url + '/state'
 
 	r = requests.get(url = url)
 	allstates = r.json()
@@ -31,8 +31,8 @@ def query_all_items():
 			j = j+1
 	return jsan
 
-def query_possible_items(partial_name):
-	url = 'http://127.0.0.1:8008/state'
+def query_possible_items(partial_name,url):
+	url = url + '/state'
 	r = requests.get(url= url)
 	allstates = r.json()
 	item_dict = {}
@@ -50,8 +50,8 @@ def query_possible_items(partial_name):
 
 
 
-def query_user_held(usrname):
-	url = 'http://127.0.0.1:8008/state'
+def query_user_held(usrname,url):
+	url = url + '/state'
 	keyfile = _get_keyfile(usrname)
 	client = HwClient(base_url=url,keyfile = keyfile)
 	public_key = client._signer.get_public_key().as_hex()

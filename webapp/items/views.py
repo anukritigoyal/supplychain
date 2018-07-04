@@ -17,19 +17,26 @@ from .models import userinfo
 import json
 
 
-###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
 
+###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
+##configure randomness here
+def random_server():
+	urls_list = { '1': 'http://127.0.0.1:8008' }
+	return urls_list['1']
 
 def index(request):
 	
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
+	url = random_server()
 
 	if not request.GET.get('q'):
-		resp= querying.query_user_held(request.user.username)
+		resp= querying.query_user_held(request.user.username,url)
+		flag = 1
 		#returns from state table all the datas with c_add as username
 	else:
-		resp = querying.query_possible_items(request.GET.get("q"))
+		resp = querying.query_possible_items(request.GET.get("q"),url)
+		flag = 0
 		#takes care of search form
 		
 	for name,item_obj in resp.items():
@@ -38,7 +45,7 @@ def index(request):
 		nc_add = _deserialize_key(nc_add)
 		resp[name].c_addr = nc_add
 
-	context = {'resp' :resp}
+	context = {'resp' :resp, 'username' : request.user.username,'flag' : flag}
 
 	return render(request,'items/index.html', context)
 
@@ -46,11 +53,13 @@ def detail(request,itemname):
 	
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
+	url = random_server()
 
 
 	#find item uses state list 
-	resp = finder_saw.find(itemname,'ubuntu')
+	resp = finder_saw.find(itemname,'ubuntu',url)
 	
+	#######VERY IMPOSRTANT CHANGE TO BE APPLIED HERE TOOO
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
@@ -61,7 +70,7 @@ def detail(request,itemname):
 	#serialized make that into an item history class with all the attributes so that django 
 	#will not complain
 	#we can do the serializtion and breaking up stuff in the his.py
-	hist= his.item_history(itemname)
+	hist= his.item_history(itemname,url)
 	requested_user = request.user.username
 
 	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user}
@@ -71,22 +80,25 @@ def user_detail (request,username):
 
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
-	
+
+	url = random_server()
+
 	if not request.GET.get('q'):
-		resp= querying.query_user_held(username)
+		resp= querying.query_user_held(username,url)
 		#returns from state table all the datas with c_add as username
 	else:
-		resp = querying.query_possible_items(request.GET.get("q"))
+		resp = querying.query_possible_items(request.GET.get("q"),url)
 		#takes care of search form
 		
 	for name,item_obj in resp.items():
 		#finding out human name of the public key holder
+		######HERE TOOOO
 		nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
 		nc_add = _deserialize_key(nc_add)
 		resp[name].c_addr = nc_add
 
 
-	context = {'resp' :resp}
+	context = {'resp' :resp,'username':username}
 
 	return render(request,'items/index.html', context)
 	
@@ -102,20 +114,23 @@ def checked(request,itemname):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
+	url = random_server()
 
-	response_url = checks.check(itemname, request.user.username,request.POST['check'],request.user.username)
+
+	response_url = checks.check(itemname, request.user.username,request.POST['check'],request.user.username,url)
 
 	
-	resp = finder_saw.find(itemname,'ubuntu')
+	resp = finder_saw.find(itemname,'ubuntu',url)
 	
 	#add this deserialize to find itself
+	#### HERE TOO
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
 	#get the checks list
 	checks_list = checks.item_checks_list(resp[itemname].check)
 	#hist goes through transactions in BC, so returns in human readble form
-	hist= his.item_history(itemname)
+	hist= his.item_history(itemname,url)
 	requested_user = request.user.username
 	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list,'requested_user':requested_user}
 	return render(request,'items/detail.html',context)
@@ -129,21 +144,40 @@ class SendItem(View):
 		if request.user.is_authenticated == False :
 			return redirect('items:login')
 
+		url = random_server()
 		form = self.form_class(None)
-		return render(request,self.template_name,{'form' : form,'itemname' : itemname})
+		#can change 'ubuntu' to 'requested user'
+		resp = finder_saw.find(itemname,'ubuntu',url)
+	
+		nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
+		nc_add = _deserialize_key(nc_add)
+		resp[itemname].c_addr = nc_add
+		#get the checks list
+		checks_list = checks.item_checks_list(resp[itemname].check)
+		#hist goes through transactions in block chain, so returns in human readble form
+		
+		#serialized make that into an item history class with all the attributes so that django 
+		#will not complain
+		#we can do the serializtion and breaking up stuff in the his.py
+		hist= his.item_history(itemname,url)
+		requested_user = request.user.username
+
+		context = {'form' : form,'itemname' : itemname ,'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user}
+
+		return render(request,self.template_name,context)
 
 	def post(self,request,itemname):
 
 		if request.user.is_authenticated == False :
 			return redirect('items:login')
-
+		url = random_server()
 		recv = request.POST['recv']
-		username = request.user.username
-		password  =request.POST['password']
-		user = authenticate(username=username,password=password)
-
+		# username = request.user.username
+		# password  =request.POST['password']
+		# user = authenticate(username=username,password=password)
+		user = request.user.username
 		if user is not None:
-			send.snd(itemname,recv,request.user.username) 
+			send.snd(itemname,recv,request.user.username,url) 
 			#time.sleep(1.5)
 			return redirect('items:index')
 		else:
@@ -159,12 +193,13 @@ def map(request):
 	if request.user.is_authenticated == False :
 		return redirect('items:login')
 
+	url =random_server()
 	#GeoLocations of users Probably change this entire charade to some other file ????
-	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55}, 'Mike@manufacturing':{'lat':42.342, 'longi' : -71.52}, 'Susan@sterilization':{'lat':42.339 , 'longi': -71.53}, 'Quinn@quality':{'lat':42.39 , 'longi': -71.54}}
+	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55},'Larry@lab':{'lat':42.34, 'longi': -71.64}, 'Mike@manufacturing':{'lat':42.342, 'longi' : -71.52}, 'Susan@sterilization':{'lat':42.339 , 'longi': -71.53}, 'Quinn@quality':{'lat':42.39 , 'longi': -71.54}}
 	
 	
 	
-	response = querying.query_all_items()
+	response = querying.query_all_items(url)
 	resp = {}
 	usersdata = {}
 	for s in response:
@@ -203,6 +238,7 @@ class CreateItemView(View):
 		if request.user.is_authenticated == False :
 			print("Should not come here")
 			return redirect('items:login')
+		url = random_server()
 
 		itemname = request.POST['itemname']
 		username = request.user.username
@@ -210,7 +246,7 @@ class CreateItemView(View):
 		user = authenticate(username=username,password=password)
 
 		if user is not None:
-			response = create_saw.cr(itemname,username)
+			response = create_saw.cr(itemname,username,url)
 			print(response)
 			#time.sleep(1.5)
 			return redirect('items:index')

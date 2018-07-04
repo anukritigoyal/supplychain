@@ -1,4 +1,3 @@
-git clone https://github.com/GuyFawkes1/supplychain.git
 screen -d -m -S keygeneration sawtooth keygen
 screen -d -m -S validator_key_gen sudo sawadm keygen
 

@@ -11,20 +11,24 @@
 
 {% block body %}
 
-	<div id="text" style="float:left;overflow: auto; height: 80%">
-	<ul>
+	<div id="text" style="float:left;overflow: auto;width:30% height: 80%">
+		<h3> Current state of supplychain</h3>
+		<ul>
 		{% for name,g in resp.items %}
 			<li><a href = "{% url 'items:detail' g.name %} "> {{ g.name }}</a>  is currently with <a href = "{% url 'items:user_detail' g.c_addr %}">{{ g.c_addr }}</a> </li><br>
 		{% endfor %}
 
-
+	</ul></div>
+	<div style="float:left;overflow : auto;width:20%; height:80% ">
+		<h3> Current state of users </h3>
+		<ul>
 		{% for name,userinfo in usersdata.items %}
-			<li><a href = "{% url 'items:user_detail' name %}">{{ name }}</a> currently has {{ userinfo.iheld }} items </li>
+			<li><a href = "{% url 'items:user_detail' name %}">{{ name }}</a> currently has {{ userinfo.iheld }} items </li><br>
 		{% endfor %}
 	</ul>
 	</div>
 
-	<div id="mapid" style="width: 660px; height: 500px; float:right; "></div>
+	<div id="mapid" style="width: 50%; height: 70%; float:right; "></div>
 	<script>
 
 		

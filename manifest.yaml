@@ -1,0 +1,95 @@
+---
+applications :
+
+- name: validator_1
+  command:
+        su apt install sudo -y && \
+        sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD \
+        sudo add-apt-repository 'deb [arch=amd64] http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe' && \
+        sudo apt-get update && \ 
+        sudo apt-get install -y sawtooth && \
+        sawtooth keygen \
+        sawadm keygen --force && \
+        sudo chmod 777 -R /var/lib/sawtooth && \
+        sudo sawset genesis \
+          -k /etc/sawtooth/keys/validator.priv \
+          -o config-genesis.batch && \
+        sudo sawset proposal create \
+          -k /etc/sawtooth/keys/validator.priv \
+          sawtooth.consensus.algorithm=poet \
+          sawtooth.poet.report_public_key_pem=\
+          \\\"$\$\(cat /etc/sawtooth/simulator_rk_pub.pem\)\\\" \
+          sawtooth.poet.valid_enclave_measurements=$\$\(poet enclave measurement\) \
+          sawtooth.poet.valid_enclave_basenames=$\$\(poet enclave basename\) \
+          -o config.batch && \
+        sudo poet registration create -k /etc/sawtooth/keys/validator.priv -o poet.batch && \
+        sudo sawset proposal create \
+          -k /etc/sawtooth/keys/validator.priv \
+             sawtooth.poet.target_wait_time=5 \
+             sawtooth.poet.initial_wait_time=25 \
+             sawtooth.publisher.max_batches_per_block=100 \
+          -o poet-settings.batch && \
+        sudo sawadm genesis \
+          config-genesis.batch config.batch poet.batch poet-settings.batch && \
+        sawtooth-validator -v \
+        --bind network:tcp://eth0:8800 \
+        --bind component:tcp://eth0:4004 \
+        --peering dynamic \
+        --endpoint tcp://validator-0:8800 \
+        --scheduler serial \
+        --network trust
+  
+
+- name: validator_2
+  docker:
+    image: hyperledger/sawtooth-validator 
+  # routes:
+  # - route: validator_2.apps.internal
+  command: 
+      bash -c "\
+        sawadm keygen --force && \
+        sawtooth-validator -v \
+            --bind network:tcp://eth0:8800 \
+            --bind component:tcp://eth0:4004 \
+            --peering dynamic \
+            --endpoint tcp://validator-2:8800 \
+            --seeds tcp://validator-0:8800 \
+            --scheduler serial \
+            --network trust"
+
+- name: rest_api_1
+  docker:
+    image: hyperledger/sawtooth-rest-api
+  # routes:
+  # - route: rest_api_1.apps.internal
+  command:  bash -c "\ 
+              sawtooth-rest-api \
+                --connect tcp://validator-1:4004 \
+                --bind rest-api-0:8008"
+
+- name: rest_api_2
+  docker:
+    image: hyperledger/sawtooth-rest-api
+  # routes:
+  # - route: rest_api_2.apps.internal
+  command:  bash -c "\ 
+              sawtooth-rest-api \
+                --connect tcp://validator-2:4004 \
+                --bind rest-api-0:8008"
+
+- name: settings_tp_1
+  docker:
+    image: hyperledger/sawtooth-settings-tp
+  # routes:
+  # - route: settings_tp_1.apps.internal
+  command: settings-tp -C tcp://validator-1:4004
+  
+- name: settings_tp_2
+  docker:
+    image: hyperledger/sawtooth-settings-tp
+  # routes:
+  # - route: settings_tp_2.apps.internal
+  command: settings-tp -C tcp://validator-2:4004
+
+
+  

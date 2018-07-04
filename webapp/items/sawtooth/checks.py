@@ -11,15 +11,15 @@ def _get_keyfile(usrname):
 
 #different check functions will be called for different checks
 
-def check(name,cu_add,checkno,usrname):
-	url = 'http://127.0.0.1:8008'
+def check(name,cu_add,checkno,usrname,url):
+	# url = 'http://127.0.0.1:8008'
 	keyfile = _get_keyfile(usrname)
 	client = HwClient(base_url=url,keyfile = keyfile)
-	finding_item = find(name,usrname)
-	print("printing c_addr")
-	print(finding_item[name].c_addr)
-	print("printing signerkeyas hex")
-	print(client._signer.get_public_key().as_hex())
+	finding_item = find(name,usrname,url)
+	# print("printing c_addr")
+	# print(finding_item[name].c_addr)
+	# print("printing signerkeyas hex")
+	# print(client._signer.get_public_key().as_hex())
 	finding_item[name].c_addr == client._signer.get_public_key().as_hex()
 	response = client.check(name=name,check_no=checkno,cu_add=usrname)
 	#only when the transaction is not pending it will return control back to django

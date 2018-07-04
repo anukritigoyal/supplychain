@@ -7,15 +7,166 @@ Note: Please have a glance over the sawtooth hyperledger architecture to make mo
 ## Introduction
 
 This repository contains a web app that can be hosted on your ubuntu machine that talks with a sawtooth network. We defined few transaction families for our use, and those will be running on the validator node (More documentation to come explaining the transaction families).This project depends on
-<ul> <li>Hyperledger sawtooth on Ubuntu 16.04 </li>
-<li>Django 2.0 or later </li>
-<li>screen</li>
-<li>git</li>
-</ul>
+
+* Hyperledger sawtooth on Ubuntu 16.04
+* Django 2.0 or later
+* git
+* screen (optional)
+
+**Note: Docker compatibility is in works**
 
 ## Installation Procedure
 
-First, install the dependencies as listed above. Once you installed sawtooth, just download the first_time_set_up.sh file from the repository and run it. This will create a single validator with two transaction procesors and a django server at your ip:8000.(Please make sure you change the allowed hosts attribute in the webapp/webapp/settings.py file)
+### Using Native Ubuntu
+
+#### Installation of hyperledger-sawtooth
+
+```shell
+user@validator$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD
+user@validator$ sudo add-apt-repository 'deb [arch=amd64] http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe'
+user@validator$ sudo apt-get update
+user@validator$ sudo apt-get install -y sawtooth
+```
+
+#### Generate User Key and validator key
+
+Generate an user key with
+
+```shell
+user@validator$ sawtooth keygen
+```
+
+Generate a validator private key with
+
+```shell
+user@validator$ sudo sawadm keygen
+```
+
+#### Genesis block creation
+
+Creation of the first block in the block chain and the subsequent setting of poet consensus algo are shown below.
+
+```shell
+$ sawset genesis -k /etc/sawtooth/keys/validator.priv -o config-genesis.batch
+
+$ sawset proposal create -k /etc/sawtooth/keys/validator.priv \
+-o config.batch \
+sawtooth.consensus.algorithm=poet \
+sawtooth.poet.report_public_key_pem="$(cat /etc/sawtooth/simulator_rk_pub.pem)" \
+sawtooth.poet.valid_enclave_measurements=$(poet enclave measurement) \
+sawtooth.poet.valid_enclave_basenames=$(poet enclave basename)
+
+$ poet registration create -k /etc/sawtooth/keys/validator.priv -o poet.batch
+
+$ sawset proposal create -k /etc/sawtooth/keys/validator.priv \
+-o poet-settings.batch \
+sawtooth.poet.target_wait_time=5 \
+sawtooth.poet.initial_wait_time=25 \
+sawtooth.publisher.max_batches_per_block=100
+
+$ sawadm genesis config-genesis.batch config.batch poet.batch poet-settings.batch
+```
+
+Note:To make a better sense out of the above steps please refer [Sawtooth Documentation](https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html)
+
+#### Starting the first validator
+
+Before we start the first validator, since we are creating a network of validators, find out the local ip of the machine and its public endpoint.Now start the validator with
+
+```shell
+sawtooth-validator -v \
+    --bind network:tcp://(your local ip):8800 \
+    --bind component:tcp://127.0.0.1:4004 \
+    --peering dynamic \
+    --endpoint tcp://(your public endpoint):8800 \
+    --scheduler serial \
+    --network trust
+```
+
+Note: you can also add the peers here by the flag --peers tcp://(public endpoint of the second machine):8800
+
+#### Adding rest api and default transaction processors
+
+Open a new terminal window (or a screen session) and start the rest-api of sawtooth framework with:
+
+```shell
+$ sudo -u sawtooth sawtooth-rest-api -v
+```
+
+On a new terminal window start the following transaction processors:
+
+```shell
+$ sudo -u sawtooth settings-tp -v
+```
+
+```shell
+$ sudo -u sawtooth poet-validator-registry-tp -v
+```
+
+##### Note: keep all the terminals open or send them to  the background using '&'
+
+
+#### Getting this repo, starting the custom transaction processors and django
+
+git the repo into your file system and start the tps.
+
+```shell
+git clone https://github.com/GuyFawkes1/supplychain.git
+python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://127.0.0.1:4004
+python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://127.0.0.1:4004
+python3 supplychain/webapp/manage.py runserver 0:8000
+```
+Now go to your public_ip:8000/items/home and you can see the application up and running
+
+#### Setting up second node(machine)
+
+Install sawtooth as above and then start the validator with :
+
+```shell
+sawtooth-validator -v \
+    --bind network:tcp://(your local ip):8800 \
+    --bind component:tcp://127.0.0.1:4004 \
+    --peering dynamic \
+    --endpoint tcp://(your public endpoint):8800 \
+    --seeds tcp://(public ip of the first validator):8800 \
+    --scheduler serial \
+    --network trust
+```
+
+##### If seeds doesnot work, try using --peers (public ip of the first validator)
+
+Now start the rest-api, default tps and custom tps as above
+
+```shell
+$ sudo -u sawtooth sawtooth-rest-api -v
+```
+
+On a new terminal window start the following transaction processors:
+
+```shell
+$ sudo -u sawtooth settings-tp -v
+```
+
+```shell
+$ sudo -u sawtooth poet-validator-registry-tp -v
+```
+
+```shell
+git clone https://github.com/GuyFawkes1/supplychain.git
+python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://127.0.0.1:4004
+python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://127.0.0.1:4004
+```
+
+#### Troubleshooting
+
+* Every tp must be started in a new terminal
+
+* Make sure you give sawtooth permission to access /var/lib/sawtooth.
+
+```shell
+sudo chmod 777 -R /var/lib/sawtooth
+```
+Make sure that you add your public ip to the allowed hosts in the django settings.py
 
 ## Details of folders
 

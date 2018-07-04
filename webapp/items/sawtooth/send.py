@@ -8,8 +8,8 @@ def _get_keyfile(usrname):
 
 	return '{}/{}.priv'.format(key_dir, username)
 
-def snd(name,nxt_add,usrname):
-	url = 'http://127.0.0.1:8008'
+def snd(name,nxt_add,usrname,url):
+	#url = 'http://127.0.0.1:8008'
 	keyfile = _get_keyfile(usrname)
 	client = HwClient(base_url=url,keyfile = keyfile)
 

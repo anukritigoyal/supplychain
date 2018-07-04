@@ -186,7 +186,7 @@ class HwClient:
 
 				if status != 'PENDING':
 					return response
-
+	
 			return response
 
 		
