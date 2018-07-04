@@ -159,6 +159,8 @@ python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://127.0.0.1:
 
 #### Troubleshooting
 
+..* Every tp must me started in a new terminal
+
 Make sure you give sawtooth permission to access /var/lib/sawtooth.
 
 ```shell
