@@ -13,9 +13,52 @@ This repository contains a web app that can be hosted on your ubuntu machine tha
 <li>git</li>
 </ul>
 
+**Note: Docker compatibility is in works**
+
 ## Installation Procedure
 
-First, install the dependencies as listed above. Once you installed sawtooth, just download the first_time_set_up.sh file from the repository and run it. This will create a single validator with two transaction procesors and a django server at your ip:8000.(Please make sure you change the allowed hosts attribute in the webapp/webapp/settings.py file)
+### Installation of hyperledger-sawtooth
+
+```shell
+user@validator$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD
+user@validator$ sudo add-apt-repository 'deb [arch=amd64] http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe'
+user@validator$ sudo apt-get update
+user@validator$ sudo apt-get install -y sawtooth
+```
+
+### Generate User Key and validator key
+
+Generate an user key with
+
+```shell
+user@validator$ sawtooth keygen
+```
+
+Generate a validator private key with
+
+```shell
+user@validator$ sudo sawadm keygen
+```
+
+### Genesis block creation
+
+Creation of the first block in the block chain and the subsequent setting of poet consensus algo are shown below.
+
+```shell
+$ sawset genesis -k /etc/sawtooth/keys/validator.priv -o config-genesis.batch
+$ sawset proposal create -k /etc/sawtooth/keys/validator.priv \
+-o config.batch \
+sawtooth.consensus.algorithm=poet \
+sawtooth.poet.report_public_key_pem="$(cat /etc/sawtooth/simulator_rk_pub.pem)" \
+sawtooth.poet.valid_enclave_measurements=$(poet enclave measurement) \
+sawtooth.poet.valid_enclave_basenames=$(poet enclave basename)
+$ poet registration create -k /etc/sawtooth/keys/validator.priv -o poet.batch
+$ sawset proposal create -k /etc/sawtooth/keys/validator.priv \
+-o poet-settings.batch \
+sawtooth.poet.target_wait_time=5 \
+sawtooth.poet.initial_wait_time=25 \
+sawtooth.publisher.max_batches_per_block=100
+$ sawadm genesis config-genesis.batch config.batch poet.batch poet-settings.batch
 
 ## Details of folders
 
