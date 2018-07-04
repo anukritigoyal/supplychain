@@ -17,7 +17,9 @@ This repository contains a web app that can be hosted on your ubuntu machine tha
 
 ## Installation Procedure
 
-### Installation of hyperledger-sawtooth
+### Using Native Ubuntu
+
+#### Installation of hyperledger-sawtooth
 
 ```shell
 user@validator$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD
@@ -26,7 +28,7 @@ user@validator$ sudo apt-get update
 user@validator$ sudo apt-get install -y sawtooth
 ```
 
-### Generate User Key and validator key
+#### Generate User Key and validator key
 
 Generate an user key with
 
@@ -40,7 +42,7 @@ Generate a validator private key with
 user@validator$ sudo sawadm keygen
 ```
 
-### Genesis block creation
+#### Genesis block creation
 
 Creation of the first block in the block chain and the subsequent setting of poet consensus algo are shown below.
 
@@ -67,14 +69,14 @@ $ sawadm genesis config-genesis.batch config.batch poet.batch poet-settings.batc
 
 Note:To make a better sense out of the above steps please refer [Sawtooth Documentation](https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html)
 
-### Starting the first validator
+#### Starting the first validator
 
 Before we start the first validator, since we are creating a network of validators, find out the local ip of the machine and its public endpoint.Now start the validator with
 
 ```shell
 sawtooth-validator -v \
     --bind network:tcp://(your local ip):8800 \
-    --bind component:tcp://(your local ip):4004 \
+    --bind component:tcp://127.0.0.1:4004 \
     --peering dynamic \
     --endpoint tcp://(your public endpoint):8800 \
     --scheduler serial \
@@ -83,7 +85,7 @@ sawtooth-validator -v \
 
 Note: you can also add the peers here by the flag --peers tcp://(public endpoint of the second machine):8800
 
-### Adding rest api and default transaction processors
+#### Adding rest api and default transaction processors
 
 Open a new terminal window (or a screen session) and start the rest-api of sawtooth framework with:
 
@@ -91,7 +93,7 @@ Open a new terminal window (or a screen session) and start the rest-api of sawto
 $ sudo -u sawtooth sawtooth-rest-api -v
 ```
 
-On a new terminal window start the following tranasaction processors:
+On a new terminal window start the following transaction processors:
 
 ```shell
 $ sudo -u sawtooth settings-tp -v
@@ -101,31 +103,32 @@ $ sudo -u sawtooth settings-tp -v
 $ sudo -u sawtooth poet-validator-registry-tp -v
 ```
 
-**Note: keep all the terminals open or aend them to  the background using '&'**
+**Note: keep all the terminals open or send them to  the background using '&'**
 
-### Getting this repo, starting the custom transaction processors and starting django
+#### Getting this repo, starting the custom transaction processors and django
 
 git the repo into your file system and start the tps.
 
 ```shell
 git clone https://github.com/GuyFawkes1/supplychain.git
-python3 supplychain/Transaction_Families/sawtooth/proc/main.py
-python3 supplychain/Transaction_Families/wallet_tf/proc/main.py
+python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://127.0.0.1:4004
+python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://127.0.0.1:4004
 python3 supplychain/webapp/manage.py runserver 0:8000
 ```
-
-**Note: Make sure that you add your public ip to the allowed hosts in the django settings.py**
-
+Now go to your public_ip:8000/items/home and you can see the application up and running
 
 
 
-### Troubleshooting:
+
+
+#### TroubleshootingS
 
 Make sure you give sawtooth permission to access /var/lib/sawtooth.
 
 ```shell
 sudo chmod 777 -R /var/lib/sawtooth
 ```
+Make sure that you add your public ip to the allowed hosts in the django settings.py
 
 ## Details of folders
 
