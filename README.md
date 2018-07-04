@@ -65,7 +65,7 @@ sawtooth.publisher.max_batches_per_block=100
 $ sawadm genesis config-genesis.batch config.batch poet.batch poet-settings.batch
 ```
 
-Note:To make a better sense out of the above steps please refer [Sawtooth documentation](https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html)
+Note:To make a better sense out of the above steps please refer [Sawtooth Documentation](https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html)
 
 ### Starting the first validator
 
@@ -81,6 +81,8 @@ sawtooth-validator -v \
     --network trust
 ```
 
+Note: you can also add the peers here by the flag --peers tcp://(public endpoint of the second machine):8800
+
 ### Adding rest api and default transaction processors
 
 Open a new terminal window (or a screen session) and start the rest-api of sawtooth framework with:
@@ -89,7 +91,41 @@ Open a new terminal window (or a screen session) and start the rest-api of sawto
 $ sudo -u sawtooth sawtooth-rest-api -v
 ```
 
+On a new terminal window start the following tranasaction processors:
 
+```shell
+$ sudo -u sawtooth settings-tp -v
+```
+
+```shell
+$ sudo -u sawtooth poet-validator-registry-tp -v
+```
+
+**Note: keep all the terminals open or aend them to  the background using '&'**
+
+### Getting this repo, starting the custom transaction processors and starting django
+
+git the repo into your file system and start the tps.
+
+```shell
+git clone https://github.com/GuyFawkes1/supplychain.git
+python3 supplychain/Transaction_Families/sawtooth/proc/main.py
+python3 supplychain/Transaction_Families/wallet_tf/proc/main.py
+python3 supplychain/webapp/manage.py runserver 0:8000
+```
+
+**Note: Make sure that you add your public ip to the allowed hosts in the django settings.py**
+
+
+
+
+### Troubleshooting:
+
+Make sure you give sawtooth permission to access /var/lib/sawtooth.
+
+```shell
+sudo chmod 777 -R /var/lib/sawtooth
+```
 
 ## Details of folders
 
