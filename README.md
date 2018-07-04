@@ -168,6 +168,14 @@ sudo chmod 777 -R /var/lib/sawtooth
 ```
 Make sure that you add your public ip to the allowed hosts in the django settings.py
 
+#### Shortcut method (experimental, may raise errors)
+
+Install sawtooth and create the genisis block as described above.Then git clone this repo to your home diectory and then run the script settingupsaw.sh.(Make sure you edit the details the script)
+
+#### Getting rid of all the block chain data to start a new chain
+
+Navigate to /var/lib/sawtooth and delete all the files inside it. To create a new blockchain follow the same procedure as above, from starting the first validator (if you don't want to change any settings of poet else you have to start from creating the genesis block)
+
 ## Details of folders
 
 ### Transaction Families
