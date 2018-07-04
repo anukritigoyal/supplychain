@@ -105,6 +105,7 @@ $ sudo -u sawtooth poet-validator-registry-tp -v
 
 ##### Note: keep all the terminals open or send them to  the background using '&'
 
+
 #### Getting this repo, starting the custom transaction processors and django
 
 git the repo into your file system and start the tps.
