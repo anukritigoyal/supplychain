@@ -117,11 +117,46 @@ python3 supplychain/webapp/manage.py runserver 0:8000
 ```
 Now go to your public_ip:8000/items/home and you can see the application up and running
 
+#### Setting up second node(machine)
 
+Install sawtooth as above and then start the validator with :
 
+```shell
+sawtooth-validator -v \
+    --bind network:tcp://(your local ip):8800 \
+    --bind component:tcp://127.0.0.1:4004 \
+    --peering dynamic \
+    --endpoint tcp://(your public endpoint):8800 \
+    --seeds tcp://(public ip of the first validator):8800 \
+    --scheduler serial \
+    --network trust
+```
 
+##### If seeds doesnot work, try using --peers (public ip of the first validator)
 
-#### TroubleshootingS
+Now start the rest-api, default tps and custom tps as above
+
+```shell
+$ sudo -u sawtooth sawtooth-rest-api -v
+```
+
+On a new terminal window start the following transaction processors:
+
+```shell
+$ sudo -u sawtooth settings-tp -v
+```
+
+```shell
+$ sudo -u sawtooth poet-validator-registry-tp -v
+```
+
+```shell
+git clone https://github.com/GuyFawkes1/supplychain.git
+python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://127.0.0.1:4004
+python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://127.0.0.1:4004
+```
+
+#### Troubleshooting
 
 Make sure you give sawtooth permission to access /var/lib/sawtooth.
 
