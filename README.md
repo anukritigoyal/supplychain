@@ -45,21 +45,47 @@ user@validator$ sudo sawadm keygen
 Creation of the first block in the block chain and the subsequent setting of poet consensus algo are shown below.
 
 ```shell
-$ sawset genesis -k /etc/sawtooth/keys/validator.priv -o config-genesis.batch
-$ sawset proposal create -k /etc/sawtooth/keys/validator.priv \
+sawset genesis -k /etc/sawtooth/keys/validator.priv -o config-genesis.batch && \
+sawset proposal create -k /etc/sawtooth/keys/validator.priv \
 -o config.batch \
 sawtooth.consensus.algorithm=poet \
 sawtooth.poet.report_public_key_pem="$(cat /etc/sawtooth/simulator_rk_pub.pem)" \
 sawtooth.poet.valid_enclave_measurements=$(poet enclave measurement) \
-sawtooth.poet.valid_enclave_basenames=$(poet enclave basename)
-$ poet registration create -k /etc/sawtooth/keys/validator.priv -o poet.batch
-$ sawset proposal create -k /etc/sawtooth/keys/validator.priv \
+sawtooth.poet.valid_enclave_basenames=$(poet enclave basename) && \
+poet registration create -k /etc/sawtooth/keys/validator.priv -o poet.batch && \
+sawset proposal create -k /etc/sawtooth/keys/validator.priv \
 -o poet-settings.batch \
 sawtooth.poet.target_wait_time=5 \
 sawtooth.poet.initial_wait_time=25 \
-sawtooth.publisher.max_batches_per_block=100
-$ sawadm genesis config-genesis.batch config.batch poet.batch poet-settings.batch
+sawtooth.publisher.max_batches_per_block=100 && \
+sawadm genesis config-genesis.batch config.batch poet.batch poet-settings.batch 
 ```
+
+Note:To make a better sense out of the above steps please refer [Sawtooth documentation](https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html)
+
+### Starting the first validator
+
+Before we start the first validator, since we are creating a network of validators, find out the local ip of the machine and its public endpoint.Now start the validator with
+
+```shell
+sawtooth-validator -v \
+    --bind network:tcp://(your local ip):8800 \
+    --bind component:tcp://(your local ip):4004 \
+    --peering dynamic \
+    --endpoint tcp://(your public endpoint):8800 \
+    --scheduler serial \
+    --network trust
+```
+
+### Adding rest api and default transaction processors
+
+Open a new terminal window (or a screen session) and start the rest-api of sawtooth framework with:
+
+```shell
+$ sudo -u sawtooth sawtooth-rest-api -v
+```
+
+
 
 ## Details of folders
 
