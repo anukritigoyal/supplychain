@@ -7,11 +7,11 @@ Note: Please have a glance over the sawtooth hyperledger architecture to make mo
 ## Introduction
 
 This repository contains a web app that can be hosted on your ubuntu machine that talks with a sawtooth network. We defined few transaction families for our use, and those will be running on the validator node (More documentation to come explaining the transaction families).This project depends on
-<ul> <li>Hyperledger sawtooth on Ubuntu 16.04 </li>
-<li>Django 2.0 or later </li>
-<li>screen</li>
-<li>git</li>
-</ul>
+
+* Hyperledger sawtooth on Ubuntu 16.04
+* Django 2.0 or later
+* git
+* screen (optional)
 
 **Note: Docker compatibility is in works**
 
@@ -159,9 +159,9 @@ python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://127.0.0.1:
 
 #### Troubleshooting
 
-..* Every tp must me started in a new terminal
+* Every tp must me started in a new terminal
 
-Make sure you give sawtooth permission to access /var/lib/sawtooth.
+* Make sure you give sawtooth permission to access /var/lib/sawtooth.
 
 ```shell
 sudo chmod 777 -R /var/lib/sawtooth
