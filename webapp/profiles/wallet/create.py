@@ -9,8 +9,8 @@ def _get_keyfile(name):
 
 	return '{}/{}.priv'.format(key_dir, username)
 
-def add(name,adminname):
-	url = 'http://127.0.0.1:8008'
+def add(name,adminname,url):
+	# url = 'http://127.0.0.1:8008'
 	try:
 		res = subprocess.check_call(['sawtooth','keygen',name])
 	except:
