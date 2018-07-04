@@ -85,32 +85,27 @@ services:
   #sawtooth tp
   ########  ADDD URLSSS
   sawtooth-tp-0:
-    image: hyperledger/sawtooth-shell
+    image: custom_saw
     container_name: sawtooth-tp-default-0
     expose:
       - 4004
       - 80
     command: bash -c \ 
-              "apt-get update && apt-get install -y git  && \
-              git clone https://github.com/GuyFawkes1/supplychain.git && \
-              cd supplychain/Transaction_Families/sawtooth/proc && \
-              python3 main.py"
+             "git clone https://github.com/GuyFawkes1/supplychain.git && /usr/bin/python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://validator-0:4004 "
+              
     stop_signal: SIGKILL
 
 
   #wallet tp
   wallet-tp-0:
-    image: hyperledger/sawtooth-shell
+    image: custom_saw
     container_name: wallet-tp-default-0
     expose:
       - 4004
       - 80
     command: bash -c \ 
-              "apt-get update && apt-get install-y git  && \
-              git clone https://github.com/GuyFawkes1/supplychain.git && \
-              cd supplychain/Transaction_Families/wallet/proc && \
-              python3 main.py"
-  
+              "git clone https://github.com/GuyFawkes1/supplychain.git && /usr/bin/python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://validator-0:4004 "
+              
   validator-1:
     image: hyperledger/sawtooth-validator
     container_name: sawtooth-validator-default-1
@@ -165,37 +160,32 @@ services:
 
 
   sawtooth-tp-1:
-    image: hyperledger/sawtooth-shell
+    image: custom_saw
     container_name: sawtooth-tp-default-1
     expose:
       - 4004
     command: bash -c \ 
-              "apt-get update && apt-get install -y git  && \
-              git clone https://github.com/GuyFawkes1/supplychain.git && \
-              cd supplychain/Transaction_Families/sawtooth/proc && \
-              python3 main.py tcp://validator-0:4004"
+              "git clone https://github.com/GuyFawkes1/supplychain.git && /usr/bin/python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://validator-1:4004 "
+              
     stop_signal: SIGKILL
 
   wallet-tp-1:
-    image: hyperledger/sawtooth-shell
+    image: custom_saw
     container_name: wallet-tp-default-1
     expose:
       - 4004
       - 80
     command: bash -c \ 
-              "apt-get update && apt-get install -y git && \
-              git clone https://github.com/GuyFawkes1/supplychain.git && \
-              cd supplychain/Transaction_Families/wallet/proc && \
-              python3 main.py"
-  
+              "git clone https://github.com/GuyFawkes1/supplychain.git && /usr/bin/python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://validator-1:4004 "
+              
+    stop_signal: SIGKILL
 
-  # djano-server-1:
-  #   image: python
-  #   container_name: django-server-default-1
-  #   expose:
-  #     - 8000
-  #     - 8008
-  #   command: bash -c \
-  #             "git clone https://github.com/GuyFawkes1/supplychain.git && \
-  #             pip3 install
-  #             "
+  djano-server-1:
+    image: django_custom
+    container_name: django-server-default-1
+    ports:
+      - "8000:8000"
+    expose:
+      - 8008
+    command: bash -c \
+              "git clone https://github.com/GuyFawkes1/supplychain.git && python3 supplychain/webapp/manage.py runserver 0:8000"
