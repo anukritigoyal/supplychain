@@ -47,18 +47,18 @@ user@validator$ sudo sawadm keygen
 Creation of the first block in the block chain and the subsequent setting of poet consensus algo are shown below.
 
 ```shell
-$ sawset genesis -k /etc/sawtooth/keys/validator.priv -o config-genesis.batch
+$ sudo sawset genesis -k /etc/sawtooth/keys/validator.priv -o config-genesis.batch
 
-$ sawset proposal create -k /etc/sawtooth/keys/validator.priv \
+$ sudo sawset proposal create -k /etc/sawtooth/keys/validator.priv \
 -o config.batch \
 sawtooth.consensus.algorithm=poet \
 sawtooth.poet.report_public_key_pem="$(cat /etc/sawtooth/simulator_rk_pub.pem)" \
 sawtooth.poet.valid_enclave_measurements=$(poet enclave measurement) \
 sawtooth.poet.valid_enclave_basenames=$(poet enclave basename)
 
-$ poet registration create -k /etc/sawtooth/keys/validator.priv -o poet.batch
+$ sudo poet registration create -k /etc/sawtooth/keys/validator.priv -o poet.batch
 
-$ sawset proposal create -k /etc/sawtooth/keys/validator.priv \
+$ sudo sawset proposal create -k /etc/sawtooth/keys/validator.priv \
 -o poet-settings.batch \
 sawtooth.poet.target_wait_time=5 \
 sawtooth.poet.initial_wait_time=25 \
@@ -74,7 +74,7 @@ Note:To make a better sense out of the above steps please refer [Sawtooth Docume
 Before we start the first validator, since we are creating a network of validators, find out the local ip of the machine and its public endpoint.Now start the validator with
 
 ```shell
-sawtooth-validator -v \
+sudo -u sawtooth sawtooth-validator -v \
     --bind network:tcp://(your local ip):8800 \
     --bind component:tcp://127.0.0.1:4004 \
     --peering dynamic \
@@ -123,7 +123,7 @@ Now go to your public_ip:8000/items/home and you can see the application up and 
 Install sawtooth as above and then start the validator with :
 
 ```shell
-sawtooth-validator -v \
+sudo -u sawtooth sawtooth-validator -v \
     --bind network:tcp://(your local ip):8800 \
     --bind component:tcp://127.0.0.1:4004 \
     --peering dynamic \
