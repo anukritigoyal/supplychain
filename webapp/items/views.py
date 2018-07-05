@@ -7,8 +7,6 @@ from .sawtooth import create as create_saw
 from .sawtooth import finder as finder_saw
 from .sawtooth import his
 from .sawtooth import checks
-import time
-import requests as req_lib
 from profiles.wallet import finder as finder_wal
 from .forms import UserForm,SendItemForm
 from .forms import CreateItemForm
@@ -37,6 +35,7 @@ def index(request):
 	else:
 		resp = querying.query_possible_items(request.GET.get("q"),url)
 		flag = 0
+		#flag to stop having the username in the html
 		#takes care of search form
 		
 	for name,item_obj in resp.items():
