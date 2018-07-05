@@ -41,7 +41,7 @@ def index(request):
 class CreateProfileView(View):
 
 	form_class = CreateProfileForm
-	template_name = 'items/create.html'
+	template_name = 'profiles/create.html'
 
 	def get(self,request):
 
