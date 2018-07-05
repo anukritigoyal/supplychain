@@ -1,0 +1,13 @@
+FROM hyperledger/sawtooth-shell AS builder
+
+RUN apt-get update && apt-get install -y python3-pip git 
+
+RUN pip3 install Django  && \
+ git clone https://github.com/GuyFawkes1/supplychain.git
+
+FROM python:3.5-alpine
+COPY --from=builder /supplychain/ /supplychain/
+COPY --from=builder /usr/lib/python3/dist-packages /usr/lib/python3/dist-packages 
+COPY --from=builder /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu
+
+ENV PYTHONPATH "${PYTONPATH}:/usr/lib/python35.zip:/usr/lib/python3.5/:usr/lib/python3.5/plat-x86_64-linux-gnu:/usr/lib/python3.5/lib-dynload:/usr/local/lib/python3.5/dist-packages:/usr/lib/python3/dist-packages"

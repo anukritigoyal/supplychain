@@ -44,7 +44,7 @@ user@validator$ sudo sawadm keygen
 
 #### Genesis block creation
 
-Creation of the first block in the block chain and the subsequent setting of poet consensus algo are shown below.
+Now since this is the first validator, we need to create the first block in the blockchain (Genesis block). All the commands in this subsection are to run only on the first node. 
 
 ```shell
 $ sudo sawset genesis -k /etc/sawtooth/keys/validator.priv -o config-genesis.batch
@@ -64,7 +64,7 @@ sawtooth.poet.target_wait_time=5 \
 sawtooth.poet.initial_wait_time=25 \
 sawtooth.publisher.max_batches_per_block=100
 
-$ sawadm genesis config-genesis.batch config.batch poet.batch poet-settings.batch
+$ sudo sawadm genesis config-genesis.batch config.batch poet.batch poet-settings.batch
 ```
 
 Note:To make a better sense out of the above steps please refer [Sawtooth Documentation](https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html)
