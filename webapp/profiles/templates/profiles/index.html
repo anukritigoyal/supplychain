@@ -1,0 +1,16 @@
+{% extends 'profiles/base.html' %}
+
+{% block body %}
+	<div class="container">
+	{% comment %} {% if flag == 1 %} {% endcomment %}
+	<h3>Assigned to {{ username }}</h3>
+	{% comment %} {% endif %} {% endcomment %}
+	<ul>
+		
+		{% for name,g in resp.items %}
+
+			<li>{% comment %}  <a href = "{% url 'items:detail' g.name %} ">{% endcomment %} {{ g.name }}  has public key of {{ g.pubkey }} </a></li><br> 
+		{% endfor %}
+	</ul>
+	</div>
+{% endblock %}
