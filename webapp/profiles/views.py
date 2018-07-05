@@ -5,8 +5,8 @@ from django.views import View
 import json
 from .wallet import create as create_wal
 from .wallet import finder
-from forms import CreateProfileForm
-from models import Pair
+from .forms import CreateProfileForm
+from .models import Pair
 
 
 
