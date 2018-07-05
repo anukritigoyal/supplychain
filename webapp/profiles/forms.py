@@ -6,5 +6,5 @@ class CreateProfileForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput)
 
 	class Meta:
-		model = ProfileCreation
+		model = User
 		fields = ['username','password']
