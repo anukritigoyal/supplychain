@@ -1,5 +1,5 @@
 from django import forms
-from models import ProfileCreation
+from .models import ProfileCreation
 
 
 class CreateProfileForm(forms.ModelForm):
