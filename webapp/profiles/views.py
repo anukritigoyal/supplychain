@@ -65,6 +65,7 @@ class CreateProfileView(View):
 			password = form.cleaned_data['password']
 			user.set_password(password)
 			user.save()
+			create_wal.add(username,request.user.username,url)
 			return redirect('profiles:home')
 		else :
 			return redirect('profiles:create')	
