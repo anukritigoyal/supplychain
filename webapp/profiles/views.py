@@ -26,7 +26,7 @@ def index(request):
 	resp ={}
 	response = finder.query_all(url)
 	for s in response:
-		name,pubkey,prof = response[s].split(",")
+		name,pubkey,prof = response[s].decode().split(",")
 		resp[name] = Pair(name,pubkey,prof)
 
 		
