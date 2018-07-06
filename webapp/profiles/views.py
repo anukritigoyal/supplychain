@@ -59,10 +59,6 @@ class CreateProfileView(View):
 		url = random_server()
 		form = CreateProfileForm(request.POST)
 		
-		print(request.POST['password'])
-		print(request.POST['username'])
-		print(request.POST['groups'])
-
 		if form.is_valid():
 			user = form.save(commit=False)
 			username = form.cleaned_data['username']
@@ -70,7 +66,6 @@ class CreateProfileView(View):
 			
 			user.set_password(password)
 			user.save()
-			user.groups.add(form.cleaned_data['groups'])
 			create_wal.add(username,request.user.username,url)
 			return redirect('profiles:home')
 		else:
