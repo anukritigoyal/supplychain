@@ -5,7 +5,7 @@ import hashlib
 import json
 import base64
 from base64 import b64encode
-
+from ..models import history_object
 WAL_NAMESPACE = hashlib.sha512('wal'.encode("utf-8")).hexdigest()[0:6]
 
 def _get_keyfile(usrname):
@@ -38,4 +38,26 @@ def query_all(url):
 			jsan[j] = (base64.b64decode(i['data']))
 			j = j+1
 	return jsan
+
+def user_history(usrname,url):
+	keyfile = _get_keyfile(usrname)
+	url =  url + '/transactions'
+	client = WalClient(base_url=url,keyfile = keyfile)
+	public_key = client._signer.get_public_key().as_hex()
+	r = requests.get(url=url)
+	alltrans = r.json()
+	jsan = {}
+	j=0
+	history_collection = {}
+	for i in alltrans['data']:
+		if i['header']['signer_public_key'] == public_key:
+			unprocessed = base64.b64decode(i['payload'])
+			name,action,c_add,prev_add,timestamp = unprocessed.decode().split(",")
+			hist = history_object(name,action,c_add,prev_add,timestamp)
+			history_collection[j] = hist
+			j = j+1
+		
+	
+	return jsan
+
 

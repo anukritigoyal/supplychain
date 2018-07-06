@@ -9,7 +9,6 @@ from .forms import CreateProfileForm
 from .models import Pair
 
 
-
 ###WORK on this postponed
 def random_server():
 	urls_list = { '1': 'http://127.0.0.1:8008','2': 'http://rest-api-0:8008' }
@@ -34,6 +33,17 @@ def index(request):
 	context = {'resp' :resp, 'username' : request.user.username}
 
 	return render(request,'profiles/index.html', context)
+
+def detail(request,username):
+	
+	if request.user.is_staff == False :
+		return redirect('items:index')
+	url = random_server()
+
+	hist= finder.user_history(username,url)
+
+	context = {'hist' : hist }
+	return render(request,'profiles/detail.html',context)	
 
 
 

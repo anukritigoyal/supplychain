@@ -9,7 +9,7 @@
 		
 		{% for name,g in resp.items %}
 
-			<li>{% comment %}  <a href = "{% url 'items:detail' g.name %} ">{% endcomment %} {{ g.name }}  has public key of {{ g.pubkey }} </a></li><br> 
+			<li><a href = "{% url 'profiles:detail' g.name %} "> {{ g.name }}  has public key of {{ g.pubkey }} </a></li><br> 
 		{% endfor %}
 	</ul>
 	</div>

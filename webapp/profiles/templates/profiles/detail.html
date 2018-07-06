@@ -1,0 +1,24 @@
+{% extends 'profiles/base.html' %}
+{% block title %}Details{% endblock %}
+{% block body %}
+	<div class= "container">
+
+		
+
+	<div id="history_text" style="margin:0px auto;float:left; position:relative;"><ul>
+		<h3>User Activity</h3>
+		<!--its actually next addr in the transactions , please go and look at send in sawtooth folder(inside item)-->
+		{% for item,g in hist.items %}
+			{% if g.action == 'send'%}
+			<li>{{g.c_addr}}: {{g.action}} to  {{g.p_addr}}  at {{g.timestamp}}   </li>
+			{% else %}
+			<li>{{g.c_addr}}: {{g.action}} at {{g.timestamp}}</li>
+			
+			{% endif %}
+
+		{% endfor %}
+	</ul></div>
+	</div>
+	
+{% endblock %}
+<!---href="{% url 'items:detail' object.name %}"-->
