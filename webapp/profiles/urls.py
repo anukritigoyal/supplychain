@@ -8,6 +8,6 @@ import time
 urlpatterns = [
 	url('home/',views.index,name='home'),
 	url('create/',views.CreateProfileView.as_view(),name='create'),
-	path('details/<username>/',views.detail,name='details'),
+	path('details/<username>/',views.detail,name='detail'),
 
 ]
