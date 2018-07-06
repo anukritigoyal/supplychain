@@ -48,20 +48,5 @@ def item_history(name,url):
 			j = j+1
 	return history_collection
 
-def user_history(usrname,url):
-	keyfile = _get_keyfile(usrname)
-	url =  url + '/transactions'
-	client = HwClient(base_url=url,keyfile = keyfile)
-	public_key = client._signer.get_public_key().as_hex()
-	r = requests.get(url=url)
-	alltrans = r.json()
-	jsan = {}
-	j=0
-	for i in alltrans['data']:
-		if i['header']['signer_public_key'] == public_key:
-			jsan[j] = (base64.b64decode(i['payload']))
-			j = j+1
-	
-	return jsan
 
 

@@ -7,8 +7,6 @@ from .sawtooth import create as create_saw
 from .sawtooth import finder as finder_saw
 from .sawtooth import his
 from .sawtooth import checks
-import time
-import requests as req_lib
 from profiles.wallet import finder as finder_wal
 from .forms import UserForm,SendItemForm
 from .forms import CreateItemForm
@@ -20,9 +18,10 @@ import json
 
 ###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
 ##configure randomness here
+## write a module that reads from servers.json or some other and uses it herre (sort of like config file)
 def random_server():
-	urls_list = { '1': 'http://127.0.0.1:8008' }
-	return urls_list['1']
+	urls_list = { '1': 'http://127.0.0.1:8008','2': 'http://rest-api-0:8008' }
+	return urls_list['2']
 
 def index(request):
 	
@@ -37,11 +36,12 @@ def index(request):
 	else:
 		resp = querying.query_possible_items(request.GET.get("q"),url)
 		flag = 0
+		#flag to stop having the username in the html
 		#takes care of search form
 		
 	for name,item_obj in resp.items():
 		#finding out human name of the public key holder
-		nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
+		nc_add = finder_wal.query(item_obj.c_addr,request.user.username,url)
 		nc_add = _deserialize_key(nc_add)
 		resp[name].c_addr = nc_add
 
@@ -60,7 +60,7 @@ def detail(request,itemname):
 	resp = finder_saw.find(itemname,'ubuntu',url)
 	
 	#######VERY IMPOSRTANT CHANGE TO BE APPLIED HERE TOOO
-	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
+	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu',url)
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
 	#get the checks list
@@ -93,7 +93,7 @@ def user_detail (request,username):
 	for name,item_obj in resp.items():
 		#finding out human name of the public key holder
 		######HERE TOOOO
-		nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
+		nc_add = finder_wal.query(item_obj.c_addr,request.user.username,url)
 		nc_add = _deserialize_key(nc_add)
 		resp[name].c_addr = nc_add
 
@@ -122,9 +122,7 @@ def checked(request,itemname):
 	
 	resp = finder_saw.find(itemname,'ubuntu',url)
 	
-	#add this deserialize to find itself
-	#### HERE TOO
-	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
+	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu',url)
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
 	#get the checks list
@@ -149,7 +147,7 @@ class SendItem(View):
 		#can change 'ubuntu' to 'requested user'
 		resp = finder_saw.find(itemname,'ubuntu',url)
 	
-		nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
+		nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu',url)
 		nc_add = _deserialize_key(nc_add)
 		resp[itemname].c_addr = nc_add
 		#get the checks list
@@ -195,7 +193,7 @@ def map(request):
 
 	url =random_server()
 	#GeoLocations of users Probably change this entire charade to some other file ????
-	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55},'Larry@lab':{'lat':42.34, 'longi': -71.64}, 'Mike@manufacturing':{'lat':42.342, 'longi' : -71.52}, 'Susan@sterilization':{'lat':42.339 , 'longi': -71.53}, 'Quinn@quality':{'lat':42.39 , 'longi': -71.54}}
+	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55},'Larry@lab':{'lat':42.34, 'longi': -71.64}, 'Mike':{'lat':42.342, 'longi' : -71.52}, 'Susan@sterilization':{'lat':42.339 , 'longi': -71.53}, 'Quinn@quality':{'lat':42.39 , 'longi': -71.54}}
 	
 	
 	
@@ -204,7 +202,7 @@ def map(request):
 	usersdata = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
-		nc_add = finder_wal.query(c_add,'ubuntu')
+		nc_add = finder_wal.query(c_add,'ubuntu',url)
 		nc_add = _deserialize_key(nc_add)
 		resp[name] = Item(name,checks,nc_add,prev_add)
 		

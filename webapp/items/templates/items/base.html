@@ -49,7 +49,14 @@
             <button type="submit" class="btn btn-default">Search</button>
         </form>
 
+
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{% url 'profiles:home' %}">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Admin
+                        </a>
+
+                </li>
                 <li>
                     <a href="{% url 'items:create' %}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Create
