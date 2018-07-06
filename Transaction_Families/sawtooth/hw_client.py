@@ -2,6 +2,7 @@ import hashlib
 import base64
 from base64 import b64encode
 import time
+import datetime
 import requests
 import yaml
 from sawtooth_signing import create_context
@@ -44,17 +45,17 @@ class HwClient:
 			.new_signer(private_key)
 
 
-	def create(self,name,cu_add=None,wait=None):
-		return self._send_hw_txn(name,"create",cu_add=self._signer.get_public_key().as_hex(),nxt_add='no',wait = wait)
+	def create(self,name,cu_add,wait=None):
+		return self._send_hw_txn(name,"create",cu_add=cu_add,nxt_add='no',wait = wait)
 
-	def delete(self,name,wait=None):
-		return self._send_hw_txn(name,"delete",cu_add=self._signer.get_public_key().as_hex(),nxt_add='no', wait = wait)
+	def delete(self,name,cu_add,wait=None):
+		return self._send_hw_txn(name,"delete",cu_add=cu_add,nxt_add='no', wait = wait)
 
-	def send(self,name,nxt_add,wait=None):
-		return self._send_hw_txn(name,"send",cu_add=self._signer.get_public_key().as_hex(),nxt_add=nxt_add,wait=wait)
+	def send(self,name,nxt_add,cu_add,wait=None):
+		return self._send_hw_txn(name,"send",cu_add=cu_add,nxt_add=nxt_add,wait=wait)
 
 	def check(self,name,check_no,cu_add,wait=None):
-		return self._send_hw_txn(name,check_no,cu_add=cu_add,nxt_add=self._signer.get_public_key().as_hex(),wait=wait)
+		return self._send_hw_txn(name,'check'+ check_no,cu_add=cu_add,nxt_add=cu_add,wait=wait)
 
 	def show(self,name):
 		address = self._get_address(name)
@@ -68,10 +69,10 @@ class HwClient:
 			return None
 
 
-	def _get_status(self,batch_id,wait):
+	def _get_status(self,batch_id):
 		try:
 			result = self._send_request(
-			'batch_statuses?id={}&wait={}'.format(batch_id, wait))
+			'batch_statuses?id={}'.format(batch_id))
 			return yaml.safe_load(result)['data'][0]['status']
 		except BaseException as err:
 			raise XoException(err)
@@ -129,12 +130,14 @@ class HwClient:
 
 
 	def _send_hw_txn(self,name,action,cu_add,nxt_add,wait=None):
-
-		payload = ",".join([name,action,cu_add,nxt_add]).encode()
+		ts = time.time()
+		time_stamp = datetime.datetime.fromtimestamp(ts).strftime('%X %x')
+		payload = ",".join([name,action,cu_add,nxt_add,time_stamp]).encode()
 		key_add = self._get_key_address(nxt_add)
 		cli_add = self._get_key_address(cu_add)
 		address = self._get_address(name)
 
+		
 		#for a transaction processor to access an address in the state database, we have to specify it in
 		#inputs of the transaction header. For a transaction processor to change an element at an address,
 		#we have to specify that address in outputs
@@ -167,10 +170,10 @@ class HwClient:
 		signature = self._signer.sign(header)
 		transaction = Transaction(header= header,payload = payload,
 			header_signature = signature)
-
+		
 		batch_list = self._create_batch_list([transaction])
 		batch_id = batch_list.batches[0].header_signature
-
+		wait = 1.5
 		if wait and wait > 0:
 			wait_time = 0
 			start_time = time.time()
@@ -178,15 +181,15 @@ class HwClient:
 				"batches",batch_list.SerializeToString(),
 				'application/octet-stream')
 			while wait_time <wait:
-				status = self._get_status(batch_id,wait - int(wait_time))
+				status = self._get_status(batch_id)
 				wait_time = time.time()-start_time
 
 				if status != 'PENDING':
 					return response
-
+	
 			return response
 
-
+		
 		return self._send_request("batches",batch_list.SerializeToString(),
 			'application/octet-stream')
 

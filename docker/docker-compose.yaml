@@ -82,8 +82,6 @@ services:
       PYTHONPATH: /project/sawtooth-core/consensus/poet/common
     stop_signal: SIGKILL
 
-  #sawtooth tp
-  ########  ADDD URLSSS
   sawtooth-tp-0:
     image: custom_saw
     container_name: sawtooth-tp-default-0

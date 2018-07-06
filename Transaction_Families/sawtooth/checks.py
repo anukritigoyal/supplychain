@@ -1,8 +1,9 @@
 import os
-from hw_client import HwClient
+from .hw_client import HwClient
+from .finder import find
 
-def _get_keyfile():
-	username = 'ubuntu'
+def _get_keyfile(usrname):
+	username = usrname
 	home = os.path.expanduser("~")
 	key_dir = os.path.join(home, ".sawtooth", "keys")
 
@@ -10,38 +11,42 @@ def _get_keyfile():
 
 #different check functions will be called for different checks
 
-def check1(name,cu_add):
-	url = 'http://127.0.0.1:8008'
-	keyfile = _get_keyfile()
+def check(name,cu_add,checkno,usrname,url):
+	# url = 'http://127.0.0.1:8008'
+	keyfile = _get_keyfile(usrname)
 	client = HwClient(base_url=url,keyfile = keyfile)
+	finding_item = find(name,usrname,url)
+	# print("printing c_addr")
+	# print(finding_item[name].c_addr)
+	# print("printing signerkeyas hex")
+	# print(client._signer.get_public_key().as_hex())
+	finding_item[name].c_addr == client._signer.get_public_key().as_hex()
+	response = client.check(name=name,check_no=checkno,cu_add=usrname)
+	#only when the transaction is not pending it will return control back to django
+	print(response)
+	return response
 
-	response = client.check(name=name,check_no='check1',cu_add=cu_add)
 
-	print("response: {}".format(response))
+def item_checks_list(check_status):
+	checks = {}
+	
+	checks[1] = "Sterilization Confirmation by Mfg"
+	checks[2] = "LAL/Endotoxin Testing"
+	checks[3] = "DES Batch Release Testing"
+	checks[4] = "Final Functional Testing"
 
-def check2(name,cu_add):
-	url = 'http://127.0.0.1:8008'
-	keyfile = _get_keyfile()
-	client = HwClient(base_url=url,keyfile = keyfile)
+	check_entire = {}
+	j=0
+	for i in checks:
+		
+		check_entire[j] = check_class(checks[i],check_status[j]== '-')
+		j = j+1
 
-	response = client.check(name=name,check_no='check2',cu_add=cu_add)
+	
+	return check_entire
 
-	print("response: {}".format(response))
-
-def check3(name,cu_add):
-	url = 'http://127.0.0.1:8008'
-	keyfile = _get_keyfile()
-	client = HwClient(base_url=url,keyfile = keyfile)
-
-	response = client.check(name=name,check_no='check3',cu_add=cu_add)
-
-	print("response: {}".format(response))
-
-def check4(name,cu_add):
-	url = 'http://127.0.0.1:8008'
-	keyfile = _get_keyfile()
-	client = HwClient(base_url=url,keyfile = keyfile)
-
-	response = client.check(name=name,check_no='check4',cu_add=cu_add)
-
-	print("response: {}".format(response))
+#django is making me do this !!!!!
+class check_class(object):
+	def __init__(self,name,check):
+		self.name = name
+		self.check = check
