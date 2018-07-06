@@ -50,12 +50,18 @@ def user_history(usrname,url):
 	j=0
 	history_collection = {}
 	for i in alltrans['data']:
-		if i['header']['signer_public_key'] == public_key:
+		if i['header']['signer_public_key'] == public_key :
 			unprocessed = base64.b64decode(i['payload'])
-			name,action,c_add,prev_add,timestamp = unprocessed.decode().split(",")
-			hist = history_object(name,action,c_add,prev_add,timestamp)
+			try:
+				name,action,c_add,prev_add,timestamp = unprocessed.decode().split(",")
+				hist = history_object(name,action,c_add,prev_add,timestamp)
+			except:
+				name,action,pubkey = unprocessed.decode().split(",")
+				hist = history_object(name,action,pubkey,None,None)
 			history_collection[j] = hist
 			j = j+1
+		
+
 		
 	
 	return jsan
