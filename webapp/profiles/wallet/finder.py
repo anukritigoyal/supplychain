@@ -62,9 +62,6 @@ def user_history(usrname,url):
 			history_collection[j] = hist
 			j = j+1
 		
-
-		
-	
-	return jsan
+	return history_collection
 
 
