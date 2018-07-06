@@ -63,7 +63,9 @@ class CreateProfileView(View):
 			user = form.save(commit=False)
 			username = form.cleaned_data['username']
 			password = form.cleaned_data['password']
+			
 			user.set_password(password)
+			user.groups.add(form.cleaned_data['groups'])
 			user.save()
 			create_wal.add(username,request.user.username,url)
 			return redirect('profiles:home')
