@@ -18,8 +18,8 @@ def random_server():
 
 def index(request):
 	
-	if request.user.is_authenticated == False :
-		return redirect('items:login')
+	if request.user.is_staff == False :
+		return redirect('items:home')
 	#Add group permission instead of just authentication
 
 	url = random_server()
@@ -45,7 +45,7 @@ class CreateProfileView(View):
 
 	def get(self,request):
 
-		if request.user.is_authenticated == False :
+		if request.user.is_staff == False :
 			return redirect('items:login')
 
 		form = self.form_class(None)
@@ -54,7 +54,7 @@ class CreateProfileView(View):
 
 	def post(self,request):
 		
-		if request.user.is_authenticated == False :
+		if request.user.is_staff == False :
 			return redirect('items:login')
 		url = random_server()
 		form = CreateProfileForm(request.POST)
