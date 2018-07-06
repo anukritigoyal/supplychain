@@ -41,7 +41,7 @@ def index(request):
 		
 	for name,item_obj in resp.items():
 		#finding out human name of the public key holder
-		nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
+		nc_add = finder_wal.query(item_obj.c_addr,request.user.username,url)
 		nc_add = _deserialize_key(nc_add)
 		resp[name].c_addr = nc_add
 
@@ -60,7 +60,7 @@ def detail(request,itemname):
 	resp = finder_saw.find(itemname,'ubuntu',url)
 	
 	#######VERY IMPOSRTANT CHANGE TO BE APPLIED HERE TOOO
-	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
+	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu',url)
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
 	#get the checks list
@@ -93,7 +93,7 @@ def user_detail (request,username):
 	for name,item_obj in resp.items():
 		#finding out human name of the public key holder
 		######HERE TOOOO
-		nc_add = finder_wal.query(item_obj.c_addr,request.user.username)
+		nc_add = finder_wal.query(item_obj.c_addr,request.user.username,url)
 		nc_add = _deserialize_key(nc_add)
 		resp[name].c_addr = nc_add
 
@@ -122,9 +122,7 @@ def checked(request,itemname):
 	
 	resp = finder_saw.find(itemname,'ubuntu',url)
 	
-	#add this deserialize to find itself
-	#### HERE TOO
-	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
+	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu',url)
 	nc_add = _deserialize_key(nc_add)
 	resp[itemname].c_addr = nc_add
 	#get the checks list
@@ -149,7 +147,7 @@ class SendItem(View):
 		#can change 'ubuntu' to 'requested user'
 		resp = finder_saw.find(itemname,'ubuntu',url)
 	
-		nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu')
+		nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu',url)
 		nc_add = _deserialize_key(nc_add)
 		resp[itemname].c_addr = nc_add
 		#get the checks list
@@ -204,7 +202,7 @@ def map(request):
 	usersdata = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
-		nc_add = finder_wal.query(c_add,'ubuntu')
+		nc_add = finder_wal.query(c_add,'ubuntu',url)
 		nc_add = _deserialize_key(nc_add)
 		resp[name] = Item(name,checks,nc_add,prev_add)
 		
