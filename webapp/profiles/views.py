@@ -19,7 +19,7 @@ def random_server():
 def index(request):
 	
 	if request.user.is_staff == False :
-		return redirect('items:home')
+		return redirect('items:index')
 	#Add group permission instead of just authentication
 
 	url = random_server()
