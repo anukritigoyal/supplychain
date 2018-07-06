@@ -58,7 +58,7 @@ class CreateProfileView(View):
 			return redirect('items:login')
 		url = random_server()
 		form = CreateProfileForm(request.POST)
-		print(request.POST['username'])
+		print(request.POST['username']+"-->username")
 		print(request.POST['groups'])
 		if form.is_valid():
 			user = form.save(commit=False)
