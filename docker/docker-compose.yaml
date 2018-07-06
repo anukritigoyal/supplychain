@@ -91,7 +91,7 @@ services:
       - 4004
       - 80
     command: bash -c \ 
-             "git clone https://github.com/GuyFawkes1/supplychain.git && /usr/bin/python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://validator-0:4004 "
+             "git clone https://github.com/GuyFawkes1/supplychain.git && cd supplychain && git checkout webapp && git pull origin webapp && /usr/bin/python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://validator-0:4004 "
               
     stop_signal: SIGKILL
 
@@ -104,7 +104,7 @@ services:
       - 4004
       - 80
     command: bash -c \ 
-              "git clone https://github.com/GuyFawkes1/supplychain.git && /usr/bin/python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://validator-0:4004 "
+              "git clone https://github.com/GuyFawkes1/supplychain.git && cd supplychain && git checkout webapp && git pull origin webapp && /usr/bin/python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://validator-0:4004 "
               
   validator-1:
     image: hyperledger/sawtooth-validator
@@ -165,7 +165,7 @@ services:
     expose:
       - 4004
     command: bash -c \ 
-              "git clone https://github.com/GuyFawkes1/supplychain.git && /usr/bin/python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://validator-1:4004 "
+              "git clone https://github.com/GuyFawkes1/supplychain.git && cd supplychain && git checkout webapp && git pull origin webapp && /usr/bin/python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://validator-0:4004 "
               
     stop_signal: SIGKILL
 
@@ -176,7 +176,7 @@ services:
       - 4004
       - 80
     command: bash -c \ 
-              "git clone https://github.com/GuyFawkes1/supplychain.git && /usr/bin/python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://validator-1:4004 "
+              "git clone https://github.com/GuyFawkes1/supplychain.git && cd supplychain && git checkout webapp && git pull origin webapp && /usr/bin/python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://validator-0:4004 "
               
     stop_signal: SIGKILL
 
@@ -188,4 +188,4 @@ services:
     expose:
       - 8008
     command: bash -c \
-              "git clone https://github.com/GuyFawkes1/supplychain.git && python3 supplychain/webapp/manage.py runserver 0:8000"
+              "git clone https://github.com/GuyFawkes1/supplychain.git && cd supplychain && git checkout webapp && git pull origin webapp && python3 supplychain/webapp/manage.py runserver 0:8000"
