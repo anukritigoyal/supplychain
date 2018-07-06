@@ -79,7 +79,7 @@ sudo -u sawtooth sawtooth-validator -v \
     --bind component:tcp://127.0.0.1:4004 \
     --peering dynamic \
     --endpoint tcp://(your public endpoint):8800 \
-    --scheduler serial \
+    --scheduler parallel \
     --network trust
 ```
 
@@ -129,7 +129,7 @@ sudo -u sawtooth sawtooth-validator -v \
     --peering dynamic \
     --endpoint tcp://(your public endpoint):8800 \
     --seeds tcp://(public ip of the first validator):8800 \
-    --scheduler serial \
+    --scheduler parallel \
     --network trust
 ```
 
