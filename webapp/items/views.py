@@ -21,7 +21,7 @@ import json
 ## write a module that reads from servers.json or some other and uses it herre (sort of like config file)
 def random_server():
 	urls_list = { '1': 'http://127.0.0.1:8008','2': 'http://rest-api-0:8008' }
-	return urls_list['2']
+	return urls_list['1']
 
 def index(request):
 	
