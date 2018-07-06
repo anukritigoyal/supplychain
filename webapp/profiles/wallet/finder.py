@@ -58,6 +58,7 @@ def user_history(usrname,url):
 			except:
 				name,action,pubkey = unprocessed.decode().split(",")
 				hist = history_object(None,action,name,None,pubkey)
+				print("ALl OKAY")
 			history_collection[j] = hist
 			j = j+1
 		
