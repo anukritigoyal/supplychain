@@ -95,7 +95,7 @@ services:
   
   sawtooth-tp-0-1:
     image: custom_saw
-    container_name: sawtooth-tp-default-0
+    container_name: sawtooth-tp-default-0-1
     expose:
       - 4004
     command: bash -c \ 
@@ -105,7 +105,7 @@ services:
   
   sawtooth-tp-0-2:
     image: custom_saw
-    container_name: sawtooth-tp-default-0
+    container_name: sawtooth-tp-default-0-2
     expose:
       - 4004
     command: bash -c \ 
