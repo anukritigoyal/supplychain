@@ -35,7 +35,7 @@ services:
           -k /etc/sawtooth/keys/validator.priv \
              sawtooth.poet.target_wait_time=1 \
              sawtooth.poet.initial_wait_time=25 \
-             sawtooth.poet.ztest_minimum_win_count = 999999999 \
+             sawtooth.poet.ztest_minimum_win_count=999999999 \
              sawtooth.publisher.max_batches_per_block=100 \
           -o poet-settings.batch && \
         sawadm genesis \
