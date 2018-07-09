@@ -47,7 +47,6 @@ def item_history(name,url):
 			hist = history_object(name,action,c_add,prev_add,timestamp)
 			history_collection[j] = hist
 			j = j+1
-			print(hist)
 	return history_collection
 
 
