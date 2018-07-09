@@ -202,11 +202,11 @@ def map(request):
 	usersdata = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
-		nc_add = finder_wal.query(c_add,'ubuntu',url)
-		nc_add = _deserialize_key(nc_add)
-		resp[name] = Item(name,checks,nc_add,prev_add)
-		
 		try:
+			nc_add = finder_wal.query(c_add,'ubuntu',url)
+			nc_add = _deserialize_key(nc_add)
+			resp[name] = Item(name,checks,nc_add,prev_add)
+			
 			try:
 				usersdata[nc_add].iheld += 1
 			except:
