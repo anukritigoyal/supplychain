@@ -207,9 +207,12 @@ def map(request):
 		resp[name] = Item(name,checks,nc_add,prev_add)
 		
 		try:
-			usersdata[nc_add].iheld += 1
+			try:
+				usersdata[nc_add].iheld += 1
+			except:
+				usersdata[nc_add] = userinfo(nc_add,float(locations[nc_add]['lat']),float(locations[nc_add]['longi']))
 		except:
-			usersdata[nc_add] = userinfo(nc_add,float(locations[nc_add]['lat']),float(locations[nc_add]['longi']))
+			pass
 	
 
 	
