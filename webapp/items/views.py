@@ -193,7 +193,7 @@ def map(request):
 
 	url =random_server()
 	#GeoLocations of users Probably change this entire charade to some other file ????
-	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55},'Larry@lab':{'lat':42.34, 'longi': -71.64}, 'Mike':{'lat':42.342, 'longi' : -71.52}, 'Susan@sterilization':{'lat':42.339 , 'longi': -71.53}, 'Quinn@quality':{'lat':42.39 , 'longi': -71.54}}
+	locations = {'admin':{'lat' : 42.34, 'longi' : -71.55},'Larry@lab':{'lat':42.34, 'longi': -71.64}, 'Mike@manufacturing':{'lat':42.342, 'longi' : -71.52}, 'Susan@sterilization':{'lat':42.339 , 'longi': -71.53}, 'Quinn@quality':{'lat':42.39 , 'longi': -71.54}}
 	
 	
 	
@@ -202,15 +202,17 @@ def map(request):
 	usersdata = {}
 	for s in response:
 		name,checks,c_add,prev_add = response[s].decode().split(",")
-		nc_add = finder_wal.query(c_add,'ubuntu',url)
-		nc_add = _deserialize_key(nc_add)
-		resp[name] = Item(name,checks,nc_add,prev_add)
-		
 		try:
-			usersdata[nc_add].iheld += 1
+			nc_add = finder_wal.query(c_add,'ubuntu',url)
+			nc_add = _deserialize_key(nc_add)
+			resp[name] = Item(name,checks,nc_add,prev_add)
+			
+			try:
+				usersdata[nc_add].iheld += 1
+			except:
+				usersdata[nc_add] = userinfo(nc_add,float(locations[nc_add]['lat']),float(locations[nc_add]['longi']))
 		except:
-			usersdata[nc_add] = userinfo(nc_add,float(locations[nc_add]['lat']),float(locations[nc_add]['longi']))
-	
+			pass	
 
 	
 	context = {'resp' :resp , 'usersdata' : usersdata}

@@ -87,9 +87,8 @@ services:
     container_name: sawtooth-tp-default-0
     expose:
       - 4004
-      - 80
     command: bash -c \ 
-             "git clone -b webapp -b webapp https://github.com/GuyFawkes1/supplychain.git  && /usr/bin/python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://validator-0:4004 "
+             "git clone -b webapp https://github.com/GuyFawkes1/supplychain.git  && /usr/bin/python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://validator-0:4004 "
               
     stop_signal: SIGKILL
 
@@ -100,7 +99,6 @@ services:
     container_name: wallet-tp-default-0
     expose:
       - 4004
-      - 80
     command: bash -c \ 
               "git clone -b webapp https://github.com/GuyFawkes1/supplychain.git  && /usr/bin/python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://validator-0:4004 "
               
@@ -172,7 +170,6 @@ services:
     container_name: wallet-tp-default-1
     expose:
       - 4004
-      - 80
     command: bash -c \ 
               "git clone -b webapp https://github.com/GuyFawkes1/supplychain.git  && /usr/bin/python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://validator-0:4004 "
               
@@ -187,3 +184,78 @@ services:
       - 8008
     command: bash -c \
               "git clone -b webapp https://github.com/GuyFawkes1/supplychain.git  && python3 supplychain/webapp/manage.py runserver 0:8000"
+
+
+
+  validator-2:
+    image: hyperledger/sawtooth-validator
+    container_name: sawtooth-validator-default-2
+    expose:
+      - 4004
+      - 8800
+    command: |
+      bash -c "
+        sawadm keygen --force && \
+        sawtooth-validator -v \
+            --bind network:tcp://eth0:8800 \
+            --bind component:tcp://eth0:4004 \
+            --peering dynamic \
+            --endpoint tcp://validator-2:8800 \
+            --seeds tcp://validator-0:8800 \
+            --scheduler parallel \
+            --network trust"
+    environment:
+      PYTHONPATH: "/project/sawtooth-core/consensus/poet/common:\
+        /project/sawtooth-core/consensus/poet/simulator:\
+        /project/sawtooth-core/consensus/poet/core"
+    stop_signal: SIGKILL
+
+
+  rest-api-2:
+    image: hyperledger/sawtooth-rest-api
+    container_name: rest-api-default-2
+    expose:
+      - 4004
+      - 8008
+    command: sawtooth-rest-api -C tcp://validator-2:4004 -B rest-api-2:8008
+    stop_signal: SIGKILL
+
+  
+  settings-tp-2:
+    image: hyperledger/sawtooth-settings-tp
+    container_name: sawtooth-settings-tp-default-2
+    expose:
+      - 4004
+    command: settings-tp -C tcp://validator-2:4004
+    stop_signal: SIGKILL
+
+  poet-validator-registry-tp-2:
+    image: hyperledger/sawtooth-poet-validator-registry-tp
+    container_name: sawtooth-poet-validator-registry-tp-2
+    expose:
+      - 4004
+    command: poet-validator-registry-tp -C tcp://validator-2:4004
+    environment:
+      PYTHONPATH: /project/sawtooth-core/consensus/poet/common
+    stop_signal: SIGKILL
+
+
+  sawtooth-tp-2:
+    image: custom_saw
+    container_name: sawtooth-tp-default-2
+    expose:
+      - 4004
+    command: bash -c \ 
+              "git clone -b webapp https://github.com/GuyFawkes1/supplychain.git  && /usr/bin/python3 supplychain/Transaction_Families/sawtooth/proc/main.py tcp://validator-0:4004 "
+              
+    stop_signal: SIGKILL
+
+  wallet-tp-2:
+    image: custom_saw
+    container_name: wallet-tp-default-2
+    expose:
+      - 4004
+    command: bash -c \ 
+              "git clone -b webapp https://github.com/GuyFawkes1/supplychain.git  && /usr/bin/python3 supplychain/Transaction_Families/wallet_tf/proc/main.py tcp://validator-0:4004 "
+              
+    stop_signal: SIGKILL
