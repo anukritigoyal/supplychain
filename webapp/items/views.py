@@ -260,6 +260,7 @@ def map(request):
 		except:
 			pass	
 
+
 	
 	context = {'resp' :resp , 'usersdata' : usersdata}
 	return render(request,'items/map.html', context)
@@ -364,6 +365,6 @@ def _deserialize_key(data):
 			name,pubkey,prof = pair.split(",")
 			user_profile = User_Profile(name,pubkey,prof)
 
-			
 		return user_profile 
 		
+
