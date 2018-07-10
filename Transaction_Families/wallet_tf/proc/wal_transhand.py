@@ -77,5 +77,5 @@ class WalTransHand(TransactionHandler):
 				raise InvalidTransaction('Invalid Action')
 
 			new_pair = Pair(name=walpayload.name,pubkey = pair.pubkey,prof = walpayload.pubkey)
-			print(new_pair)
 			walstate.set_pair(walpayload.name,new_pair)
+			walstate.set_pair(pair.pubkey,new_pair)
