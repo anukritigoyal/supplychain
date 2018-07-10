@@ -15,15 +15,15 @@
 				{% csrf_token %}
 				
 				{% for checkno,obj in checks_list.items %}
-					<fieldset la>
+					
 					{% if forloop.counter == 1 %}
-					<legend<h4>Manufacturing Site QA</h4></legend>
+					<fieldset ><legend><h4>Manufacturing Site QA</h4></legend>
 					{% endif %}
 					{% if forloop.counter == 5 %}
-					<br><legend><h4>Sterilization Unit</h4></legend>
+					</fieldset><fieldset ><br><legend><h4>Sterilization Unit</h4></legend>
 					{% endif %}
 					{% if forloop.counter == 7 %}
-					<br><legend><h4>Distribution Centre - QA</h4></legend>
+					</fieldset><fieldset ><br><legend><h4>Distribution Centre - QA</h4></legend>
 					{% endif %}
 
 
@@ -40,9 +40,9 @@
 					<input type="checkbox" name="check" disabled="disabled" value="{{ forloop.counter }}" checked />
 						<label style="color:green">{{ obj.name }}</label><br>
 					{% endif %}
-					</fieldset>
+					
 				{% endfor %}
-
+					</fieldset>
 			{% if g.c_addr == requested_user  %}
 			<input type = "submit" value="Submit">
 			{% endif %}	
