@@ -43,7 +43,7 @@ def index(request):
 		#finding out human name of the public key holder
 		nc_add = finder_wal.query(item_obj.c_addr,request.user.username,url)
 		nc_add = _deserialize_key(nc_add)
-		resp[name].c_addr = nc_add
+		resp[name].c_addr = nc_add.name
 
 	context = {'resp' :resp, 'username' : request.user.username,'flag' : flag}
 
@@ -100,7 +100,7 @@ def user_detail (request,username):
 		#finding out human name of the public key holder
 		######HERE TOOOO
 		nc_add = finder_wal.query(item_obj.c_addr,request.user.username,url)
-		nc_add = _deserialize_key(nc_add)
+		nc_add = _deserialize_key(nc_add).name
 		resp[name].c_addr = nc_add
 
 
@@ -216,7 +216,7 @@ def map(request):
 		name,checks,c_add,prev_add = response[s].decode().split(",")
 		try:
 			nc_add = finder_wal.query(c_add,'ubuntu',url)
-			nc_add = _deserialize_key(nc_add)
+			nc_add = _deserialize_key(nc_add).name
 			resp[name] = Item(name,checks,nc_add,prev_add)
 			
 			try:
@@ -312,17 +312,17 @@ class User_Profile(object):
 		self.profile = profile
 
 
-def _deserialize(data):
-		items = {}
-		try:
-			for item in data.decode().split("|"):
-				name,check,c_addr,p_addr = item.split(",")
-				items[name] = Item(name,check,c_addr,p_addr)
+# def _deserialize(data):
+# 		items = {}
+# 		try:
+# 			for item in data.decode().split("|"):
+# 				name,check,c_addr,p_addr = item.split(",")
+# 				items[name] = Item(name,check,c_addr,p_addr)
 
-		except ValueError:
-			pass
+# 		except ValueError:
+# 			pass
 			
-		return items
+# 		return items
 
 def _deserialize_key(data):
 	
