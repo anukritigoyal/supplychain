@@ -64,6 +64,7 @@ def detail(request,itemname):
 	user_profile = _deserialize_key(nc_add) 
 	nc_add = user_profile.name
 	user_profile = finder_wal.query(nc_add,'ubuntu',url)
+	user_profile = _deserialize_key(user_profile)
 	resp[itemname].c_addr = nc_add
 	#get the checks list
 	checks_list = checks.item_checks_list(check_status = resp[itemname].check,profile =user_profile.profile)
