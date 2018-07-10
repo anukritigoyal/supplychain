@@ -61,10 +61,11 @@ def detail(request,itemname):
 	
 	#######VERY IMPOSRTANT CHANGE TO BE APPLIED HERE TOOO
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu',url)
-	nc_add = _deserialize_key(nc_add)
+	user_profile = _deserialize_key(nc_add) 
+	nc_add = user_profile.name
 	resp[itemname].c_addr = nc_add
 	#get the checks list
-	checks_list = checks.item_checks_list(resp[itemname].check)
+	checks_list = checks.item_checks_list(check_status = resp[itemname].check,profile =user_profile.profile)
 	#hist goes through transactions in block chain, so returns in human readble form
 	
 	#serialized make that into an item history class with all the attributes so that django 
@@ -72,8 +73,9 @@ def detail(request,itemname):
 	#we can do the serializtion and breaking up stuff in the his.py
 	hist= his.item_history(itemname,url)
 	requested_user = request.user.username
+	
 
-	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user}
+	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user }
 	return render(request,'items/detail.html',context)	
 
 def user_detail (request,username):
@@ -293,6 +295,11 @@ class Item(object):
 		self.check = check
 		self.c_addr = c_addr
 		self.p_addr = p_addr
+class User_Profile(object):
+	def __init__(self,name,pubkey,profile):
+		self.name = name
+		self.pubkey = pubkey
+		self.profile = profile
 
 
 def _deserialize(data):
@@ -311,6 +318,8 @@ def _deserialize_key(data):
 	
 		for pair in data.decode().split("|"):
 			name,pubkey,prof = pair.split(",")
+			user_profile = User_Profile(name,pubkey,prof)
+
 			
-		return name 
+		return user_profile 
 		

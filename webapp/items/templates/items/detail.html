@@ -17,8 +17,13 @@
 				{% for checkno,obj in checks_list.items %}
 
 					{% if obj.check %}
+						{% if obj.auth%}
+							<input type="checkbox" name="check" value="{{ forloop.counter }}" /><label>{{ obj.name }}</label><br>			
+						{% else %}
+						<input type="checkbox" name="check" disabled="disabled" value="{{ forloop.counter }}" />
+							<label style = "color:grey">{{ obj.name }}</label><br>			
+						{% endif %}
 
-					<input type="checkbox" name="check" value="{{ forloop.counter }}" /><label>{{ obj.name }}</label><br>			
 					{% else %}
 					<input type="checkbox" name="check" disabled="disabled" value="{{ forloop.counter }}" checked />
 						<label style="color:green">{{ obj.name }}</label><br>
