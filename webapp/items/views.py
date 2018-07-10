@@ -63,6 +63,8 @@ def detail(request,itemname):
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu',url)
 	user_profile = _deserialize_key(nc_add) 
 	nc_add = user_profile.name
+	print("NC-ADD")
+	print(nc_add)
 	user_profile = finder_wal.query(nc_add,'ubuntu',url)
 	user_profile = _deserialize_key(user_profile)
 	resp[itemname].c_addr = nc_add
