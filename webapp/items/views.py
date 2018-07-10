@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import Http404
 from django.contrib.auth import authenticate, login , logout
 from .sawtooth import querying
-from .sawtooth import send_saw
+from .sawtooth import send as send_saw
 from .sawtooth import create as create_saw
 from .sawtooth import finder as finder_saw
 from .sawtooth import his
