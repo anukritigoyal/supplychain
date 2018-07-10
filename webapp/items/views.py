@@ -127,10 +127,13 @@ def checked(request,itemname):
 	resp = finder_saw.find(itemname,'ubuntu',url)
 	
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu',url)
-	nc_add = _deserialize_key(nc_add)
+	user_profile = _deserialize_key(nc_add) 
+	nc_add = user_profile.name
+	user_profile = finder_wal.query(nc_add,'ubuntu',url)
+	user_profile = _deserialize_key(user_profile)
 	resp[itemname].c_addr = nc_add
 	#get the checks list
-	checks_list = checks.item_checks_list(resp[itemname].check)
+	checks_list = checks.item_checks_list(resp[itemname].check,user_profile.profile)
 	#hist goes through transactions in BC, so returns in human readble form
 	hist= his.item_history(itemname,url)
 	requested_user = request.user.username
@@ -152,10 +155,13 @@ class SendItem(View):
 		resp = finder_saw.find(itemname,'ubuntu',url)
 	
 		nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu',url)
-		nc_add = _deserialize_key(nc_add)
+		user_profile = _deserialize_key(nc_add) 
+		nc_add = user_profile.name
+		user_profile = finder_wal.query(nc_add,'ubuntu',url)
+		user_profile = _deserialize_key(user_profile)
 		resp[itemname].c_addr = nc_add
 		#get the checks list
-		checks_list = checks.item_checks_list(resp[itemname].check)
+		checks_list = checks.item_checks_list(resp[itemname].check,user_profile.profile)
 		#hist goes through transactions in block chain, so returns in human readble form
 		
 		#serialized make that into an item history class with all the attributes so that django 
