@@ -15,15 +15,15 @@
 				{% csrf_token %}
 				
 				{% for checkno,obj in checks_list.items %}
-					<fieldset>
+					<fieldset la>
 					{% if forloop.counter == 1 %}
-					<h4>Manufacturing Site QA</h4>
+					<legend<h4>Manufacturing Site QA</h4></legend>
 					{% endif %}
 					{% if forloop.counter == 5 %}
-					<br><h4>Sterilization Unit</h4>
+					<br><legend><h4>Sterilization Unit</h4></legend>
 					{% endif %}
 					{% if forloop.counter == 7 %}
-					<br><h4>Distribution Centre - QA</h4>
+					<br><legend><h4>Distribution Centre - QA</h4></legend>
 					{% endif %}
 
 
