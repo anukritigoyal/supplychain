@@ -15,7 +15,7 @@
 				{% csrf_token %}
 				
 				{% for checkno,obj in checks_list.items %}
-
+					<fieldset>
 					{% if forloop.counter == 1 %}
 					<h4>Manufacturing Site QA</h4>
 					{% endif %}
@@ -40,8 +40,9 @@
 					<input type="checkbox" name="check" disabled="disabled" value="{{ forloop.counter }}" checked />
 						<label style="color:green">{{ obj.name }}</label><br>
 					{% endif %}
-				
+					</fieldset>
 				{% endfor %}
+
 			{% if g.c_addr == requested_user  %}
 			<input type = "submit" value="Submit">
 			{% endif %}	
