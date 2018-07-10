@@ -222,7 +222,7 @@ def send(request,itemname):
 	hist= his.item_history(itemname,url)
 	requested_user = request.user.username
 
-	resp = send_saw.snd(itemname,forwarding.from_user(request.user.username),request.user.username,url)
+	send_saw.snd(itemname,forwarding.from_user(request.user.username),request.user.username,url)
 	
 
 	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user,'sent_to':forwarding.from_user(request.user.username) }
