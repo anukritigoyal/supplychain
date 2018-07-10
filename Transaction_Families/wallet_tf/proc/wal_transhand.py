@@ -59,9 +59,9 @@ class WalTransHand(TransactionHandler):
 			walstate.delete_pair(walpayload.name)
 
 		elif walpayload.action == 'create' :
-			'''if walstate.get_pair(walpayload.name) is not None:
-				raise InvalidTransaction('Invalid Item Exists')
-'''			
+			# if walstate.get_pair(walpayload.name) is not None:
+			# 	raise InvalidTransaction('Invalid Item Exists')
+			
 			try:
 				res = subprocess.check_call(['sawtooth','keygen',walpayload.name])
 			except:
