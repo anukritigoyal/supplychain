@@ -2,7 +2,7 @@
 {% block title %}Details{% endblock %}
 {% block body %}
 	<div class= "container">
-	<div id="checks_text" style="margin: 0 auto; float: left; "><ul>
+	<div id="checks_text" style="margin: 0 auto; float: left; ">
 
 		
 		
@@ -20,10 +20,12 @@
 					<fieldset ><legend><h4>Manufacturing Site QA</h4></legend>
 					{% endif %}
 					{% if forloop.counter == 5 %}
-					</fieldset><fieldset ><br><legend><h4>Sterilization Unit</h4></legend>
+					</fieldset>
+					<fieldset ><br><legend><h4>Sterilization Unit</h4></legend>
 					{% endif %}
 					{% if forloop.counter == 7 %}
-					</fieldset><fieldset ><br><legend><h4>Distribution Centre - QA</h4></legend>
+					</fieldset>
+					<fieldset ><br><legend><h4>Distribution Centre - QA</h4></legend>
 					{% endif %}
 
 
@@ -53,7 +55,7 @@
 		<h4><a href="{% url 'items:send' g.name %}">Send item ?</a></h4><br>
 		{% endif %}
 		{% endfor %}
-	</ul></div>
+	</div>
 		
 
 		<!--- Mike at manufacturing send   -->
