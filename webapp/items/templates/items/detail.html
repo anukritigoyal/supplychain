@@ -2,7 +2,7 @@
 {% block title %}Details{% endblock %}
 {% block body %}
 	<div class= "container">
-	<div id="checks_text" style="margin: 0 auto; float: left; ">
+	<div id="checks_text" style="margin: 0 auto; float: left; "><ul>
 
 		
 		
@@ -15,17 +15,15 @@
 				{% csrf_token %}
 				
 				{% for checkno,obj in checks_list.items %}
-					
+
 					{% if forloop.counter == 1 %}
-					<fieldset><legend><h4>Manufacturing Site QA</h4></legend>
+					<h4>Manufacturing Site QA</h4>
 					{% endif %}
 					{% if forloop.counter == 5 %}
-					</fieldset>
-					<fieldset><br><legend><h4>Sterilization Unit</h4></legend>
+					<br><h4>Sterilization Unit</h4>
 					{% endif %}
 					{% if forloop.counter == 7 %}
-					</fieldset>
-					<fieldset><br><legend><h4>Distribution Centre - QA</h4></legend>
+					<br><h4>Distribution Centre - QA</h4>
 					{% endif %}
 
 
@@ -42,9 +40,8 @@
 					<input type="checkbox" name="check" disabled="disabled" value="{{ forloop.counter }}" checked />
 						<label style="color:green">{{ obj.name }}</label><br>
 					{% endif %}
-					
+				
 				{% endfor %}
-					</fieldset>
 			{% if g.c_addr == requested_user  %}
 			<input type = "submit" value="Submit">
 			{% endif %}	
@@ -55,7 +52,7 @@
 		<h4><a href="{% url 'items:send' g.name %}">Send item ?</a></h4><br>
 		{% endif %}
 		{% endfor %}
-	</div>
+	</ul></div>
 		
 
 		<!--- Mike at manufacturing send   -->
