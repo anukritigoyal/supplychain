@@ -9,22 +9,26 @@ from hw_state import HW_NAMESPACE
 
 LOGGER = logging.getLogger(__name__)
 
+# Transaction Handler class for ITEMS
 class HwTransHand(TransactionHandler):
 
+	# Returns the family name of the transaction family/transaction type
 	@property
 	def family_name(self):
 		return 'hw'
 
+	# Returns the version number of the transaction family
 	@property
 	def family_versions(self):
 		return ['1.0']
 
+	# Returns the first 6 digits of hexadecimal number of the transaction family
 	@property
 	def namespaces(self):
 		return [HW_NAMESPACE]
 
-	# apply method will be called by the validator(Inbuilt sawtoth framework)
-	# Action specified in transaction argument is applied to the state. 
+	# Apply method will be called by the validator(Inbuilt sawtoth framework)
+	# Action specified within transaction argument is applied and added to the state. 
 	# Context refers to a small piece of the state database
 	def apply(self,transaction,context):
 		header = transaction.header
@@ -32,6 +36,7 @@ class HwTransHand(TransactionHandler):
 		hwpayload = HwPayload.from_bytes(transaction.payload)
 		hwstate = HwState(context)
 
+		# If action is delete, state data of the item is retrieved from state database and deleted. 
 		if hwpayload.action == 'delete':
 			item = hwstate.get_item(hwpayload.name)
 			if item is None:
@@ -39,7 +44,8 @@ class HwTransHand(TransactionHandler):
 
 			hwstate.delete_item(hwpayload.name)
 
-
+		# If action is create, an object of type Item is created and put into the state database
+		# If the item already exists in the state databse, an exception is thrown. 
 		elif hwpayload.action == 'create' :
 
 			if hwstate.get_item(hwpayload.name) is not None:
@@ -49,13 +55,17 @@ class HwTransHand(TransactionHandler):
 			hwstate.set_item(hwpayload.name,item)
 			
 
-
+		# If action is send, the address of the next person is retrieved
+		# The items previous address is set to the current address
+		# Its current address is set to the next address
+		# The updated item's credentials are updated in the state database. 
 		elif hwpayload.action == 'send' :
 			item = hwstate.get_item(hwpayload.name)
 			if item is None:
 				raise InvalidTransaction('Item not yet created')
 
-			#get pubkey of the nxt_add
+			# Get's public key of the nxt_add
+			# Required to verify if the user exists in database 
 			pubkey_nxt_add = hwstate.get_pubkey(name=hwpayload.nxt_add)
 			if pubkey_nxt_add is None:
 				raise InvalidTransaction('Recvr doesnt exist')
@@ -70,7 +80,7 @@ class HwTransHand(TransactionHandler):
 		# # specifies the number of the check that has been completed
 		# Profile of the user that administered the check is searched for 
 		# to ensure the check can be authorizes by the user
-		# Check is entered into state by signifying an x in the checklist
+		# Check is updated into the state database by signifying an x in the checklist
 		elif hwpayload.action[:5] == 'check':
 			item = hwstate.get_item(hwpayload.name)
 			try:
@@ -99,7 +109,6 @@ class HwTransHand(TransactionHandler):
 			item1 = Item(name = hwpayload.name,check =new_c,
 						c_addr = item.c_addr , p_addr = item.p_addr)
 			hwstate.set_item(hwpayload.name,item1)
-
 
 def _display(msg):
 	n = msg.count("\n")
