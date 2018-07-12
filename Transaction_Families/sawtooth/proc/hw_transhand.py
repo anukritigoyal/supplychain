@@ -67,7 +67,7 @@ class HwTransHand(TransactionHandler):
 		elif hwpayload.action[:5] == 'check':
 			item = hwstate.get_item(hwpayload.name)
 			try:
-				cno = int(hwpayload.action[5:6])
+				cno = int(hwpayload.action[5:7])
 			except:
 				cno = int(hwpayload.action[5])
 			prof = hwstate.get_prof(name = hwpayload.cu_add)
