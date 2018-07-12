@@ -87,7 +87,7 @@ def detail(request,itemname):
 	
 
 	# submit button is only shown in the current address of the item is the same as the current user of the page. 
-	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user }
+	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':request.user.usrname }
 
 	return render(request,'items/detail.html',context)	
 
@@ -147,8 +147,7 @@ def checked(request,itemname):
 	checks_list = checks.item_checks_list(resp[itemname].check,user_profile.profile)
 	#hist goes through transactions in BC, so returns in human readble form
 	hist= his.item_history(itemname,url)
-	requested_user = request.user.username
-	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list,'requested_user':requested_user}
+	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list,'requested_user':request.user.username}
 	return render(request,'items/detail.html',context)
 
 # class SendItem(View):
@@ -230,11 +229,10 @@ def send(request,itemname):
 	#will not complain
 	#we can do the serializtion and breaking up stuff in the his.py
 	hist= his.item_history(itemname,url)
-	requested_user = request.user.username
 
 	
 
-	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user,'sent_to':forwarding.from_user(request.user.username) }
+	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':request.user.username,'sent_to':forwarding.from_user(request.user.username) }
 	return render(request,'items/send.html',context)	
 
 
