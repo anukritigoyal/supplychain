@@ -28,6 +28,7 @@ def check(name,cu_add,checkno,usrname,url):
 
 def item_checks_list(check_status,profile):
 	checks = {}
+	#In future dev this method can query the product-type tf and get the checks
 	
 	checks[1]= "Pallet restacked at sterilizer"
 	checks[2]= "PDP Product"

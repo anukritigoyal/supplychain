@@ -293,7 +293,6 @@ class CreateItemView(View):
 	def post(self,request):
 		
 		if request.user.is_authenticated == False :
-			print("Should not come here")
 			return redirect('items:login')
 		url = random_server()
 
@@ -304,9 +303,8 @@ class CreateItemView(View):
 
 		if user is not None:
 			response = create_saw.cr(itemname,username,url)
-			print(response)
-			#time.sleep(1.5)
 			return redirect('items:index')
+		
 		else:
 			#retry password
 			form = self.form_class(None)
