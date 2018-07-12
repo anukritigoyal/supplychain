@@ -1,4 +1,4 @@
-version: "3"
+version: "2"
 
 services:
   shell:
@@ -41,7 +41,7 @@ services:
           -o poet-settings.batch && \
         sawadm genesis \
           config-genesis.batch config.batch poet.batch poet-settings.batch && \
-        sawtooth-validator -vv \
+        sawtooth-validator -v \
           --bind network:tcp://eth0:8800 \
           --bind component:tcp://eth0:4004 \
           --peering dynamic \
@@ -61,7 +61,7 @@ services:
     ports:
       - "8008:8008"
       - "4004"
-    command: sawtooth-rest-api -vv -C tcp://validator-0:4004 --bind rest-api-0:8008
+    command: sawtooth-rest-api -v -C tcp://validator-0:4004 --bind rest-api-0:8008
     stop_signal: SIGKILL
   
   settings-tp-0:
@@ -216,7 +216,7 @@ services:
     command: |
       bash -c "
         sawadm keygen --force && \
-        sawtooth-validator -vv --bind network:tcp://eth0:8800 --bind component:tcp://eth0:4004 --peering dynamic --endpoint tcp://validator-2:8800 --seeds tcp://validator-0:8800 --scheduler parallel --network trust"
+        sawtooth-validator -v --bind network:tcp://eth0:8800 --bind component:tcp://eth0:4004 --peering dynamic --endpoint tcp://validator-2:8800 --seeds tcp://validator-0:8800 --scheduler parallel --network trust"
     environment:
       PYTHONPATH: "/project/sawtooth-core/consensus/poet/common:\
         /project/sawtooth-core/consensus/poet/simulator:\
