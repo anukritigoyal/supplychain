@@ -59,7 +59,6 @@ def detail(request,itemname):
 	#find item uses state list 
 	resp = finder_saw.find(itemname,'ubuntu',url)
 	
-	#######VERY IMPOSRTANT CHANGE TO BE APPLIED HERE TOOO
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu',url)
 	user_profile = _deserialize_key(nc_add) 
 	nc_add = user_profile.name
@@ -74,10 +73,9 @@ def detail(request,itemname):
 	#will not complain
 	#we can do the serializtion and breaking up stuff in the his.py
 	hist= his.item_history(itemname,url)
-	requested_user = request.user.username
 	
 
-	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user }
+	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':request.user.username }
 	return render(request,'items/detail.html',context)	
 
 def user_detail (request,username):
@@ -104,7 +102,7 @@ def user_detail (request,username):
 
 	context = {'resp' :resp,'username':username}
 
-	return render(request,'items/index.html', context)
+	return render(request,'items/user-detail.html', context)
 	
 
 
