@@ -15,9 +15,9 @@ This repository contains a web app that can be hosted on your ubuntu machine tha
 
 ## Installation Procedure
 
-## Installtion with Docker
+### Installation with Docker
 
-Make sure that you install Docker and Docker-compose(For Windows and Mac installing docker will also install docker-compose).After installing download [docker-compose.yaml](https://github.com/GuyFawkes1/supplychain/blob/webapp-beta/docker/docker-compose.yaml) and run docker-compose up.
+Make sure that you install Docker and Docker-compose(For Windows and Mac installing docker will also install docker-compose).After installing download [docker-compose.yaml](https://github.com/GuyFawkes1/supplychain/blob/webapp/docker/docker-compose.yaml) and run docker-compose up.
 
 ### Using Native Ubuntu
 
