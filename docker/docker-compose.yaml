@@ -202,7 +202,7 @@ services:
     labels:
       kompose.service.expose: "django-server-1"
     command: bash -c \
-              "git clone -b webapp-beta https://github.com/GuyFawkes1/supplychain.git && sawtooth keygen ubuntu &&  python3 webapp/profiles/wallet/settingup-website.py && python3 supplychain/webapp/manage.py runserver 0:8000 "
+              "git clone -b webapp-beta https://github.com/GuyFawkes1/supplychain.git && sawtooth keygen ubuntu &&  python3 supplychain/webapp/profiles/wallet/settingup-website.py && python3 supplychain/webapp/manage.py runserver 0:8000 "
 
 
 
