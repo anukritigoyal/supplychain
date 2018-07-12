@@ -39,11 +39,11 @@ def index(request):
 		#flag to stop having the username in the html
 		#takes care of search form
 		
-	for name,item_obj in resp.items():
-		#finding out human name of the public key holder
-		nc_add = finder_wal.query(item_obj.c_addr,request.user.username,url)
-		nc_add = _deserialize_key(nc_add)
-		resp[name].c_addr = nc_add.name
+	# for name,item_obj in resp.items():
+	# 	#finding out human name of the public key holder
+	# 	nc_add = finder_wal.query(item_obj.c_addr,request.user.username,url)
+	# 	nc_add = _deserialize_key(nc_add)
+	# 	resp[name].c_addr = nc_add.name
 
 	context = {'resp' :resp, 'username' : request.user.username,'flag' : flag}
 

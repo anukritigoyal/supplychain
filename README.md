@@ -176,6 +176,10 @@ Install sawtooth and create the genisis block as described above.Then git clone 
 
 Navigate to /var/lib/sawtooth and delete all the files inside it. To create a new blockchain follow the same procedure as above, from starting the first validator (if you don't want to change any settings of poet else you have to start from creating the genesis block)
 
+## Installtion with Docker
+
+Make sure that you install Docker and Docker-compose(For Windows and Mac installing docker will also install docker-compose).After this 
+
 ## Details of folders
 
 ### Transaction Families
