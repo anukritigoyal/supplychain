@@ -60,7 +60,6 @@ def detail(request,itemname):
 	# finding the details of itemname in the state database 
 	resp = finder_saw.find(itemname,'ubuntu',url)
 	
-	#######VERY IMPOSRTANT CHANGE TO BE APPLIED HERE TOOO
 
 	# nc_add is the human readable name
 	nc_add = finder_wal.query(resp[itemname].c_addr,'ubuntu',url)
@@ -69,7 +68,9 @@ def detail(request,itemname):
 
 	nc_add = user_profile.name
 
+
 	# finding the profile 
+
 	user_profile = finder_wal.query(nc_add,'ubuntu',url)
 	user_profile = _deserialize_key(user_profile)
 	resp[itemname].c_addr = nc_add
@@ -83,10 +84,11 @@ def detail(request,itemname):
 
 	# looks through all the transactions to find history
 	hist= his.item_history(itemname,url)
-	requested_user = request.user.username
 	
+
 	# submit button is only shown in the current address of the item is the same as the current user of the page. 
 	context = {'resp' :resp,'hist' : hist , "checks_list" : checks_list , 'requested_user':requested_user }
+
 	return render(request,'items/detail.html',context)	
 
 def user_detail (request,username):
@@ -113,7 +115,7 @@ def user_detail (request,username):
 
 	context = {'resp' :resp,'username':username}
 
-	return render(request,'items/index.html', context)
+	return render(request,'items/user-detail.html', context)
 	
 
 
