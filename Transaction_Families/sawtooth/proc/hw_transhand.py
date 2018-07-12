@@ -23,8 +23,9 @@ class HwTransHand(TransactionHandler):
 	def namespaces(self):
 		return [HW_NAMESPACE]
 
-	#apply method will be called by the validator(Inbuilt sawtoth framework)
-
+	# apply method will be called by the validator(Inbuilt sawtoth framework)
+	# Action specified in transaction argument is applied to the state. 
+	# Context refers to a small piece of the state database
 	def apply(self,transaction,context):
 		header = transaction.header
 		signer = header.signer_public_key
@@ -64,6 +65,12 @@ class HwTransHand(TransactionHandler):
 			hwstate.set_item(hwpayload.name,item)
 			_display("Item {} sent to {} by {}".format(hwpayload.name,hwpayload.nxt_add,hwpayload.cu_add))
 		
+
+		# When a check is done, the action will be specified as check# 
+		# # specifies the number of the check that has been completed
+		# Profile of the user that administered the check is searched for 
+		# to ensure the check can be authorizes by the user
+		# Check is entered into state by signifying an x in the checklist
 		elif hwpayload.action[:5] == 'check':
 			item = hwstate.get_item(hwpayload.name)
 			cno = int(hwpayload.action[5])
