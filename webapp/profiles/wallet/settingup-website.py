@@ -1,7 +1,7 @@
 #This file creates a user with username ritwick into the blockchain
 
 import os
-from .wal_client import WalClient
+from wal_client import WalClient
 import subprocess
 
 def _get_keyfile(name):
