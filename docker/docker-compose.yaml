@@ -279,7 +279,7 @@ services:
     ports:
       - "4004"
     command: bash -c \ 
-              "git clone -b testing https://github.com/anukritigoyal/supplychain.git  && /usr/bin/python3 supplychain/Transaction_Families/ptypes/proc/main.py tcp://validator-0:4004 "
+              "git clone -b testing https://github.com/anukritigoyal/supplychain.git  && /usr/bin/python3 supplychain/Transaction_Families/product-type-tf/proc/main.py tcp://validator-0:4004 "
 
   ptypes-tp-1:
       image: isaacprasanth/supplychain-custom-saw
@@ -287,7 +287,7 @@ services:
       ports:
         - "4004"
       command: bash -c \ 
-                "git clone -b testing https://github.com/anukritigoyal/supplychain.git  && /usr/bin/python3 supplychain/Transaction_Families/ptypes/proc/main.py tcp://validator-1:4004 "
+                "git clone -b testing https://github.com/anukritigoyal/supplychain.git  && /usr/bin/python3 supplychain/Transaction_Families/product-type-tf/proc/main.py tcp://validator-1:4004 "
 
   ptypes-tp-2:
       image: isaacprasanth/supplychain-custom-saw
@@ -295,4 +295,4 @@ services:
       ports:
         - "4004"
       command: bash -c \ 
-                "git clone -b testing https://github.com/anukritigoyal/supplychain.git  && /usr/bin/python3 supplychain/Transaction_Families/ptypes/proc/main.py tcp://validator-2:4004 "
+                "git clone -b testing https://github.com/anukritigoyal/supplychain.git  && /usr/bin/python3 supplychain/Transaction_Families/product-type-tf/proc/main.py tcp://validator-2:4004 "
