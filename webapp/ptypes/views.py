@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.views import View
 import json
 
+from .forms import UserForm, User
+
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the Ptypes index.")
 
