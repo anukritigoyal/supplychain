@@ -17,6 +17,16 @@ def index(request):
     context = {'username' : request.user.username} 
     return render(request, 'ptypes/index.html', context)
 
-def create(request):
-    context = {'username': request.user.username}
-    return render(request, 'ptypes/create.html', context)
+# def create(request):
+#     context = {'username': request.user.username}
+#     return render(request, 'ptypes/create.html', context)
+
+class CreatePageView(View):
+    template_name = 'ptypes/create.html'
+
+    def get(self, request):
+        if request.user.is_authenticated == False:
+            return redirect('items:login')
+
+        context = {'username': request.user.username}
+        return render(request, 'ptypes/create.html', context)
