@@ -8,8 +8,3 @@ class UserForm(forms.ModelForm):
         model = User
         #fields = ['username', 'password', 'dept'] 
         fields = ['username', 'password']
-
-class ProductTypeForm(forms.ModelForm):    
-    class Meta:
-        model = ProductTypeCreation
-        fields = ['ptype_name', 'role_assign', 'check_assign']
