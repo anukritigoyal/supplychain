@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.views import View
 import json
 
-from .forms import UserForm, User
+from .forms import UserForm, User, ProductTypeForm
 
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the Ptypes index.")
@@ -28,5 +28,9 @@ class CreatePageView(View):
         if request.user.is_authenticated == False:
             return redirect('items:login')
 
-        context = {'username': request.user.username}
-        return render(request, 'ptypes/create.html', context)
+        #context = {'username': request.user.username}
+        form = {'form' : ProductTypeForm}
+        return render(request, 'ptypes/create.html', form)
+
+    def post(self, request):
+        None
