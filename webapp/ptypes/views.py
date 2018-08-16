@@ -21,16 +21,24 @@ def index(request):
 #     context = {'username': request.user.username}
 #     return render(request, 'ptypes/create.html', context)
 
-class CreatePageView(View):
-    template_name = 'ptypes/create.html'
+# class CreatePageView(View):
+#     form = ProductTypeForm()
 
-    def get(self, request):
-        if request.user.is_authenticated == False:
-            return redirect('items:login')
+#     def get(self, request):
+#         if request.user.is_authenticated == False:
+#             return redirect('items:login')
 
-        #context = {'username': request.user.username}
-        form = {'form' : ProductTypeForm}
-        return render(request, 'ptypes/create.html', form)
+#         #context = {'username': request.user.username}
+#         context = {'form' : ProductTypeForm}
+#         return render(request, 'ptypes/create.html', context)
 
-    def post(self, request):
-        None
+def create(request):
+    if request.method == "POST":
+        form = ProductTypeForm(request.POST)
+        if form.is_valid():
+            return redirect('ptypes:index')
+
+    else:
+        form = ProductTypeForm()
+        context = {'form' : ProductTypeForm}
+        return render(request, 'ptypes/create.html', context)
