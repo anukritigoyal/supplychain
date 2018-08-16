@@ -21,12 +21,12 @@ def index(request):
 #     context = {'username': request.user.username}
 #     return render(request, 'ptypes/create.html', context)
 
-class CreatePageView(View):
-    template_name = 'ptypes/create.html'
+# class CreatePageView(View):
+#     template_name = 'ptypes/create.html'
 
-    def get(self, request):
-        if request.user.is_authenticated == False:
-            return redirect('items:login')
+#     def get(self, request):
+#         if request.user.is_authenticated == False:
+#             return redirect('items:login')
 
-        context = {'username': request.user.username}
-        return render(request, 'ptypes/create.html', context)
+#         context = {'username': request.user.username}
+#         return render(request, 'ptypes/create.html', context)
