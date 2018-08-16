@@ -18,6 +18,16 @@ def index(request):
     return render(request, 'ptypes/index.html', context)
 
 def create(request):
-    form = ProductTypeForm()
-    context = {'form' : form}
-    return render(request, 'ptypes/create.html', context)
+    if request.method == "POST":
+        form = ProductTypeForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            ptype_name = form.cleaned_data['ptype_name']
+            role_assign = form.cleaned_data['role_assign']
+            check_assign = form.cleaned_data['check_assign']
+            
+
+    else:
+        form = ProductTypeForm()
+        context = {'form' : form}
+        return render(request, 'ptypes/create.html', context)
