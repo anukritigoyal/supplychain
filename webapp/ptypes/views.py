@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.views import View
 import json
 
-from .forms import UserForm, User
+from .forms import UserForm, User, ProductTypeForm
 
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the Ptypes index.")
@@ -18,5 +18,6 @@ def index(request):
     return render(request, 'ptypes/index.html', context)
 
 def create(request):
-    context = {'username' : request.user.username}
+    form = ProductTypeForm()
+    context = {'form' : form}
     return render(request, 'ptypes/create.html', context)
