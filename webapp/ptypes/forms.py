@@ -11,7 +11,7 @@ class UserForm(forms.ModelForm):
         #fields = ['username', 'password', 'dept'] 
         fields = ['username', 'password']
 
-class ProductTypeForm(forms.ModelForm):
-    class Meta:
-        model: ProductType
-        fields = ['ptype_name', 'role_name', 'check_assign']
+# class ProductTypeForm(forms.ModelForm):
+#     class Meta:
+#         model: ProductType
+#         fields = ['ptype_name', 'role_name', 'check_assign']
