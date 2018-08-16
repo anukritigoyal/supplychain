@@ -16,7 +16,3 @@ def index(request):
 
     context = {'username' : request.user.username} 
     return render(request, 'ptypes/index.html', context)
-
-def create(request):
-     context = {'username': request.user.username}
-     return render(request, 'ptypes/create.html', context)
