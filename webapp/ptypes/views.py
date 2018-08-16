@@ -23,7 +23,7 @@ def create(request):
         if form.is_valid():
             post = form.save(commit=False)
             ptype_name = form.cleaned_data['ptype_name']
-            role_assign = form.cleaned_data['role_assign']
+            role_assign = form.cleaned_data['role_name']
             check_assign = form.cleaned_data['check_assign']
             
 
