@@ -28,8 +28,10 @@ def create(request):
 
             return redirect('ptpyes/create.html')
             
-
     else:
         form = ProductTypeForm()
         context = {'form' : form}
         return render(request, 'ptypes/create.html', context)
+
+def details(request):
+    None
