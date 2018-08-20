@@ -51,13 +51,6 @@ class PtypeClient:
 		return self._send_hw_txn(name = name, dept = dept, role = None, check = None,
 		action = "create_product_type", wait = wait)
 
-	def create_role(self, name, dept, role, check, wait = None):
-		return self._send_hw_txn(name = name, dept = dept, role = role, check = check,
-		action = "create_role", wait = wait)
-
-	def create_check(self, name, dept, role, check, wait = None):
-		return self._send_hw_txn(name = name, dept = dept, role = role, check = check,
-		action = "create_check", wait = wait)
 	# add more create and delete here 
 
 	def show(self, name):
@@ -116,6 +109,8 @@ class PtypeClient:
 			raise XoException(err)
 
 		return result.text
+
+	# DONE UP TILL HERE
 
 	def _send_hw_txn(self, name, dept, role, check, action, wait=None):
 		ts = time.time()
