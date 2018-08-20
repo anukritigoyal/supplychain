@@ -2,9 +2,7 @@
 
 {% block body %}
     <div class ="container">
-        <h3>Assigned to username</h3>
-        <h3>This is the create page!</h3>
-
+        <h3>Create Product Type</h3>
         <form method = "POST" action = "{% url 'ptypes:create'%}">
             {% csrf_token %}
             {{form}}
