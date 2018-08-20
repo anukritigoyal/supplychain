@@ -28,13 +28,8 @@ def create(request):
 
             return redirect('ptpyes/create.html')
             
+
     else:
         form = ProductTypeForm()
         context = {'form' : form}
         return render(request, 'ptypes/create.html', context)
-
-def details(request):
-    if request.user.is_authenticated == False:
-        return redirect('items:index')
-
-    
