@@ -34,4 +34,7 @@ def create(request):
         return render(request, 'ptypes/create.html', context)
 
 def details(request):
-    None
+    if request.user.is_authenticated == False:
+        return redirect('items:index')
+
+    
