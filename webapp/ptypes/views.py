@@ -6,6 +6,7 @@ from django.views import View
 import json
 
 from .forms import UserForm, User, ProductTypeForm
+from .product_type import querying
 
 def random_server():
 	urls_list = { '1': 'http://127.0.0.1:8008','2': 'http://rest-api-0:8008' }
@@ -36,5 +37,8 @@ def create(request):
         return render(request, 'ptypes/create.html', context)
 
 def details(request):
-    if request.uesr.is_authenticated == False:
+    if request.user.is_authenticated == False:
         return redirect('items:index')
+
+    url = random_server()
+    response = querying.query_all(url)
