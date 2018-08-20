@@ -7,8 +7,9 @@ import json
 
 from .forms import UserForm, User, ProductTypeForm
 
-# def index(request):
-#     return HttpResponse("Hello, world. You're at the Ptypes index.")
+def random_server():
+	urls_list = { '1': 'http://127.0.0.1:8008','2': 'http://rest-api-0:8008' }
+	return urls_list['2']
 
 def index(request):
     if request.user.is_authenticated == False:
@@ -33,3 +34,7 @@ def create(request):
         form = ProductTypeForm()
         context = {'form' : form}
         return render(request, 'ptypes/create.html', context)
+
+def details(request):
+    if request.uesr.is_authenticated == False:
+        return redirect('items:index')
