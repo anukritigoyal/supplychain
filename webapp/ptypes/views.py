@@ -49,8 +49,8 @@ def details(request):
         name, dept, role = response[data].decode().split(",")
         details[name] = Ptype(name, dept, role)
 
-    context = {'details' : details}
-    return render(request, 'ptypes/details/html', context)
+    context = {'resp' : details}
+    return render(request, 'ptypes/details.html', context)
 
 class Ptype(object):
     def __init__(self, ptype_name, dept, role):
