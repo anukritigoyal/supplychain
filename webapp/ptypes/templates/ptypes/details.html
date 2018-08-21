@@ -3,7 +3,9 @@
 {% block body %}
     <div class ="container">
         <h3>Product Type Details</h3>
-        
+        {% for name, g in details.items %}
+            <li>{{g.name}}</li>
+        {% endfor %}
         
     </div>
 

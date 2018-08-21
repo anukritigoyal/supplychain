@@ -42,3 +42,18 @@ def details(request):
 
     url = random_server()
     response = querying.query_all(url)
+    
+    # new
+    details = {}
+    for data in response:
+        name, dept, role = response[data].decode().split(",")
+        details[name] = Ptype(name, dept, role)
+
+    context = {'details' : details}
+    return render(request, 'ptypes/details/html', context)
+
+class Ptype(object):
+    def __init__(self, ptype_name, dept, role):
+        self.name = ptype_name
+        self.dept = dept
+        self.role = role
