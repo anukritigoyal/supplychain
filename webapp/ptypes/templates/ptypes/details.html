@@ -2,9 +2,18 @@
 
 {% block body %}
     <div class ="container">
-        <h3>Product Type Details</h3>
-        {% for name, g in details.items %}
-            <li>{{g.name}}</li>
+
+        {% for ptype,g in response.ptypes %}
+            <h3>Product Type Details of {{g.name}}</h3>
+                {% for roles in g.role %}
+                    <h4>{{roles}}</h4>
+                    <ul>
+                        {% for checks in g.role.get(roles)}
+                            <li>{{checks}}</li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+        
         {% endfor %}
         
     </div>

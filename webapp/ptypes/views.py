@@ -51,21 +51,13 @@ def details(request, ptype_name):
     if request.user.is_authenticated == False:
         return redirect('items:index')
 
-    # shifted to index
-    # url = random_server()
-    # response = querying.query_all(url)
-    
-    # # new
-    # details = {}
-    # for data in response:
-    #     name, dept, role = response[data].decode().split(",")
-    #     details[name] = Ptype(name, dept, role)
-
-    # context = {'resp' : details}
-    # return render(request, 'ptypes/details.html', context)
-
-    # new ADD HERE to populate
     url = random_server()
+    # response is a dictionary with one key value pair - key is ptype name, value is Ptype object
+    response = querying.query_one(ptype_name, request.user.username, url)
+    
+    context = {'response' : response}
+    return render(request, 'ptypes/details.html', context)
+
 
     
 

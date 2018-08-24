@@ -28,8 +28,7 @@ def query_one(name, username, url):
     client = PtypeClient(base_url = url, keyfile = keyfile)
     response = client.show(name = name)
     response = deserialize(response)
-
-
+    return response
 
 def get_keyfile(username):
 	home = os.path.expanduser("~")
