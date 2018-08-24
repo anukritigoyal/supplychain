@@ -15,9 +15,9 @@ def query_all(url):
     states = request.json()
     
     all_details = {}
-    j=0
+    j = 0
     for i in states['data']:
-        if i['address'][0:6]== PTYPE_NAMESPACE:
+        if i['address'][0:6] == PTYPE_NAMESPACE:
             all_details[j] = (base64.b64decode(i['data']))
             j = j + 1
     

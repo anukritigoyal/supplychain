@@ -6,7 +6,7 @@ from django.views import View
 import json
 
 from .forms import UserForm, User, ProductTypeForm
-from .product_type import querying
+from .product_type import querying 
 
 def random_server():
 	urls_list = { '1': 'http://127.0.0.1:8008','2': 'http://rest-api-0:8008' }
@@ -16,7 +16,16 @@ def index(request):
     if request.user.is_authenticated == False:
         return redirect('items:index')
 
-    context = {'username' : request.user.username} 
+    url = random_server()
+    response = querying.query_all(url)
+    
+    # new
+    details = {}
+    for data in response:
+        name, dept, role = response[data].decode().split(",")
+        details[name] = Ptype(name, dept, role)
+
+    context = {'username' : request.user.username, 'resp' : details} 
     return render(request, 'ptypes/index.html', context)
 
 def create(request):
@@ -36,21 +45,27 @@ def create(request):
         context = {'form' : form}
         return render(request, 'ptypes/create.html', context)
 
-def details(request):
+def details(request, ptype_name):
     if request.user.is_authenticated == False:
         return redirect('items:index')
 
-    url = random_server()
-    response = querying.query_all(url)
+    # shifted to index
+    # url = random_server()
+    # response = querying.query_all(url)
     
-    # new
-    details = {}
-    for data in response:
-        name, dept, role = response[data].decode().split(",")
-        details[name] = Ptype(name, dept, role)
+    # # new
+    # details = {}
+    # for data in response:
+    #     name, dept, role = response[data].decode().split(",")
+    #     details[name] = Ptype(name, dept, role)
 
-    context = {'resp' : details}
-    return render(request, 'ptypes/details.html', context)
+    # context = {'resp' : details}
+    # return render(request, 'ptypes/details.html', context)
+
+    # new ADD HERE to populate
+    url = random_server()
+
+    
 
 class Ptype(object):
     def __init__(self, ptype_name, dept, role):
