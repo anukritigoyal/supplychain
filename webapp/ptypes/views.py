@@ -37,6 +37,9 @@ def create(request):
             role_assign = form.cleaned_data['role_name']
             check_assign = form.cleaned_data['check_assign']
 
+            submit = "New Product Type Successfully Created"
+            context = {'message' : submit}
+            return render(request, 'ptypes/create.html', context)
             return redirect('ptpyes/create.html')
             
 
