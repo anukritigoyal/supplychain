@@ -6,7 +6,7 @@ from django.views import View
 import json
 
 from .forms import UserForm, User, ProductTypeForm
-from .product_type import querying 
+from .product_type import querying, create_product_type 
 
 def random_server():
 	urls_list = { '1': 'http://127.0.0.1:8008','2': 'http://rest-api-0:8008' }
@@ -33,9 +33,16 @@ def create(request):
         form = ProductTypeForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
+            username = request.user.username
+            url = random_server()
+
             ptype_name = form.cleaned_data['ptype_name']
             role_assign = form.cleaned_data['role_name']
             check_assign = form.cleaned_data['check_assign']
+
+
+            if ptype_name is not None:
+                create_product_type.create_ptype(name = ptype_name, dept = 'manufacturing', adminname = username, url = url)
 
             submit = "New Product Type Successfully Created"
             context = {'form': form, 'message' : submit}
