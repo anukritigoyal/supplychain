@@ -1,11 +1,11 @@
 import os 
 from .ptype_client import PtypeClient
 
-def _get_keyfile(adminname):
-    username = adminname
-    home = os.path.expanduser("~")
-    key_dir = os.path.join(home, "sawtooth", "keys")
-    return '{}/{}.priv'.format(key_dir, username)
+def _get_keyfile(usrname):
+	username = usrname
+	home = os.path.expanduser("~")
+	key_dir = os.path.join(home, ".sawtooth", "keys")
+	return '{}/{}.priv'.format(key_dir, username)
 
 def create_check(name, dept, role, check, adminname, url):
     keyfile = _get_keyfile(adminname)
