@@ -58,9 +58,6 @@ def details(request, ptype_name):
     context = {'response' : response}
     return render(request, 'ptypes/details.html', context)
 
-
-    
-
 class Ptype(object):
     def __init__(self, ptype_name, dept, role):
         self.name = ptype_name
