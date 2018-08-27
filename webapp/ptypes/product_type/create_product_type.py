@@ -3,9 +3,10 @@ from .ptype_client import PtypeClient
 
 
 def _get_keyfile(adminname):
+    username = adminname
     home = os.path.expanduser("~")
     key_dir = os.path.join(home, ".sawtooth", "keys")
-    return '{}/{}.priv'.format(key_dir, adminname)
+    return '{}/{}.priv'.format(key_dir, username)
 
 def create_ptype(name, dept, adminname, url):
     admin_keyfile = _get_keyfile(adminname)
