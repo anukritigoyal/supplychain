@@ -51,7 +51,25 @@ class PtypeClient:
 		return self._send_hw_txn(name = name, dept = dept, role = None, check = None,
 		action = "create_product_type", wait = wait)
 
-	# add more create and delete here 
+	def delete_product_type(self, name, dept, wait = None):
+		return self._send_hw_txn(name = name, dept = dept, role = None, check = None,
+		action = "delete_product_type", wait = wait)
+
+	def create_role(self, name, dept, role, check, wait = None):
+		return self._send_hw_txn(name = name, dept = dept, role = role, check = check,
+		action = "create_role", wait = wait)
+
+	def delete_role(self, name, dept, role, wait = None):
+		return self._send_hw_txn(name = name, dept = dept, role = role, check = None,
+		action = "delete_role", wait = wait)
+
+	def create_check(self, name, dept, role, check, wait = None):
+		return self._send_hw_txn(name = name, dept = dept, role = role, check = check,
+		action = "create_check", wait = wait)
+
+	def delete_check(self, name, dept, role, check, wait = None):
+		return self._send_hw_txn(name = name, dept = dept, role = role, check = check,
+		action = "delete_check", wait = wait)
 
 	def show(self, name):
 		address = self._get_address(name)
