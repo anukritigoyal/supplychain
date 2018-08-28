@@ -6,7 +6,7 @@ from django.views import View
 import json
 
 from .forms import UserForm, User, ProductTypeForm
-from .product_type import querying, create_product_type, create_check
+from .product_type import querying, create_product_type, create_role, create_check
 
 def random_server():
 	urls_list = { '1': 'http://127.0.0.1:8008','2': 'http://rest-api-0:8008' }
@@ -34,15 +34,22 @@ def create(request):
         if form.is_valid():
             post = form.save(commit=False)
             username = request.user.username
+            dept = username.split("@")
+            dept = dept[1]
             url = random_server()
 
             ptype_name = form.cleaned_data['ptype_name']
             role_assign = form.cleaned_data['role_name']
             check_assign = form.cleaned_data['check_assign']
 
+            # when form allows individual submissions
+            if role_assign is None and check_assign is None:
+                create_product_type.create_ptype(name = ptype_name, dept = dept, adminname = username, url = url)
+            elif role_assign is not None and check_assign is None:
+                create_role.create_role(name = ptype_name, dept = dept, role = role_assign, check = None, adminname = username, url = url)
+            elif check_assign is not None:
+                create_check.create_check(name = ptype_name, dept = dept, role = role_assign, check = check_assign, adminname = username, url = url)
 
-            # if ptype_name is not None:
-            #     create_product_type.create_ptype(name = ptype_name, dept = 'manufacturing', adminname = username, url = url)
 
             create_check.create_check(ptype_name, 'manufacturing', role_assign, check_assign, username, url)
 
