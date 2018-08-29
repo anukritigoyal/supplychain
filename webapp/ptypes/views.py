@@ -50,9 +50,6 @@ def create(request):
             elif check_assign is not None:
                 create_check.create_check(name = ptype_name, dept = dept, role = role_assign, check = check_assign, adminname = username, url = url)
 
-
-            create_check.create_check(ptype_name, 'manufacturing', role_assign, check_assign, username, url)
-
             submit = "New Product Type Successfully Created"
             context = {'form': form, 'message' : submit}
             return render(request, 'ptypes/create.html', context)
@@ -73,6 +70,9 @@ def details(request, ptype_name):
     
     context = {'response' : response}
     return render(request, 'ptypes/details.html', context)
+
+def delete(request, delete_item, type):
+    None
 
 class Ptype(object):
     def __init__(self, ptype_name, dept, role):
