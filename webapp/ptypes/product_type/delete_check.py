@@ -6,7 +6,7 @@ def _get_keyfile(adminname):
     key_dir = os.path.join(home, ".sawtooth", "keys")
     return '{}/{}.priv'.format(key_dir, adminname)
 
-def delete_checl(name, dept, role, check, adminname, url):
+def delete_check(name, dept, role, check, adminname, url):
     keyfile = _get_keyfile(adminname)
     ptype_client = PtypeClient(base_url = url, keyfile = keyfile)
     response = ptype_client.delete_check(name = name, dept = dept, role = role, check = check)

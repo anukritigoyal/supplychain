@@ -5,12 +5,14 @@
 
         {% for ptype,g in response.ptypes %}
             <h3>Product Type Details of {{g.name}}</h3>
-            <h6><a href="{% ptypes:delete g.name 1 %}">Delete Product Type</a></h6> 
+            <h6><a href="{% ptypes:delete g.name none none %}">Delete Product Type</a></h6> 
                 {% for roles in g.role %}
                     <h4>{{roles}}</h4>
+                    <a href="{% ptyes:delete g.name roles none %}">Delete Role</a>
                     <ul>
                         {% for checks in g.role.get(roles)}
                             <li>{{checks}}</li>
+                            <a href="{% ptypes:delete g.name roles check %}">Delete Check</a>
                         {% endfor %}
                     </ul>
                 {% endfor %}

@@ -6,7 +6,7 @@ from django.views import View
 import json
 
 from .forms import UserForm, User, ProductTypeForm
-from .product_type import querying, create_product_type, create_role, create_check
+from .product_type import querying, create_product_type, create_role, create_check, delete_product_type, delete_role, delete_check
 
 def random_server():
 	urls_list = { '1': 'http://127.0.0.1:8008','2': 'http://rest-api-0:8008' }
@@ -71,8 +71,22 @@ def details(request, ptype_name):
     context = {'response' : response}
     return render(request, 'ptypes/details.html', context)
 
-def delete(request, delete_item, type):
-    None
+def delete(request, ptype_name, role_name, check_name):
+    if request.user.is_authenticated == False:
+        return redirect('items:login')
+
+    username = request.user.username
+    dept = username.split("@")
+    dept = dept[1]
+    url = random_server()
+
+    if role_name == 'none':
+        delete_product_type.delete_ptype(name = ptype_name, dept = dept, adminname = username, url = url)
+    elif check_name == 'none':
+        delete_role.delete_role(name = ptype_name, dept = dept, role = role_name, adminname = username, url = url)
+    else:
+        delete_check.delete_check(name = ptype_name, dept = dept, role = role_name, check = check_name, adminname = username, url = url)
+
 
 class Ptype(object):
     def __init__(self, ptype_name, dept, role):
