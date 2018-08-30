@@ -7,6 +7,7 @@ import json
 
 from .forms import UserForm, User, ProductTypeForm
 from .product_type import querying, create_product_type, create_role, create_check, delete_product_type, delete_role, delete_check
+from . import test
 
 def random_server():
 	urls_list = { '1': 'http://127.0.0.1:8008','2': 'http://rest-api-0:8008' }
@@ -42,6 +43,8 @@ def create(request):
             role_assign = form.cleaned_data['role_name']
             check_assign = form.cleaned_data['check_assign']
 
+            #test.create(name = ptype_name, dept = dept, role = role_assign, check = check_assign) 
+
             # when form allows individual submissions
             if role_assign is None and check_assign is None:
                 create_product_type.create_ptype(name = ptype_name, dept = dept, adminname = username, url = url)
@@ -63,12 +66,19 @@ def create(request):
 def details(request, ptype_name):
     if request.user.is_authenticated == False:
         return redirect('items:index')
+    # only retrieve product types for this department
+    username = request.user.username
+    dept = username.split("@")
+    dept = dept[1]
+
+    #info = test.retrieve(dept)
 
     url = random_server()
     # response is a dictionary with one key value pair - key is ptype name, value is Ptype object
     response = querying.query_one(ptype_name, request.user.username, url)
     
     context = {'response' : response}
+    #context = {'response' : info}
     return render(request, 'ptypes/details.html', context)
 
 def delete(request, ptype_name, role_name, check_name):
