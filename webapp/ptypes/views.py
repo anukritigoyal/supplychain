@@ -80,12 +80,21 @@ def delete(request, ptype_name, role_name, check_name):
     dept = dept[1]
     url = random_server()
 
+    response = querying.query_one(ptype_name, request.user.username, url)
+
     if role_name == 'none':
         delete_product_type.delete_ptype(name = ptype_name, dept = dept, adminname = username, url = url)
+        message = "Product Type Deleted"
     elif check_name == 'none':
         delete_role.delete_role(name = ptype_name, dept = dept, role = role_name, adminname = username, url = url)
+        message = "Role Deleted"
     else:
         delete_check.delete_check(name = ptype_name, dept = dept, role = role_name, check = check_name, adminname = username, url = url)
+        message = "Check Deleted"
+
+    context = {'response' : response, 'message' : message}
+    return render(request, 'ptypes/delete.html', context)
+
 
 
 class Ptype(object):
