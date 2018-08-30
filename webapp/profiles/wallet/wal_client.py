@@ -1,6 +1,7 @@
 import hashlib
 import base64
 from base64 import b64encode
+import datetime
 import time
 import requests
 import yaml
@@ -120,8 +121,9 @@ class WalClient:
 
 
 	def _send_wal_txn(self,name,action,pubkey,wait=None):
-
-		payload = ",".join([name,action,pubkey]).encode()
+		ts = time.time()
+		time_stamp = datetime.datetime.fromtimestamp(ts).strftime('%X %x')
+		payload = ",".join([name,action,pubkey,time_stamp]).encode()
 
 		address = self._get_address(name)
 		sec_address = self._get_address(pubkey)
