@@ -7,6 +7,7 @@ import json
 
 from .forms import UserForm, User, ProductTypeForm
 from .product_type import querying, create_product_type, create_role, create_check, delete_product_type, delete_role, delete_check
+# remove when done testing
 from . import test
 
 def random_server():
@@ -43,7 +44,7 @@ def create(request):
             role_assign = form.cleaned_data['role_name']
             check_assign = form.cleaned_data['check_assign']
 
-            #test.create(name = ptype_name, dept = dept, role = role_assign, check = check_assign) 
+            test.create(name = ptype_name, dept = dept, role = role_assign, check = check_assign) 
 
             # when form allows individual submissions
             if role_assign is None and check_assign is None:
@@ -71,14 +72,14 @@ def details(request, ptype_name):
     dept = username.split("@")
     dept = dept[1]
 
-    #info = test.retrieve(dept)
+    info = test.retrieve(dept)
 
     url = random_server()
     # response is a dictionary with one key value pair - key is ptype name, value is Ptype object
-    response = querying.query_one(ptype_name, request.user.username, url)
+    #response = querying.query_one(ptype_name, request.user.username, url)
     
-    context = {'response' : response}
-    #context = {'response' : info}
+    #context = {'response' : response}
+    context = {'response' : info}
     return render(request, 'ptypes/details.html', context)
 
 def delete(request, ptype_name, role_name, check_name):
