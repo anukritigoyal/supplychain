@@ -22,7 +22,7 @@ class CreateItemForm(forms.ModelForm):
 
 	class Meta:
 		model = ItemCreation
-		fields = ['itemname','password']
+		fields = ['itemname','password','ptype']
 
 class SendItemForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput)

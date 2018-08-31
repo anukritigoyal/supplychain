@@ -304,6 +304,7 @@ class CreateItemView(View):
 		username = request.user.username
 		password  =request.POST['password']
 		user = authenticate(username=username,password=password)
+		ptype = request.POST['ptype']
 
 		if user is not None:
 			response = create_saw.cr(itemname,username,url)
