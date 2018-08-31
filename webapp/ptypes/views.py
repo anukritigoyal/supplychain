@@ -20,6 +20,13 @@ def index(request):
 
     url = random_server()
     response = querying.query_all(url)
+
+
+    username = request.user.username
+    dept = username.split("@")
+    dept = dept[1]
+
+    info = test.retrieve(dept)
     
     # new
     details = {}
@@ -27,7 +34,8 @@ def index(request):
         name, dept, role = response[data].decode().split(",")
         details[name] = Ptype(name, dept, role)
 
-    context = {'username' : request.user.username, 'resp' : details} 
+    #context = {'username' : request.user.username, 'resp' : details} 
+    context = {'username' : request.user.username, 'resp' : info}
     return render(request, 'ptypes/index.html', context)
 
 def create(request):
@@ -68,18 +76,14 @@ def details(request, ptype_name):
     if request.user.is_authenticated == False:
         return redirect('items:index')
     # only retrieve product types for this department
-    username = request.user.username
-    dept = username.split("@")
-    dept = dept[1]
-
-    info = test.retrieve(dept)
+    
 
     url = random_server()
     # response is a dictionary with one key value pair - key is ptype name, value is Ptype object
-    #response = querying.query_one(ptype_name, request.user.username, url)
+    response = querying.query_one(ptype_name, request.user.username, url)
     
-    #context = {'response' : response}
-    context = {'response' : info}
+    context = {'response' : response}
+    #context = {'response' : info}
     return render(request, 'ptypes/details.html', context)
 
 def delete(request, ptype_name, role_name, check_name):
