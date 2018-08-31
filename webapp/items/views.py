@@ -304,10 +304,11 @@ class CreateItemView(View):
 		username = request.user.username
 		password  =request.POST['password']
 		user = authenticate(username=username,password=password)
+		# NEW ADDITION HERE 
 		ptype = request.POST['ptype']
 
 		if user is not None:
-			response = create_saw.cr(itemname,username,url)
+			response = create_saw.cr(itemname,username,ptype,url)
 			return redirect('items:index')
 		
 		else:
