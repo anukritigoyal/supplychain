@@ -16,7 +16,7 @@ from django.views import View
 from .models import userinfo
 import json
 
-
+import logging
 
 ###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
 ##configure randomness here
@@ -279,7 +279,6 @@ def map(request):
 	context = {'resp' :resp , 'usersdata' : usersdata}
 	return render(request,'items/map.html', context)
 
-
 class CreateItemView(View):
 
 	form_class = CreateItemForm
@@ -304,7 +303,6 @@ class CreateItemView(View):
 		username = request.user.username
 		password  =request.POST['password']
 		user = authenticate(username=username,password=password)
-		# NEW ADDITION HERE 
 		ptype = request.POST['ptype']
 
 		if user is not None:
