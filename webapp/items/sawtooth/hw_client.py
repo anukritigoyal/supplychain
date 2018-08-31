@@ -18,8 +18,6 @@ from sawtooth_sdk.protobuf.batch_pb2 import BatchHeader
 from sawtooth_sdk.protobuf.batch_pb2 import Batch
 from sawtooth_xo.xo_exceptions import XoException
 
-import logging
-
 
 def _sha512(data):
 	return hashlib.sha512(data).hexdigest()
@@ -50,8 +48,8 @@ class HwClient:
 
 	# create, delete, send and checks are the 4 main actions the Items transaction family will handle
  	# These are called by the files create.py, delete.py, send.py and checks.py located in the same sawtooth folder
-	def create(self,name,cu_add,ptype,wait=None):
-		return self._send_hw_txn(name,"create",cu_add=cu_add,nxt_add='no', wait = wait)
+	def create(self,name,cu_add,wait=None):
+		return self._send_hw_txn(name,"create",cu_add=cu_add,nxt_add='no',wait = wait)
 
 	def delete(self,name,cu_add,wait=None):
 		return self._send_hw_txn(name,"delete",cu_add=cu_add,nxt_add='no', wait = wait)
@@ -133,7 +131,6 @@ class HwClient:
 
 		return result.text
 
-	logging.basicConfig(filename="debug.log", level=logging.DEBUG)
 
 	def _send_hw_txn(self,name,action,cu_add,nxt_add,wait=None):
 		ts = time.time()
