@@ -20,8 +20,8 @@ class Ptype(object):
 	def __init__(self, ptype_name, dept, role):
 		self.name = ptype_name # name of product type
 		self.dept = dept # dept for whose checks + roles have been administered 
-		self.role = role  # role that has been added 
-
+		self.role = role  # dictionary where role is the key and the values are the checks associated with the role
+		
 	@property
 	def name(self):
 		return self.name

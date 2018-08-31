@@ -1,3 +1,5 @@
+# Models that are required for forms to be made. These are used in forms.py and views.py
+
 from django.db import models
 
 # Create your models here.

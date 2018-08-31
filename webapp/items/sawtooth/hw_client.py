@@ -1,3 +1,5 @@
+# Connection between Django and Sawtooth. Allows for actions taken place in django to be executed by sawtooth. 
+
 import hashlib
 import base64
 from base64 import b64encode
@@ -44,7 +46,8 @@ class HwClient:
 		self._signer = CryptoFactory(create_context('secp256k1')) \
 			.new_signer(private_key)
 
-
+	# create, delete, send and checks are the 4 main actions the Items transaction family will handle
+ 	# These are called by the files create.py, delete.py, send.py and checks.py located in the same sawtooth folder
 	def create(self,name,cu_add,wait=None):
 		return self._send_hw_txn(name,"create",cu_add=cu_add,nxt_add='no',wait = wait)
 
