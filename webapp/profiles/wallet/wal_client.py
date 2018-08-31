@@ -1,5 +1,3 @@
-# Forms connection between Django and Sawtooth. Allows for actions taken place in django to be executed by sawtooth. 
-
 import hashlib
 import base64
 from base64 import b64encode

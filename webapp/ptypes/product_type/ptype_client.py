@@ -1,5 +1,3 @@
-# Forms connection between Django and Sawtooth. Allows for actions taken place in django to be executed by sawtooth. 
-
 import hashlib
 import base64
 from base64 import b64encode
@@ -84,10 +82,10 @@ class PtypeClient:
 		except BaseException:
 			return None
 
-	def _get_status(self,batch_id,wait):
+	def _get_status(self, batch_id):
 		try:
 			result = self._send_request(
-			'batch_statuses?id={}&wait={}'.format(batch_id, wait))
+			'batch_statuses?id={}'.format(batch_id))
 			return yaml.safe_load(result)['data'][0]['status']
 		except BaseException as err:
 			raise XoException(err)
@@ -164,8 +162,8 @@ class PtypeClient:
 			response = self._send_request(
 				"batches",batch_list.SerializeToString(),
 				'application/octet-stream')
-			while wait_time < wait:
-				status = self._get_status(batch_id, wait - int(wait_time))
+			while wait_time <wait:
+				status = self._get_status(batch_id)
 				wait_time = time.time()-start_time
 
 				if status != 'PENDING':

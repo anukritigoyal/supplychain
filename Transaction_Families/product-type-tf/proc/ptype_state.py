@@ -20,7 +20,7 @@ class Ptype(object):
 	def __init__(self, ptype_name, dept, role):
 		self.name = ptype_name # name of product type
 		self.dept = dept # dept for whose checks + roles have been administered 
-		self.role = role  # dictionary where role is the key and the values are the checks associated with the role
+		self.role = role  # role that has been added 
 
 	@property
 	def name(self):
@@ -45,13 +45,13 @@ class PtypeState(object):
 		ptype = {}
 		try:
 			for types in data.decode().split("|"):
-				name, dept, role = types.split(",")
+				name, dept, role = types.split(",") # potential problem? splitting roles?
 				ptype[name] = Ptype(name, dept, role)
 		except ValueError:
 			raise InternalError("Failed to deserialize product type data")
 		return ptype
 
-
+	# fix! 
 	def _serialize(self, ptypes): 
 		ptype_strs = []
 		for name, g in ptypes.items(): 

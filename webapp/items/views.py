@@ -1,5 +1,3 @@
-# Each method corresponds to an HTML page within the templates folder of the same name
-
 from django.shortcuts import render,redirect
 from django.http import Http404
 from django.contrib.auth import authenticate, login , logout
@@ -15,6 +13,7 @@ from .forms import CreateItemForm
 from django.views import View
 from .models import userinfo
 import json
+
 
 
 ###IMPORTANT SEND ALL DESERIALS TO RESPECTIVE MODULES
@@ -50,8 +49,6 @@ def index(request):
 
 	return render(request,'items/index.html', context)
 
-# detail page for each item name that sates which checks have been completed and handling history
-# allows the user to send the item to the next user
 def detail(request,itemname):
 	
 	if request.user.is_authenticated == False :
@@ -95,7 +92,6 @@ def detail(request,itemname):
 
 	return render(request,'items/detail.html',context)	
 
-# provides details for each user that 
 def user_detail (request,username):
 
 	if request.user.is_authenticated == False :
