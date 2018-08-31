@@ -1,3 +1,5 @@
+# Forms that are created with the help of models.py. These forms are used in views.py and rendered in the corresponding HTML pages
+
 from django.contrib.auth.models import User
 from django import forms
 from .models import ItemCreation
