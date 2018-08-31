@@ -7,9 +7,16 @@
         <form method = "POST" action = "{% url 'ptypes:create'%}">
             {% csrf_token %}
             {{form}}
-            <button type="submit">Submit</button>
+            <!-- <button type="submit">Submit</button> -->
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
         </form>
         <h4 style="color:green">{{message}}</h4>
     </div>
 
 {% endblock %}
+
+

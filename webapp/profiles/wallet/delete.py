@@ -18,6 +18,6 @@ def delete(u_name,adminname):
 	keyfile_a = _get_keyfile(adminname)
 	client = WalClient(base_url=url,keyfile = keyfile_u)
 	admin_client = _get_keyfile(adminname)
-	response = admin_client.delete(name=u_name,pubkey = client._signer.get_public_key().as_hex())
+	response = client.delete(name=u_name,pubkey = client._signer.get_public_key().as_hex()) 
 
 	print("response: {}".format(response))
