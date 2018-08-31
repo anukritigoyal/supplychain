@@ -22,6 +22,7 @@ class history_object(object):
 class ItemCreation(models.Model):
     itemname = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
+    ptype = models.CharField(max_length=30)
 
 class ItemSending(models.Model):
     recv = models.CharField(max_length = 30)
