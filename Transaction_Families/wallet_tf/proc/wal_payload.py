@@ -5,7 +5,7 @@ class WalPayload(object):
 	def __init__(self,payload):
 
 		try:
-			name,action,pubkey,time_stamp = payload.decode().split(",")
+			name,action,pubkey,ptype,time_stamp = payload.decode().split(",")
 		except ValueError:
 			raise InvalidTransaction("Invalid payload serialization")
 
@@ -14,6 +14,7 @@ class WalPayload(object):
 		self._name = name
 		self._action = action
 		self._pubkey = pubkey
+		self._ptype = ptype
 		self._time_stamp = time_stamp
 
 	@staticmethod
@@ -31,6 +32,10 @@ class WalPayload(object):
 	@property
 	def pubkey(self):
 		return self._pubkey
+
+	@property
+	def ptype(self):
+		return self._ptype
 
 	@property
 	def time_stamp(self):
