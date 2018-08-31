@@ -48,17 +48,17 @@ class HwClient:
 
 	# create, delete, send and checks are the 4 main actions the Items transaction family will handle
  	# These are called by the files create.py, delete.py, send.py and checks.py located in the same sawtooth folder
-	def create(self,name,cu_add,ptype,wait=None):
-		return self._send_hw_txn(name,"create",cu_add=cu_add,nxt_add='no',ptype=ptype,wait = wait)
+	def create(self,name,cu_add,wait=None):
+		return self._send_hw_txn(name,"create",cu_add=cu_add,nxt_add='no',wait = wait)
 
 	def delete(self,name,cu_add,wait=None):
-		return self._send_hw_txn(name,"delete",cu_add=cu_add,nxt_add='no',ptype='none',wait = wait)
+		return self._send_hw_txn(name,"delete",cu_add=cu_add,nxt_add='no', wait = wait)
 
 	def send(self,name,nxt_add,cu_add,wait=None):
-		return self._send_hw_txn(name,"send",cu_add=cu_add,nxt_add=nxt_add,ptype='none',wait=wait)
+		return self._send_hw_txn(name,"send",cu_add=cu_add,nxt_add=nxt_add,wait=wait)
 
 	def check(self,name,check_no,cu_add,wait=None):
-		return self._send_hw_txn(name,'check'+ check_no,cu_add=cu_add,nxt_add=cu_add,ptype='none',wait=wait)
+		return self._send_hw_txn(name,'check'+ check_no,cu_add=cu_add,nxt_add=cu_add,wait=wait)
 
 	def show(self,name):
 		address = self._get_address(name)
@@ -132,10 +132,10 @@ class HwClient:
 		return result.text
 
 
-	def _send_hw_txn(self,name,action,cu_add,nxt_add,ptype,wait=None):
+	def _send_hw_txn(self,name,action,cu_add,nxt_add,wait=None):
 		ts = time.time()
 		time_stamp = datetime.datetime.fromtimestamp(ts).strftime('%X %x')
-		payload = ",".join([name,action,cu_add,nxt_add,ptype,time_stamp]).encode()
+		payload = ",".join([name,action,cu_add,nxt_add,time_stamp]).encode()
 		key_add = self._get_key_address(nxt_add)
 		cli_add = self._get_key_address(cu_add)
 		address = self._get_address(name)
