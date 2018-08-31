@@ -8,4 +8,4 @@ class CreateProfileForm(forms.ModelForm):
 
 	class Meta:
 		model = User
-		fields = ['username','password', 'dept']
+		fields = ['username','password']

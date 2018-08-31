@@ -9,7 +9,7 @@ def _get_keyfile(name):
 
 	return '{}/{}.priv'.format(key_dir, username)
 
-def add(name,adminname,dept,url):
+def add(name,adminname,url):
 	# url = 'http://127.0.0.1:8008'
 	try:
 		res = subprocess.check_call(['sawtooth','keygen',name])
@@ -21,7 +21,7 @@ def add(name,adminname,dept,url):
 	admin_client = WalClient(base_url=url,keyfile=keyfile_admin)
 	client = WalClient(base_url=url,keyfile = keyfile_u)
 
-	response = admin_client.create(name=name,dept=dept,pubkey=client._signer.get_public_key().as_hex()) 
+	response = admin_client.create(name=name,pubkey=client._signer.get_public_key().as_hex())
 
 	print("response: {}".format(response))
 
