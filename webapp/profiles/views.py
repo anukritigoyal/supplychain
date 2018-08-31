@@ -73,6 +73,7 @@ class CreateProfileView(View):
 			user = form.save(commit=False)
 			username = form.cleaned_data['username']
 			password = form.cleaned_data['password']
+			department = form.cleaned_data['department']
 			
 			user.set_password(password)
 			user.save()
