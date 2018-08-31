@@ -26,7 +26,8 @@ def index(request):
     dept = username.split("@")
     dept = dept[1]
 
-    info = test.retrieve(dept)
+    # info is a dictionary - key is name of ptype and value is Ptype object
+    info = test.retrieve()
     
     # new
     details = {}

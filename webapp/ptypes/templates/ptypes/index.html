@@ -6,9 +6,12 @@
     </div>
 
     <ul>
-        {% for ptype in resp.items %}
+        <!-- {% for ptype in resp.items %}
             <li><a href= "{% url 'ptypes:details' ptype.name %}"> {{ ptype.name }}</a></li>
             <br>
+        {% endfor %} -->
+        {% for ptype in info.items %}
+        <li>{{ ptype.name }}</li>
         {% endfor %}
     </ul>
 
